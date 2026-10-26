@@ -2173,3 +2173,531 @@ export const vocExpansionData: VocExpansionMechanism[] = [
   }
 ];
 
+// ==========================================
+// INTERACTIVE HISTORY LABORATORY DATASETS
+// ==========================================
+
+export interface SpatialMarker {
+  id: string;
+  name: string;
+  category: 'commodity' | 'famine' | 'resistance' | 'railway-hub';
+  cx: number; // Persentase koordinat SVG (0 - 1000)
+  cy: number; // Persentase koordinat SVG (0 - 450)
+  residency: string;
+  period: string;
+  badge: string;
+  title: string;
+  summary: string;
+  historicalDetails: {
+    commodities?: string[];
+    statistics?: string;
+    impactSummary: string;
+    vanDenBoschPolicyNote: string;
+    archivalReference: string;
+  };
+}
+
+export interface RailwayLine {
+  id: string;
+  name: string;
+  pathD: string;
+  startPoint: string;
+  endPoint: string;
+  yearBuilt: string;
+  purpose: string;
+}
+
+export interface CurrencyBenchmark {
+  id: string;
+  label: string;
+  guldenAmount: number;
+  modernIdrEstimate: number;
+  historicalRole: string;
+  disparityDescription: string;
+}
+
+export interface UnitConversion {
+  id: string;
+  unitName: string;
+  dutchNotation: string;
+  metricEquivalent: string;
+  baseMultiplier: number; // multiplier ke unit standar (m2, kg, jiwa)
+  unitCategory: 'luas' | 'bobot' | 'populasi';
+  historicalUsage: string;
+}
+
+export interface DilemmaChoice {
+  id: string;
+  choiceLabel: string;
+  actionText: string;
+  consequences: {
+    peasantWelfare: number;   // -3 s/d +3
+    colonialPressure: number; // -3 s/d +3
+    localStability: number;   // -3 s/d +3
+  };
+  immediateFeedback: string;
+}
+
+export interface HistoricalDilemmaScenario {
+  id: string;
+  role: string;
+  location: string;
+  year: number;
+  title: string;
+  situation: string;
+  historicalContext: string;
+  choices: DilemmaChoice[];
+  historicalEpilogue: {
+    whatActuallyHappened: string;
+    historicalOutcome: string;
+    archivalSource: string;
+  };
+}
+
+export const spatialMarkersData: SpatialMarker[] = [
+  {
+    id: "marker-priangan",
+    name: "Priangan (Preanger)",
+    category: "commodity",
+    cx: 215,
+    cy: 265,
+    residency: "Karesidenan Priangan",
+    period: "1830–1870",
+    badge: "Sentra Kopi Dunia",
+    title: "Dataran Tinggi Kopi Priangan & Kerja Rodi",
+    summary: "Episentrum penanaman kopi terbesar di Hindia Belanda, menyumbang lebih dari 60% pasokan kopi kolonial. Penduduk dibebaskan dari Landrent namun dibebani penyerahan kopi wajib dan pikul kuli ke pelabuhan.",
+    historicalDetails: {
+      commodities: ["Kopi Jawa", "Teh Pegunungan"],
+      statistics: "Rata-rata 250–350 pohon kopi per keluarga; upah panen bersih hanya f. 2,11/tahun.",
+      impactSummary: "Eksploitasi feodal terorganisir di mana para bupati pribumi menikmati cultuurprocenten di atas f. 90.000/tahun.",
+      vanDenBoschPolicyNote: "Van den Bosch mempertahankan Preangerstelsel tanpa pajak tanah untuk mengejar kuota kopi setinggi mungkin bagi NHM.",
+      archivalReference: "Jan Breman (2014), 'Keuntungan Kolonial dari Kerja Paksa: Sistem Priangan'."
+    }
+  },
+  {
+    id: "marker-cirebon",
+    name: "Cirebon",
+    category: "famine",
+    cx: 345,
+    cy: 220,
+    residency: "Karesidenan Cirebon",
+    period: "1843–1846",
+    badge: "Tragedi Nila & Kelaparan",
+    title: "Skandal Nombok Pajak & Krisis Pangan Cirebon",
+    summary: "Sawah padi disita paksa hingga 1/3 lebih untuk menanam nila dan tebu. Petani tidak memiliki waktu menanam padi, sementara upah tebasan nila lebih kecil daripada pajak tanah (skandal nombok f. 1,06 s/d f. 4,60).",
+    historicalDetails: {
+      commodities: ["Nila (Indigo)", "Tebu / Gula"],
+      statistics: "Lebih dari 30.000 jiwa mengungsi dan tewas akibat wabah kelaparan dan demam 1843–1844.",
+      impactSummary: "Memicu kehancuran struktur agraris lokal dan gelombang protes keras dari pejabat kolonial terkejut (vitalis & de Seriere).",
+      vanDenBoschPolicyNote: "Target pabrik nila modern bertenaga air memaksa rotasi sawah tanpa henti hingga tanah kehilangan unsur hara.",
+      archivalReference: "Kultuurverslag 1844 & Surat Protes Residen Cirebon de Seriere."
+    }
+  },
+  {
+    id: "marker-pekalongan",
+    name: "Pekalongan",
+    category: "resistance",
+    cx: 435,
+    cy: 195,
+    residency: "Karesidenan Pekalongan",
+    period: "1847",
+    badge: "Demonstrasi Akbar 1847",
+    title: "Aksi Unjuk Rasa 700 Petani Pekalongan",
+    summary: "Sebanyak 700–800 petani menolak bekerja di kebun nila dan pabrik gula. Mereka berjalan kaki puluhan kilometer dan berkemah di alun-alun kediaman Residen saat Gubernur Jenderal J.J. Rochussen berkunjung.",
+    historicalDetails: {
+      commodities: ["Tebu / Gula", "Nila"],
+      statistics: "700–800 petani melakukan mogok massal dan audiensi terbuka tanpa kekerasan senjata.",
+      impactSummary: "Aksi protes terbuka paling masif sepanjang era Tanam Paksa, memaksa Rochussen menurunkan sebagian target kuota nila.",
+      vanDenBoschPolicyNote: "Membuktikan bahwa klaim awal 'petani dengan sukarela menanam' adalah fiksi birokrasi kolonial.",
+      archivalReference: "C. Fasseur (1992), 'The Politics of Colonial Exploitation', Cornell SEAP."
+    }
+  },
+  {
+    id: "marker-demak",
+    name: "Demak & Grobogan",
+    category: "famine",
+    cx: 550,
+    cy: 195,
+    residency: "Karesidenan Semarang (Demak-Grobogan)",
+    period: "1848–1850",
+    badge: "Krisis Kelaparan Terparah",
+    title: "Bencana Kelaparan Demak-Grobogan & Kematian Kerbau",
+    summary: "Puncak bencana kemanusiaan Tanam Paksa. Pemaksaan tanam tembakau dan tebu bersamaan dengan kerja rodi saluran air dan benteng menewaskan lebih dari 200.000 jiwa, meruntuhkan populasi wilayah dari 336.000 menjadi 120.000 jiwa.",
+    historicalDetails: {
+      commodities: ["Tembakau", "Tebu", "Kerja Rodi Benteng"],
+      statistics: "Populasi Demak anjlok drastis; ribuan kerbau pembajak mati karena kekurangan pakan dan kerja paksa angkut.",
+      impactSummary: "Menjadi lonceng kematian moral Cultuurstelsel dan memicu debat panas parlemen Belanda yang dipimpin Baron van Hoëvell.",
+      vanDenBoschPolicyNote: "Kombinasi cultuurprocenten pegawai Eropa dan desakan kuota ekspor Batavia menutup mata birokrasi atas tanda-tanda gagal panen.",
+      archivalReference: "Pidato Parlemen W.R. van Hoëvell (1850) & Arsip Kolonial Verslag 1849."
+    }
+  },
+  {
+    id: "marker-kedu",
+    name: "Kedu",
+    category: "resistance",
+    cx: 485,
+    cy: 260,
+    residency: "Karesidenan Kedu",
+    period: "1843",
+    badge: "Protes Tembakau & Boikot",
+    title: "Resistensi Tembakau dan Sabotase Bibit Kedu",
+    summary: "Petani lereng Gunung Sindoro-Sumbing melakukan mogok siram, pencabutan bibit tembakau di malam hari, dan aksi protes ke rumah residen akibat penetapan harga beli daun tembakau yang dirasa sangat merugikan.",
+    historicalDetails: {
+      commodities: ["Tembakau Kedu", "Kopi"],
+      statistics: "Ratusan hektar kebun tembakau mengalami kerusakan bibit misterius akibat sabotase terorganisir.",
+      impactSummary: "Birokrasi kolonial terpaksa menghapus kewajiban tanam tembakau di Kedu dan menyerahkannya ke pedagang bebas.",
+      vanDenBoschPolicyNote: "Kagagalan sistem tanam paksa tembakau di Jawa Tengah membuktikan bahwa tanaman daun rapuh tidak cocok di bawah sistem rodi.",
+      archivalReference: "Jan Breman (1983), 'Control of Land and Labour in Colonial Java'."
+    }
+  },
+  {
+    id: "marker-pasuruan",
+    name: "Pasuruan",
+    category: "commodity",
+    cx: 735,
+    cy: 245,
+    residency: "Karesidenan Pasuruan",
+    period: "1835–1865",
+    badge: "Ibukota Gula Hindia Belanda",
+    title: "Sentra Gula Terkaya & Sirkulasi Uang Tertinggi",
+    summary: "Karesidenan dengan produksi gula paling efisien dan produktif. Memiliki belasan pabrik gula uap modern. Tingkat upah panen tebu tertinggi di Jawa (f. 54,91/keluarga), menciptakan perputaran ekonomi pasar lokal yang dinamis.",
+    historicalDetails: {
+      commodities: ["Gula Tebu", "Kopi Pegunungan"],
+      statistics: "Menyumbang hampir 25% dari total ekspor gula Hindia Belanda; rata-rata rasio rendemen gula tertinggi.",
+      impactSummary: "Menjadi model ideal yang selalu dipamerkan Van den Bosch di Parlemen Belanda untuk menutupi tragedi Cirebon dan Demak.",
+      vanDenBoschPolicyNote: "Kerjasama erat antara kontraktor pabrik gula swasta Eropa dan bupati yang digaji persentase sangat tinggi.",
+      archivalReference: "Robert Van Niel (1992), 'Java under the Cultivation System'."
+    }
+  },
+  {
+    id: "marker-batavia",
+    name: "Batavia (Sunda Kelapa)",
+    category: "railway-hub",
+    cx: 170,
+    cy: 195,
+    residency: "Batavia",
+    period: "1830–1870",
+    badge: "Pusat Kuasa & Markas NHM",
+    title: "Kantor Gubernur Jenderal & Konsorsium NHM",
+    summary: "Pusat birokrasi pemerintahan kolonial dan kantor pusat Nederlandsche Handel-Maatschappij (NHM) yang memegang hak monopoli pengapalan seluruh komoditas Tanam Paksa menuju pelabuhan Amsterdam dan Rotterdam.",
+    historicalDetails: {
+      commodities: ["Pusat Logistik & Finansial"],
+      statistics: "Mengelola lebih dari 690 juta gulden aliran dana surplus Batig Slot.",
+      impactSummary: "Pusat penerbitan Staatsblad dan pengawasan algemeene rekenkamer.",
+      vanDenBoschPolicyNote: "Van den Bosch merancang jalur logistik terpusat dari Batavia langsung ke pasar lelang Belanda.",
+      archivalReference: "C. Fasseur (1992), 'The Politics of Colonial Exploitation'."
+    }
+  },
+  {
+    id: "marker-minangkabau",
+    name: "Minangkabau (Sumatera Barat)",
+    category: "commodity",
+    cx: 90,
+    cy: 110,
+    residency: "Sumatra's Westkust",
+    period: "1847–1908",
+    badge: "Tanam Paksa Kopi Luar Jawa",
+    title: "Koffiestelsel Minangkabau & Kerja Rodi Jalan",
+    summary: "Diberlakukan oleh Gubernur J.V. Michiels pasca Perang Padri. Setiap keluarga petani wajib menanam 150 batang kopi dan menyetorkannya ke gudang kolonial (Koffiepakhuis) dengan harga murah, serta rodi membuka jalan perbukitan.",
+    historicalDetails: {
+      commodities: ["Kopi Robusta & Arabika"],
+      statistics: "Penyerahan kopi wajib berlaku hingga dihapuskan pada tahun 1908 akibat Perang Belasting.",
+      impactSummary: "Merusak tatanan nagari tradisional dan memicu perlawanan rakyat terhadap pajak uang.",
+      vanDenBoschPolicyNote: "Eksperimen pembuktian bahwa Tanam Paksa dapat direplikasi di luar Jawa.",
+      archivalReference: "M.C. Ricklefs (2008), 'A History of Modern Indonesia'."
+    }
+  },
+  {
+    id: "marker-minahasa",
+    name: "Minahasa (Sulawesi Utara)",
+    category: "commodity",
+    cx: 890,
+    cy: 90,
+    residency: "Karesidenan Manado",
+    period: "1853–1899",
+    badge: "Monopoli Kopi Timur",
+    title: "Koffiestelsel Minahasa & Aliansi Walak",
+    summary: "Pemerintah kolonial memonopoli komoditas kopi melalui para Hukum Tua (kepala walak). Petani dipaksa membuka lereng-lereng pegunungan dan menanam kopi dengan imbalan harga beli monopoli yang ditetapkan sepihak.",
+    historicalDetails: {
+      commodities: ["Kopi Minahasa"],
+      statistics: "Menghasilkan ribuan pikul kopi kualitas premium untuk lelang NHM di Eropa.",
+      impactSummary: "Mendorong monetisasi awal namun mengikis kemandirian pertanian subsisten masyarakat lokal.",
+      vanDenBoschPolicyNote: "Penggunaan struktur adat Walak mirip dengan pemanfaatan bupati di Pulau Jawa.",
+      archivalReference: "David Henley (2005), 'Fertility, Food and Fever: Population, economy and environment in North and Central Sulawesi'."
+    }
+  },
+  {
+    id: "marker-maluku",
+    name: "Maluku (Ambon & Banda)",
+    category: "commodity",
+    cx: 940,
+    cy: 155,
+    residency: "Karesidenan Maluku",
+    period: "1830–1864",
+    badge: "Monopoli Rempah Klasik",
+    title: "Penyerahan Rempah Wajib Cengkeh & Pala",
+    summary: "Penerusan dari sistem monopoli rempah-rempah kuno VOC. Penduduk diwajibkan memelihara pohon cengkeh dan pala, melarang penjualan bebas ke pedagang Bugis atau Makassar dengan ancaman pidana berat.",
+    historicalDetails: {
+      commodities: ["Cengkeh", "Pala & Fuli"],
+      statistics: "Dihapuskan secara bertahap pada tahun 1864 seiring jatuhnya harga rempah di pasar global.",
+      impactSummary: "Mengakibatkan stagnasi ekonomi kepulauan Maluku dibandingkan sentra perkebunan gula/kopi di Jawa.",
+      vanDenBoschPolicyNote: "Kewajiban rempah tetap dipertahankan sebagai benteng cadangan fiskal pemerintah kolonial.",
+      archivalReference: "G.J. Resink (1968), 'Indonesia's History Between the Myths'."
+    }
+  }
+];
+
+export const railwayLinesData: RailwayLine[] = [
+  {
+    id: "rail-nis-central",
+    name: "Jalur NIS Semarang–Solo–Yogyakarta",
+    pathD: "M 550 195 Q 520 225 500 240 T 485 260",
+    startPoint: "Semarang (Pelabuhan Ekspor)",
+    endPoint: "Vorstenlanden (Solo & Yogyakarta)",
+    yearBuilt: "1867–1872",
+    purpose: "Mengangkut gula, tembakau, dan nila dari Vorstenlanden ke pelabuhan kapal uap Semarang dengan memangkas waktu tempuh dari 4 hari menjadi 4 jam."
+  },
+  {
+    id: "rail-ss-west",
+    name: "Jalur SS Batavia–Buitenzorg",
+    pathD: "M 170 195 L 180 230",
+    startPoint: "Batavia (Kota)",
+    endPoint: "Buitenzorg (Bogor)",
+    yearBuilt: "1873",
+    purpose: "Jalur kereta api pertama di Jawa Barat untuk mempercepat arus pasokan kopi pegunungan Priangan menuju pelabuhan Sunda Kelapa."
+  },
+  {
+    id: "rail-ss-east",
+    name: "Jalur SS Surabaya–Pasuruan–Probolinggo",
+    pathD: "M 710 215 Q 735 245 770 250",
+    startPoint: "Surabaya (Pelabuhan Ujung)",
+    endPoint: "Pasuruan & Probolinggo",
+    yearBuilt: "1878",
+    purpose: "Menghubungkan puluhan pabrik gula uap di Pasuruan langsung dengan dermaga kapal dagang internasional Surabaya."
+  }
+];
+
+export const currencyConversionBenchmarks: CurrencyBenchmark[] = [
+  {
+    id: "peasant-wage",
+    label: "Upah Tahunan Petani Priangan",
+    guldenAmount: 2.11,
+    modernIdrEstimate: 369250,
+    historicalRole: "Hasil bersih rata-rata petani kopi Priangan setelah bekerja ratusan hari dalam setahun.",
+    disparityDescription: "Setara hanya ~Rp 30.000-an per bulan. Tidak cukup bahkan untuk membeli 2 karung beras."
+  },
+  {
+    id: "regent-bonus",
+    label: "Bonus Tahunan Bupati Priangan",
+    guldenAmount: 90000,
+    modernIdrEstimate: 15750000000,
+    historicalRole: "Bonus persentase panen (cultuurprocenten) seorang bupati elit berkat memeras ribuan petani.",
+    disparityDescription: "Setara ~Rp 15,75 Miliar per tahun! Ketimpangan sosial mencapai lebih dari 40.000 kali lipat."
+  },
+  {
+    id: "batig-slot-total",
+    label: "Total Keuntungan Bersih (Batig Slot)",
+    guldenAmount: 690000000,
+    modernIdrEstimate: 120750000000000,
+    historicalRole: "Total surplus fiskal yang disedot dari tanah Jawa dan ditransfer langsung ke kas Negeri Belanda (1831–1877).",
+    disparityDescription: "Setara ~Rp 120,75 Triliun nilai sekarang. Cukup untuk melunasi seluruh utang nasional Belanda dan membangun seluruh jaringan kereta apinya."
+  },
+  {
+    id: "indigo-export",
+    label: "Puncak Nilai Ekspor Nila (1840)",
+    guldenAmount: 15000000,
+    modernIdrEstimate: 2625000000000,
+    historicalRole: "Total nilai ekspor nila/indigo dari sawah-sawah Cirebon dan Pekalongan ke industri tekstil Eropa.",
+    disparityDescription: "Setara ~Rp 2,62 Triliun, diraih dengan memicu kelaparan massal puluhan ribu petani di Cirebon."
+  }
+];
+
+export const unitConversionData: UnitConversion[] = [
+  {
+    id: "unit-bouw",
+    unitName: "Bouw (Bahu)",
+    dutchNotation: "Bouw",
+    metricEquivalent: "0,7096 Hektar (7.096,5 m²)",
+    baseMultiplier: 7096.5,
+    unitCategory: "luas",
+    historicalUsage: "Satuan luas standar sawah dan perkebunan di Jawa. Staatsblad 1834 menyatakan maksimal 1/5 bouw per keluarga, namun fakta di lapangan sawah petani disita hingga 1/2 hingga 1 bouw penuh."
+  },
+  {
+    id: "unit-pikul",
+    unitName: "Pikul (Picul)",
+    dutchNotation: "Pikul (100 Kati)",
+    metricEquivalent: "61,76 Kilogram",
+    baseMultiplier: 61.76,
+    unitCategory: "bobot",
+    historicalUsage: "Satuan bobot standar hasil bumi (kopi, gula, nila). Petani diwajibkan memikul karung kopi seberat 1 pikul mendaki lereng pegunungan hingga jarak puluhan kilometer ke pakhuis."
+  },
+  {
+    id: "unit-pon",
+    unitName: "Pon (Pond Kolonial)",
+    dutchNotation: "Pond",
+    metricEquivalent: "0,5 Kilogram (500 gram)",
+    baseMultiplier: 0.5,
+    unitCategory: "bobot",
+    historicalUsage: "Digunakan khusus untuk mengukur ekstrak pasta nila (indigo) dan daun tembakau kering bermutu tinggi."
+  },
+  {
+    id: "unit-cacah",
+    unitName: "Cacah (Cacah Sawah)",
+    dutchNotation: "Huisgezin / Belastingplichtige",
+    metricEquivalent: "1 Kepala Keluarga Petani Pembayar Pajak",
+    baseMultiplier: 1,
+    unitCategory: "populasi",
+    historicalUsage: "Satuan sensus kolonial. Satu cacah bertanggung jawab menyediakan 1 tenaga kerja rodi penuh sepanjang tahun."
+  }
+];
+
+export const historicalDilemmasData: HistoricalDilemmaScenario[] = [
+  {
+    id: "scenario-cirebon-1845",
+    role: "Kepala Desa (Kuwu)",
+    location: "Karesidenan Cirebon",
+    year: 1845,
+    title: "Dilema Tanaman Nila vs Kelaparan Padi Desa",
+    situation: "Musim tanam padi tiba. Residen Belanda dan Kontrolir memerintahkan desa Anda menyerahkan 40% sawah subur beririgasi untuk diperluas menjadi kebun Nila (indigo). Petani Anda sudah mulai kekurangan beras dan kelelahan setelah bekerja di pabrik nila.",
+    historicalContext: "Pada tahun 1845 di Cirebon, penanaman nila secara berlebihan merusak siklus tanam padi dan menyebabkan kelaparan dahsyat hingga ribuan warga memakan daun liar atau mengungsi ke pedalaman.",
+    choices: [
+      {
+        id: "cirebon-opt-comply",
+        choiceLabel: "Opsi A: Patuhi Sepenuhnya Tuntutan Kolonial",
+        actionText: "Serahkan 40% sawah terbaik untuk nila dan paksa warga bekerja lembur agar target kuota panen terpenuhi.",
+        consequences: {
+          peasantWelfare: -3,
+          colonialPressure: 2,
+          localStability: -2
+        },
+        immediateFeedback: "Residen Belanda memuji kepatuhan Anda dan memberi Anda bonus uang, namun gagal panen padi terjadi. Warga desa Anda mulai jatuh sakit karena kelaparan, dan sebagian melarikan diri ke hutan."
+      },
+      {
+        id: "cirebon-opt-compromise",
+        choiceLabel: "Opsi B: Taktik Pembagian Lahan Kompromistis",
+        actionText: "Hanya serahkan 20% sawah tepi untuk nila, sisanya tetap ditanam padi secara sembunyi-sembunyi dengan alasan banjir lumpur.",
+        consequences: {
+          peasantWelfare: 1,
+          colonialPressure: -1,
+          localStability: 1
+        },
+        immediateFeedback: "Desa Anda masih memiliki cukup beras untuk bertahan hidup, namun Kontrolir Belanda mencurigai keterlambatan setor pasta nila dan mengancam memeriksa buku kas desa."
+      },
+      {
+        id: "cirebon-opt-resist",
+        choiceLabel: "Opsi C: Pimpin Delegasi Protes ke Alun-Alun",
+        actionText: "Tolak perintah tanam nila secara terbuka, dan pimpin 100 perwakilan petani menemui Bupati untuk meminta pembatalan kuota.",
+        consequences: {
+          peasantWelfare: 2,
+          colonialPressure: -3,
+          localStability: -1
+        },
+        immediateFeedback: "Aksi protes Anda membangkitkan keberanian desa tetangga, tetapi Anda ditangkap oleh serdadu kolonial dan dicopot dari jabatan kuwu, diasingkan sebagai penghasut."
+      }
+    ],
+    historicalEpilogue: {
+      whatActuallyHappened: "Para kuwu dan bupati di Cirebon pada kenyataannya ditekan sangat keras untuk mematuhi kuota nila demi mengejar kultuurprocenten. Akibatnya, bencana kelaparan hebat 1844-1845 pecah hingga menewaskan puluhan ribu orang, memaksa pemerintah kolonial akhirnya memangkas budidaya nila di Cirebon.",
+      historicalOutcome: "Peristiwa Cirebon ini menjadi skandal besar pertama yang membongkar kekejaman Tanam Paksa di mata publik Den Haag.",
+      archivalSource: "Laporan Inspeksi Khusus L. Vitalis (1845) & Verslag Cirebon 1846."
+    }
+  },
+  {
+    id: "scenario-priangan-1840",
+    role: "Bupati Pribumi (Regent)",
+    location: "Karesidenan Priangan",
+    year: 1840,
+    title: "Godaan Bonus Cultuurprocenten vs Pikul Kopi Kuli",
+    situation: "Gubernur Jenderal Johannes van den Bosch menjanjikan Anda kenaikan bonus panen kopi (cultuurprocenten) menjadi f. 90.000 per tahun jika Anda bisa membuka 500 hektar hutan pegunungan terjal dan mengerahkan 10.000 petani pikul untuk menyetor kopi ke dermaga.",
+    historicalContext: "Bupati Priangan menerima bayaran bonus persentase yang menjadikannya kaum bangsawan terkaya di Asia Tenggara, sementara rakyatnya hidup di gubuk bivak pegunungan dengan upah hanya f. 2,11 per tahun.",
+    choices: [
+      {
+        id: "priangan-opt-maximize",
+        choiceLabel: "Opsi A: Kerahkan Seluruh Petani Tanpa Pengecualian",
+        actionText: "Wajibkan seluruh laki-laki dewasa tinggal di bivak rimba kopi pegunungan selama 8 bulan berturut-turut untuk mengejar rekor setoran kopi.",
+        consequences: {
+          peasantWelfare: -3,
+          colonialPressure: 3,
+          localStability: -1
+        },
+        immediateFeedback: "Anda menerima bonus monumental f. 92.500 dan dipuji di Batavia sebagai 'Regent Teladan'. Namun puluhan kuli tewas diterkam harimau dan kelelahan memikul kopi di jalanan jurang."
+      },
+      {
+        id: "priangan-opt-moderate",
+        choiceLabel: "Opsi B: Sistem Gilir Kerja Rodi Berkala",
+        actionText: "Terapkan rotasi giliran kerja tiap 2 bulan dan gunakan sebagian kas kabupaten untuk membiayai gerobak pedati di jalan utama.",
+        consequences: {
+          peasantWelfare: 1,
+          colonialPressure: 0,
+          localStability: 2
+        },
+        immediateFeedback: "Beban kerja petani berkurang signifikan. Target kopi tercapai 85%, bonus Anda tetap sangat besar (f. 65.000), dan kerusuhan sosial dapat dihindarkan."
+      },
+      {
+        id: "priangan-opt-protect",
+        choiceLabel: "Opsi C: Beri Keringanan Petani & Tolak Ekspansi Hutan",
+        actionText: "Kirim surat resmi ke Residen bahwa lereng gunung rawan longsor dan tolak membuka hutan baru demi melindungi lahan padi huma rakyat.",
+        consequences: {
+          peasantWelfare: 3,
+          colonialPressure: -3,
+          localStability: 0
+        },
+        immediateFeedback: "Rakyat menganggap Anda pemimpin adil dan pelindung tanah Sunda. Namun Residen Eropa menganggap Anda tidak loyal dan merekomendasikan mutasi atau pemakzulan gelar bupati."
+      }
+    ],
+    historicalEpilogue: {
+      whatActuallyHappened: "Hampir seluruh bupati Priangan memilih Opsi A atau kompromi yang sangat condong ke kolonial, tergiur oleh kekayaan fantastis cultuurprocenten. Kemegahan pendopo kabupaten abad ke-19 dibangun di atas keringat ratusan ribu petani bivak kopi.",
+      historicalOutcome: "Jan Breman mencatat inilah feodalisme birokratis paling brutal: aliansi penguasa feodal pribumi dan penjajah Belanda memeras rakyatnya sendiri.",
+      archivalSource: "Jan Breman (2014), 'Keuntungan Kolonial dari Kerja Paksa: Sistem Priangan'."
+    }
+  },
+  {
+    id: "scenario-parliament-1860",
+    role: "Anggota Parlemen Liberal Belanda (Tweede Kamer)",
+    location: "Den Haag, Belanda",
+    year: 1860,
+    title: "Sidang Parlemen Pasca Penerbitan Novel Max Havelaar",
+    situation: "Novel 'Max Havelaar' karya Multatuli baru saja beredar luas dan menimbulkan kehebohan moral di seluruh penjuru negeri Belanda. Menteri Jajahan dari kubu Konservatif berdalih bahwa keuntungan Batig Slot (f. 690 juta) telah menyelamatkan ekonomi Belanda dari kebangkrutan.",
+    historicalContext: "Tahun 1860 adalah titik balik politik kolonial Belanda. Kubu Liberal menuntut penghapusan Tanam Paksa monopoli negara, namun menginginkan tanah Hindia dibuka untuk modal swasta perkebunan Eropa.",
+    choices: [
+      {
+        id: "parl-opt-defend",
+        choiceLabel: "Opsi A: Bela Tanam Paksa Demi Pembangunan Belanda",
+        actionText: "Dukung menteri Konservatif: berargumen bahwa Batig Slot dibutuhkan untuk membangun jaringan rel kereta api nasional Staatsspoorwegen dan Terusan Noordzee.",
+        consequences: {
+          peasantWelfare: -2,
+          colonialPressure: 2,
+          localStability: 1
+        },
+        immediateFeedback: "Kubu Konservatif dan pemegang saham NHM bertepuk tangan. Kebijakan Tanam Paksa diperpanjang, namun kecaman moral pers Belanda semakin tajam."
+      },
+      {
+        id: "parl-opt-liberal-privatize",
+        choiceLabel: "Opsi B: Desak Liberalisasi & Buka Tanah untuk Modal Swasta",
+        actionText: "Dukung Mosi Wintgens dan rancangan UU Agraria: hapus monopoli negara secara bertahap dan buka tanah Hindia Belanda untuk pengusaha perkebunan swasta Belanda.",
+        consequences: {
+          peasantWelfare: 0,
+          colonialPressure: 0,
+          localStability: 1
+        },
+        immediateFeedback: "Mosi Wintgens lolos di parlemen! Jalan menuju Agrarische Wet 1870 terbuka lebar. Negara berhenti memaksa tanam, namun era baru eksploitasi perkebunan swasta dimulai."
+      },
+      {
+        id: "parl-opt-ethical-reparation",
+        choiceLabel: "Opsi C: Tuntut Restitusi Moral & Pengembalian Dana ke Jawa",
+        actionText: "Sampaikan pidato radikal seperti Baron van Hoëvell: tuntut agar 690 juta gulden Batig Slot dikembalikan untuk mendanai sekolah dan irigasi rakyat Jawa.",
+        consequences: {
+          peasantWelfare: 3,
+          colonialPressure: -2,
+          localStability: 0
+        },
+        immediateFeedback: "Pidato Anda mengguncang nurani parlemen, meski mayoritas anggota menganggap gagasan ganti rugi terlalu utopis pada tahun 1860. Benih Politik Etis (Ethische Politiek) resmi tertanam."
+      }
+    ],
+    historicalEpilogue: {
+      whatActuallyHappened: "Parlemen Belanda akhirnya memilih Opsi B (Jalur Liberal Fransen van de Putte). Melalui Suikerwet 1870 dan Agrarische Wet 1870, Tanam Paksa resmi diakhiri secara bertahap dan digantikan oleh era perkebunan modal swasta (Liberal Period 1870–1900). Tuntutan ganti rugi moral (Opsi C) baru diadopsi 40 tahun kemudian dalam Politik Etis 1901.",
+      historicalOutcome: "Peralihan dari Tanam Paksa ke Era Swasta tidak serta-merta memakmurkan petani Jawa, tetapi mengalihkan eksploitasi dari birokrasi negara ke korporasi swasta.",
+      archivalSource: "Handelingen van de Tweede Kamer 1860 & C. Fasseur (1992)."
+    }
+  }
+];
+

@@ -364,6 +364,7 @@ export const heroData = {
     { label: "Aturan Staatsblad", targetId: "pelaksanaan", icon: "scale" },
     { label: "Garis Waktu (Timeline)", targetId: "timeline-section", icon: "clock" },
     { label: "Dampak & Kelaparan", targetId: "dampak", icon: "alert" },
+    { label: "Lab Sejarah Interaktif", targetId: "interactive-lab", icon: "compass" },
     { label: "Daftar Pustaka", targetId: "pustaka", icon: "bookmark" },
   ],
 };

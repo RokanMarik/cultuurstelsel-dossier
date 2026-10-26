@@ -15,7 +15,8 @@ import {
   AlertTriangle, 
   Bookmark,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Compass
 } from 'lucide-react';
 import './Hero.css';
 
@@ -42,6 +43,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenImage }) => {
       case 'scale': return <Scale size={14} />;
       case 'clock': return <Calendar size={14} />;
       case 'alert': return <AlertTriangle size={14} />;
+      case 'compass': return <Compass size={14} />;
       case 'bookmark': return <Bookmark size={14} />;
       default: return <BookOpen size={14} />;
     }

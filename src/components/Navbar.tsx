@@ -14,6 +14,7 @@ const navItems: NavItem[] = [
   { id: 'timeline-section', label: 'Garis Waktu' },
   { id: 'pelaksanaan', label: 'Staatsblad 1834' },
   { id: 'dampak', label: 'Dampak' },
+  { id: 'interactive-lab', label: 'Lab Sejarah' },
   { id: 'pustaka', label: 'Pustaka' },
 ];
 

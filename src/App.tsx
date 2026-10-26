@@ -6,6 +6,7 @@ import { ExploitationSection } from './components/ExploitationSection';
 import { TimelineSection } from './components/TimelineSection';
 import { ImplementationSection } from './components/ImplementationSection';
 import { ImpactSection } from './components/ImpactSection';
+import { InteractiveLabSection } from './components/InteractiveLabSection';
 import { BibliographySection } from './components/BibliographySection';
 import { Footer } from './components/Footer';
 import { ImageLightboxModal } from './components/ImageLightboxModal';
@@ -31,6 +32,7 @@ export const App: React.FC = () => {
         <TimelineSection />
         <ImplementationSection />
         <ImpactSection onOpenImage={handleOpenImage} />
+        <InteractiveLabSection />
         <BibliographySection />
       </main>
       <Footer />

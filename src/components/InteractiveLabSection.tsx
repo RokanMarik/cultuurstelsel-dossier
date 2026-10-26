@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   spatialMarkersData,
   railwayLinesData,
@@ -57,53 +57,60 @@ export const InteractiveLabSection: React.FC = () => {
     'scenario-parliament-1860': null
   });
 
-  // Data helpers
-  const selectedMarker: SpatialMarker =
-    spatialMarkersData.find((m) => m.id === selectedMarkerId) || spatialMarkersData[0];
+  // [vercel-react-best-practices: js-set-map-lookups & rerender-memo]
+  const selectedMarker: SpatialMarker = useMemo(() => {
+    return spatialMarkersData.find((m) => m.id === selectedMarkerId) || spatialMarkersData[0];
+  }, [selectedMarkerId]);
 
-  const filteredMarkers = spatialMarkersData.filter((m) => {
-    if (mapFilter === 'all') return true;
-    return m.category === mapFilter;
-  });
+  const filteredMarkers = useMemo(() => {
+    if (mapFilter === 'all') return spatialMarkersData;
+    return spatialMarkersData.filter((m) => m.category === mapFilter);
+  }, [mapFilter]);
 
-  const activeScenario =
-    historicalDilemmasData.find((s) => s.id === activeScenarioId) || historicalDilemmasData[0];
+  const activeScenario = useMemo(() => {
+    return historicalDilemmasData.find((s) => s.id === activeScenarioId) || historicalDilemmasData[0];
+  }, [activeScenarioId]);
 
   // Kalkulasi Kurs Gulden ke IDR Modern (Base: 1 Gulden 1850 ≈ Rp 175.000 daya beli beras)
   const guldenToIdrRate = 175000;
-  const calculatedModernIdr = Math.round(guldenInput * guldenToIdrRate);
+  const calculatedModernIdr = useMemo(() => {
+    return Math.round(guldenInput * guldenToIdrRate);
+  }, [guldenInput]);
 
   // Kalkulasi Satuan Kolonial
-  const selectedUnit = unitConversionData.find((u) => u.id === unitType) || unitConversionData[0];
-  const convertedMetricValue = (unitInputVal * selectedUnit.baseMultiplier).toLocaleString('id-ID');
+  const selectedUnit = useMemo(() => {
+    return unitConversionData.find((u) => u.id === unitType) || unitConversionData[0];
+  }, [unitType]);
 
-  // Kalkulasi Simulator Beban Petani (Jan Breman Metric)
-  const getFarmerSimulation = () => {
-    // Staatsblad 1834: max 66 hari per tahun
-    const statutoryDays = 66;
+  const convertedMetricValue = useMemo(() => {
+    return (unitInputVal * selectedUnit.baseMultiplier).toLocaleString('id-ID');
+  }, [unitInputVal, selectedUnit]);
+
+  // [vercel-react-best-practices: rerender-derived-state-no-effect with useMemo]
+  const simResult = useMemo(() => {
+    const statutoryDays = 66; // Staatsblad 1834: max 66 hari per tahun
     let actualDays = 0;
-    let plantloonPerBouw = 0; // f. bruto per bouw
-    let landrentTax = 0;      // f. pajak tanah per bouw
+    let plantloonPerBouw = 0;
+    let landrentTax = 0;
     let cropYieldStr = '';
     let cropBurdenDesc = '';
 
     if (selectedCrop === 'kopi') {
-      actualDays = Math.round(farmerLandBouw * 180 + 30); // rata-rata Breman: 180-225 hari di bivak
+      actualDays = Math.round(farmerLandBouw * 180 + 30);
       plantloonPerBouw = 14;
       landrentTax = 10;
       cropYieldStr = `${Math.round(farmerLandBouw * 14)} Pikul Kopi Mentah`;
       cropBurdenDesc = 'Wajib tinggal di bivak rimba pegunungan selama 6–8 bulan dan memikul hasil panen ke gudang distrik.';
     } else if (selectedCrop === 'tebu') {
-      actualDays = Math.round(farmerLandBouw * 150 + 40); // pemeliharaan saluran air & tebang
+      actualDays = Math.round(farmerLandBouw * 150 + 40);
       plantloonPerBouw = 32;
       landrentTax = 22;
       cropYieldStr = `${Math.round(farmerLandBouw * 350)} Pikul Batang Tebu`;
       cropBurdenDesc = 'Menuntut giliran kerja malam hari di pabrik gula dan penyitaan sawah padi terbaik.';
     } else {
-      // Nila (Indigo) - Kasus Cirebon
-      actualDays = Math.round(farmerLandBouw * 210); // perendaman pasta beracun & bau busuk
+      actualDays = Math.round(farmerLandBouw * 210);
       plantloonPerBouw = 12;
-      landrentTax = 15; // Nombok! Sering kali pajak lebih tinggi dari upah
+      landrentTax = 15;
       cropYieldStr = `${Math.round(farmerLandBouw * 80)} Pon Pasta Nila Kering`;
       cropBurdenDesc = 'Pekerjaan merendam daun nila di bak fermentasi memicu penyakit kulit dan air limbah meracuni irigasi padi.';
     }
@@ -124,9 +131,7 @@ export const InteractiveLabSection: React.FC = () => {
       cropYieldStr,
       cropBurdenDesc
     };
-  };
-
-  const simResult = getFarmerSimulation();
+  }, [farmerLandBouw, selectedCrop]);
 
   return (
     <section id="interactive-lab" className="interactive-lab-section">

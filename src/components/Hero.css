@@ -276,6 +276,13 @@
   cursor: pointer;
   user-select: none;
   gap: 1rem;
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
 }
 
 .summary-title-group {

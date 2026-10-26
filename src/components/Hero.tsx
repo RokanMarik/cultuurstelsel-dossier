@@ -110,11 +110,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenImage }) => {
 
         {/* SUB-FITUR PRD FASE 1: Ringkasan 1 Menit */}
         <div className="quick-summary-box parchment-card">
-          <div 
+          <button
             className="quick-summary-header"
             onClick={() => setIsSummaryOpen(!isSummaryOpen)}
-            role="button"
-            tabIndex={0}
             aria-expanded={isSummaryOpen}
             id="toggle-1-min-summary"
           >
@@ -127,13 +125,14 @@ export const Hero: React.FC<HeroProps> = ({ onOpenImage }) => {
               </div>
               <h3 className="summary-title">{heroData.quickSummary.title}</h3>
             </div>
-            <button 
+            <span
               className="summary-toggle-btn"
               aria-label={isSummaryOpen ? 'Sembunyikan Ringkasan' : 'Buka Ringkasan'}
             >
               {isSummaryOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-            </button>
-          </div>
+            </span>
+          </button>
+
 
           {isSummaryOpen && (
             <div className="summary-grid">

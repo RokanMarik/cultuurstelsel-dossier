@@ -76,12 +76,39 @@ body {
   overflow-x: hidden;
 }
 
+/* Skip to Main Content — Aksesibilitas Keyboard */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.6rem 1.2rem;
+  background: var(--accent-crimson);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  transition: top var(--transition-fast);
+  text-decoration: none;
+}
+
+.skip-to-content:focus {
+  top: 0;
+}
+
+/* Global Focus Visible Ring */
+:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 /* Typography Defaults */
 h1, h2, h3, h4, .font-heading {
   font-family: var(--font-serif-heading);
   letter-spacing: 0.04em;
   color: var(--ink-primary);
   line-height: 1.25;
+  text-wrap: balance;
 }
 
 p {
@@ -258,7 +285,7 @@ a:hover {
   letter-spacing: 0.05em;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
   border: none;
 }
 
@@ -359,7 +386,7 @@ a:hover {
   cursor: pointer;
   padding: 0.5rem;
   border-radius: var(--radius-sm);
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .modal-close-btn:hover {
@@ -389,5 +416,23 @@ a:hover {
   .modal-header, .modal-body {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
+  }
+}
+
+/* =========================================
+   AKSESIBILITAS: prefers-reduced-motion
+   Menghormati preferensi pengguna yang
+   sensitif terhadap animasi/gerakan
+   ========================================= */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html {
+    scroll-behavior: auto;
   }
 }

@@ -523,12 +523,20 @@
   color: #fff;
   font-size: 1rem;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  outline: none;
-  transition: border-color 0.2s;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .input-with-symbol .calc-number-input {
   padding-left: 2.2rem;
+}
+
+.calc-number-input:focus-visible,
+.calc-select-input:focus-visible {
+  outline-color: #e5a93c;
+  border-color: #e5a93c;
+  box-shadow: 0 0 8px rgba(229, 169, 60, 0.3);
 }
 
 .calc-number-input:focus,
@@ -536,6 +544,7 @@
   border-color: #e5a93c;
   box-shadow: 0 0 8px rgba(229, 169, 60, 0.3);
 }
+
 
 .calc-presets {
   display: flex;

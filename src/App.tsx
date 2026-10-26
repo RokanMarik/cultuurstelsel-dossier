@@ -24,8 +24,10 @@ export const App: React.FC = () => {
 
   return (
     <div className="app-root">
+      {/* Skip to Main Content — Aksesibilitas Keyboard */}
+      <a href="#main-content" className="skip-to-content">Langsung ke Konten Utama</a>
       <Navbar />
-      <main>
+      <main id="main-content">
         <Hero onOpenImage={handleOpenImage} />
         <BackgroundSection onOpenImage={handleOpenImage} />
         <ExploitationSection onOpenImage={handleOpenImage} />

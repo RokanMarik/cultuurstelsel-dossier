@@ -28,4 +28,10 @@
 | TASK-27 | Refaktor ExploitationSection dengan 4 Tab Interaktif & Kamus Kolonial | Completed | 4 tab interaktif (Finansial 1840-1860, Ekologi Lahan, Alokasi Batig Slot, Data Makro Kultuurverslagen + Kamus Kolonial & Kritik Breman), build exit code 0 |
 | TASK-28 | Perkaya ImplementationSection dengan 3 Tab & Studi Kasus 3 Karesidenan | Completed | 3 tab interaktif (Staatsblad vs Realita, Studi Kasus Priangan vs Cirebon vs Pasuruan, Dinamika Luar Jawa), build exit code 0 |
 | TASK-29 | Perkaya ImpactSection dengan 4 Tab (Kelaparan, Resistensi, Parlemen, Historiografi) | Completed | 4 tab interaktif (Kelaparan & Dampak, Resistensi Rakyat, Pertarungan Parlemen 1848-1870, Matriks 3 Lensa Sejarawan) + Galeri Tokoh, build exit code 0 |
-| TASK-30 | Verifikasi Menyeluruh (Oxlint, Vite Build, Browser Review) & Polish | In Progress | Menjalankan build, lint, dan verifikasi tampilan live di browser |
+| TASK-30 | Verifikasi Menyeluruh (Oxlint, Vite Build, Browser Review) & Polish | Completed | Build, lint (0 error), dan git push origin main sukses |
+| TASK-31 | Schema, Type Definitions, & Dataset Baru di historyContent.ts | Pending | Spatial markers, railway lines, currency benchmarks, unit conversions, dilemma scenarios |
+| TASK-32 | Implementasi Tab 1: Peta Kartografi Antik SVG Interaktif & Layer Filter | Pending | Peta SVG Jawa/Nusantara, filter layers, & panel inspeksi karesidenan |
+| TASK-33 | Implementasi Tab 2: Kalkulator Kolonial (Kurs Gulden, Satuan, Neraca Petani) | Pending | Konverter Gulden-IDR, konversi Bouw/Pikul, simulator beban kerja Jan Breman |
+| TASK-34 | Implementasi Tab 3: Simulasi Skenario Dilema Sejarah & Epilog Arsip | Pending | 3 skenario peran, live impact meter, dan epilog arsip sejarah asli |
+| TASK-35 | Integrasi InteractiveLabSection di App.tsx, Navbar.tsx, Hero.tsx & Styling CSS | Pending | Penempatan section, nav link #interactive-lab, & responsive styling |
+| TASK-36 | Verifikasi Akhir (Oxlint, Vite Build, Browser Subagent) & Push ke GitHub | Pending | Linter 0 error, build exit code 0, verifikasi browser live |

@@ -1,0 +1,29 @@
+FOLDER ASET GAMBAR SEJARAH CULTUURSTELSEL
+=============================================
+Simpan file gambar Anda di folder ini (public/images/) sesuai rekomendasi nama berikut:
+
+1. TOKOH SEJARAH (Potret/Lukisan):
+   - van-den-bosch.jpg     : Potret Gubernur Jenderal Johannes van den Bosch
+   - multatuli.jpg         : Potret Eduard Douwes Dekker / Multatuli
+   - baron-van-hoevell.jpg : Potret Dr. W.R. van Hoëvell
+   - fransen-van-de-putte.jpg : Potret I.D. Fransen van de Putte
+   - van-hogendorp.jpg     : Potret Dirk van Hogendorp
+   - ono-van-rees.png      : Potret Otto (Ono) van Rees
+   - van-gorkom.jpg        : Potret Dr. K.W. van Gorkom
+   - van-deventer.jpg      : Potret C. Th. van Deventer
+
+2. LATAR BELAKANG & PERISTIWA:
+   - perang-diponegoro.jpg : Lukisan Penangkapan Diponegoro (Raden Saleh)
+   - perang-padri.jpg      : Litografi Raaff tijdens de Padri-Oorlogen (Perang Padri)
+   - perang-belgia.jpg     : Lukisan Revolusi Belgia 1830 (Gustave Wappers)
+   - kelaparan-cirebon.jpg : Arsip ilustrasi dampak kelaparan / kemiskinan
+
+3. KOMODITAS & PERKEBUNAN:
+   - komoditas-nila.jpg     : Pabrik / pekerja tanaman nila (indigo)
+   - komoditas-tebu.jpg     : Pabrik gula tradisional / pengangkutan tebu
+   - komoditas-kopi.jpg     : Pemetikan / penjemuran kopi Priangan
+   - komoditas-tembakau.jpg : Pemrosesan daun tembakau
+
+Catatan:
+- Format file bisa .jpg, .jpeg, .png, atau .webp.
+- Ukuran resolusi bebas (CSS sudah diatur otomatis agar seragam, presisi, dan tidak gepeng).

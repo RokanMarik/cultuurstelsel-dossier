@@ -1,0 +1,684 @@
+.background-section {
+  background-color: var(--bg-parchment);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.narrative-intro-card {
+  max-width: 860px;
+  margin: 0 auto 3rem auto;
+  border-left: 4px solid var(--accent-gold);
+}
+
+.narrative-lead {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--ink-secondary);
+  font-family: var(--font-serif-body);
+}
+
+/* Crisis Cards Grid */
+.crisis-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.crisis-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.crisis-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.crisis-number {
+  font-family: var(--font-serif-heading);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--border-ornament);
+}
+
+.crisis-name {
+  font-size: 1.2rem;
+  color: var(--ink-primary);
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.crisis-impact {
+  font-size: 0.95rem;
+  color: var(--ink-secondary);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.crisis-cost-box {
+  background-color: var(--bg-parchment-accent);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.crisis-cost-icon {
+  color: var(--accent-crimson);
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.crisis-cost-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.cost-label {
+  font-size: 0.725rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-muted);
+  font-weight: 600;
+}
+
+.cost-value {
+  font-size: 0.875rem;
+  color: var(--accent-crimson);
+  font-weight: 700;
+}
+
+/* Van Den Bosch Box */
+.vandenbosch-container {
+  margin-bottom: 4.5rem;
+  padding: 2.5rem;
+  border-top: 3px solid var(--accent-crimson);
+}
+
+.vandenbosch-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  background-color: var(--accent-gold-bg);
+  color: var(--accent-gold);
+  border: 1px solid rgba(179, 130, 40, 0.3);
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: var(--font-serif-heading);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.vandenbosch-content {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.vandenbosch-title {
+  font-size: 1.5rem;
+  color: var(--ink-primary);
+  margin-bottom: 0.75rem;
+}
+
+.vandenbosch-summary {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--ink-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.vandenbosch-points-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.vandenbosch-point-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.point-bullet {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--bg-parchment-accent);
+  color: var(--accent-crimson);
+  font-weight: 800;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-strong);
+  flex-shrink: 0;
+}
+
+.point-text {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--ink-secondary);
+}
+
+/* Aside Box */
+.vandenbosch-aside-box {
+  background: linear-gradient(135deg, var(--bg-parchment-accent) 0%, var(--bg-parchment-dark) 100%);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.aside-icon-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--accent-crimson-bg);
+  color: var(--accent-crimson);
+  margin: 0 auto 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(140, 40, 30, 0.25);
+}
+
+.vandenbosch-aside-box h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink-primary);
+}
+
+.vandenbosch-aside-box p {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.aside-quote {
+  font-family: var(--font-serif-body);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--accent-crimson);
+  font-weight: 600;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--border-strong);
+}
+
+/* Quotes Block */
+.quotes-block {
+  margin-top: 2rem;
+}
+
+.quotes-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.quotes-heading-icon {
+  color: var(--accent-crimson);
+  margin-bottom: 0.5rem;
+}
+
+.quotes-title {
+  font-size: 1.65rem;
+  color: var(--ink-primary);
+}
+
+.quotes-subtitle {
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+}
+
+.quotes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.quote-work {
+  font-size: 0.775rem;
+  color: var(--ink-muted);
+  margin-top: 0.2rem;
+}
+
+/* Historian Interpretations Block */
+.interpretations-block {
+  margin: 4rem 0;
+}
+
+.interp-header {
+  text-align: center;
+  margin-bottom: 2.25rem;
+}
+
+.interp-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--accent-gold);
+  color: var(--bg-parchment);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 1rem;
+  border-radius: 20px;
+  margin-bottom: 0.9rem;
+}
+
+.interp-title {
+  font-family: var(--font-serif-heading);
+  font-size: 1.65rem;
+  color: var(--ink-primary);
+  margin-bottom: 0.5rem;
+}
+
+.interp-subtitle {
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+  font-style: italic;
+}
+
+.interp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.interp-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-top: 3px solid var(--accent-gold);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.interp-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.interp-scholar-label {
+  font-family: var(--font-serif-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.interp-text {
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--ink-secondary);
+}
+
+@media (max-width: 992px) {
+  .crisis-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .vandenbosch-content {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  .quotes-grid {
+    grid-template-columns: 1fr;
+  }
+  .interp-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .interp-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Crisis Image Archival Thumbnail */
+.crisis-image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin: 0.75rem 0 1rem;
+  border: 1px solid var(--border-subtle);
+  background-color: #1a1511;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.crisis-image-container:hover {
+  border-color: var(--accent-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(179, 130, 40, 0.2);
+}
+
+.crisis-image-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.crisis-image-container:hover .crisis-image-media {
+  transform: scale(1.04);
+}
+
+.crisis-image-zoom-tag {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-full);
+  background-color: rgba(18, 14, 11, 0.8);
+  color: #fcfaf5;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+/* Van den Bosch Portrait Banner in Aside Box */
+.vandenbosch-portrait-banner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  max-height: 200px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-top: 1rem;
+  border: 1px solid var(--border-strong);
+  background-color: #1a1511;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.vandenbosch-portrait-banner:hover {
+  border-color: var(--accent-gold);
+  box-shadow: var(--shadow-gold);
+  transform: scale(1.02);
+}
+
+.vandenbosch-portrait-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  display: block;
+}
+
+.vandenbosch-portrait-zoom-hint {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  right: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  background-color: rgba(18, 14, 11, 0.85);
+  padding: 0.3rem 0.5rem;
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(4px);
+}
+
+/* ==========================================
+   Controversy Block (Sisi Gelap Van den Bosch)
+   ========================================== */
+.controversy-block {
+  margin-bottom: 4.5rem;
+}
+
+.controversy-header {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 2.5rem auto;
+}
+
+.controversy-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background-color: rgba(139, 26, 26, 0.1);
+  border: 1px solid rgba(139, 26, 26, 0.3);
+  border-radius: var(--radius-full);
+  color: var(--accent-crimson);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.85rem;
+}
+
+.controversy-title {
+  font-family: var(--font-serif-heading);
+  font-size: 1.85rem;
+  color: var(--ink-primary);
+  margin-bottom: 0.75rem;
+}
+
+.controversy-subtitle {
+  font-size: 1rem;
+  color: var(--ink-secondary);
+  line-height: 1.6;
+}
+
+.controversy-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+}
+
+.controversy-card {
+  border-left: 4px solid var(--accent-crimson);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.controversy-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(139, 26, 26, 0.12);
+}
+
+.controversy-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.controversy-alert-icon {
+  color: var(--accent-crimson);
+}
+
+.controversy-item-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 0.65rem;
+  line-height: 1.4;
+}
+
+.controversy-item-desc {
+  font-size: 0.925rem;
+  color: var(--ink-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+
+.controversy-detail-box {
+  background-color: var(--bg-parchment-accent);
+  border: 1px dashed rgba(139, 26, 26, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+}
+
+.detail-tag {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-crimson);
+  margin-bottom: 0.25rem;
+}
+
+.detail-text {
+  color: var(--ink-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ==========================================
+   Potret Humanis: Sehari-hari Petani di Bivak
+   ========================================== */
+.farmer-life-container {
+  margin-bottom: 4.5rem;
+  padding: 2.5rem;
+  border-left: 4px solid var(--accent-gold);
+  background: linear-gradient(to bottom, var(--bg-parchment-card), rgba(247, 243, 235, 0.95));
+}
+
+.farmer-life-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 2.5rem auto;
+}
+
+.farmer-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background-color: rgba(184, 134, 11, 0.12);
+  border: 1px solid rgba(184, 134, 11, 0.35);
+  border-radius: var(--radius-full);
+  color: var(--accent-gold);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.85rem;
+}
+
+.farmer-life-title {
+  font-family: var(--font-serif-heading);
+  font-size: 1.85rem;
+  color: var(--ink-primary);
+  margin-bottom: 0.5rem;
+}
+
+.farmer-life-subtitle {
+  font-size: 1rem;
+  color: var(--ink-secondary);
+}
+
+.farmer-aspects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.farmer-aspect-card {
+  background-color: var(--bg-parchment);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 1.35rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.aspect-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.aspect-number {
+  font-family: var(--font-serif-heading);
+  font-weight: 800;
+  color: var(--border-ornament);
+  font-size: 1.15rem;
+}
+
+.aspect-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.aspect-desc {
+  font-size: 0.88rem;
+  color: var(--ink-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.farmer-quote-box {
+  background-color: rgba(43, 30, 22, 0.03);
+  border-left: 3px solid var(--accent-gold);
+  padding: 1.25rem 1.75rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.farmer-quote-icon {
+  color: var(--accent-gold);
+}
+
+.farmer-quote-text {
+  font-family: var(--font-serif-body);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-primary);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.farmer-quote-source {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+  .controversy-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

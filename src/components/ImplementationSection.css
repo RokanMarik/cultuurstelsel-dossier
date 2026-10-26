@@ -1,0 +1,487 @@
+.implementation-section {
+  background-color: var(--bg-parchment);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.law-intro-card {
+  max-width: 860px;
+  margin: 0 auto 2.5rem auto;
+  border-left: 4px solid var(--accent-crimson);
+}
+
+.law-intro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent-crimson);
+  font-family: var(--font-serif-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.law-intro-text {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--ink-secondary);
+}
+
+/* SUB-FITUR PRD FASE 3: Beban Kerja & Lahan */
+.workload-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.workload-stat-card {
+  padding: 1.4rem 1.25rem;
+  display: flex;
+  gap: 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.workload-stat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-gold);
+}
+
+.workload-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.workload-icon-wrap.red {
+  background-color: rgba(140, 40, 30, 0.1);
+  color: var(--accent-crimson);
+  border: 1px solid rgba(140, 40, 30, 0.25);
+}
+
+.workload-icon-wrap.amber {
+  background-color: var(--accent-gold-bg);
+  color: var(--accent-gold);
+  border: 1px solid rgba(179, 130, 40, 0.25);
+}
+
+.workload-icon-wrap.crimson {
+  background-color: rgba(140, 40, 30, 0.12);
+  color: var(--accent-crimson-light);
+  border: 1px solid rgba(140, 40, 30, 0.3);
+}
+
+.workload-stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.workload-label {
+  font-family: var(--font-serif-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-primary);
+}
+
+.workload-values {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.val-rule {
+  color: #2e7d32;
+  font-size: 0.85rem;
+}
+
+.val-divider {
+  color: var(--ink-light);
+  font-style: italic;
+  font-size: 0.75rem;
+}
+
+.val-reality {
+  color: var(--accent-crimson);
+  font-size: 0.85rem;
+}
+
+.workload-note {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--ink-muted);
+}
+
+/* Law Rules Grid */
+.law-rules-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.law-card {
+  padding: 1.5rem 1.75rem;
+}
+
+.law-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.law-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.law-number-badge {
+  font-family: var(--font-serif-heading);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background-color: var(--accent-gold-bg);
+  color: var(--accent-gold);
+  border: 1px solid rgba(179, 130, 40, 0.35);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+.law-article-name {
+  font-family: var(--font-serif-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+}
+
+.law-duo-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.law-side {
+  padding: 1.1rem;
+  border-radius: var(--radius-sm);
+}
+
+.official-side {
+  background-color: rgba(46, 125, 50, 0.05);
+  border-left: 3px solid #2e7d32;
+}
+
+.reality-side {
+  background-color: rgba(140, 40, 30, 0.06);
+  border-left: 3px solid var(--accent-crimson);
+}
+
+.side-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.side-icon.green {
+  color: #2e7d32;
+}
+
+.side-icon.red {
+  color: var(--accent-crimson);
+}
+
+.official-side p, .reality-side p {
+  font-size: 0.925rem;
+  line-height: 1.6;
+  color: var(--ink-secondary);
+}
+
+@media (max-width: 900px) {
+  .workload-summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .law-duo-box {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================
+   TIGA WAJAH CULTUURSTELSEL (3 RESIDENCIES)
+   ========================================== */
+.residency-lead-card {
+  padding: 2.25rem;
+  margin-bottom: 2.5rem;
+  border-left: 4px solid var(--accent-gold);
+}
+
+.residency-lead-title {
+  font-family: var(--font-serif-heading);
+  font-size: 1.85rem;
+  color: var(--ink-primary);
+  margin: 0.5rem 0 0.75rem 0;
+}
+
+.residency-lead-desc {
+  font-size: 1rem;
+  color: var(--ink-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.residency-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin-bottom: 2.5rem;
+}
+
+.residency-data-table th,
+.residency-data-table td {
+  padding: 0.9rem 1.15rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-medium);
+}
+
+.residency-data-table th {
+  background-color: var(--bg-parchment-accent);
+  color: var(--ink-primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.775rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+.status-surplus {
+  background-color: rgba(46, 117, 89, 0.12);
+  color: #2e7559;
+  border: 1px solid rgba(46, 117, 89, 0.3);
+}
+
+.status-defisit {
+  background-color: rgba(139, 26, 26, 0.12);
+  color: var(--accent-crimson);
+  border: 1px solid rgba(139, 26, 26, 0.3);
+}
+
+.status-feodal {
+  background-color: rgba(184, 134, 11, 0.12);
+  color: var(--accent-gold);
+  border: 1px solid rgba(184, 134, 11, 0.3);
+}
+
+.residency-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.res-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem;
+}
+
+.res-card-priangan {
+  border-top: 4px solid var(--accent-gold);
+}
+
+.res-card-cirebon {
+  border-top: 4px solid var(--accent-crimson);
+}
+
+.res-card-pasuruan {
+  border-top: 4px solid #2e7559;
+}
+
+.res-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.res-island-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.res-name {
+  font-family: var(--font-serif-heading);
+  font-size: 1.5rem;
+  color: var(--ink-primary);
+  margin: 0;
+}
+
+.res-crops-highlight {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  color: var(--ink-secondary);
+  background-color: var(--bg-parchment-accent);
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.25rem;
+}
+
+.res-mechanism-box,
+.res-historiography-box {
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+}
+
+.res-historiography-box {
+  margin-top: auto;
+  border-top: 1px dashed var(--border-medium);
+  padding-top: 0.75rem;
+}
+
+.res-box-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.03em;
+}
+
+.res-card-cirebon .res-box-label {
+  color: var(--accent-crimson);
+}
+
+.res-card-pasuruan .res-box-label {
+  color: #2e7559;
+}
+
+.res-box-desc {
+  color: var(--ink-secondary);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ==========================================
+   OUTER JAVA ENHANCEMENTS
+   ========================================== */
+.outer-java-hero-banner {
+  padding: 2.25rem;
+  margin-bottom: 2.5rem;
+  border-left: 4px solid var(--accent-gold);
+}
+
+.outer-java-hero-title {
+  font-family: var(--font-serif-heading);
+  font-size: 1.75rem;
+  color: var(--ink-primary);
+  margin: 0.5rem 0 0.75rem 0;
+}
+
+.outer-java-hero-desc {
+  font-size: 1rem;
+  color: var(--ink-secondary);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.outer-contrast-card {
+  padding: 2rem;
+  margin-top: 2.5rem;
+  border-left: 4px solid var(--accent-crimson);
+}
+
+.outer-contrast-header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+}
+
+.outer-contrast-header h4 {
+  font-family: var(--font-serif-heading);
+  font-size: 1.35rem;
+  color: var(--ink-primary);
+  margin: 0;
+}
+
+.outer-contrast-icon {
+  color: var(--accent-crimson);
+}
+
+.outer-contrast-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.contrast-box {
+  background-color: var(--bg-parchment-accent);
+  padding: 1.15rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-medium);
+}
+
+.contrast-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-crimson);
+  margin-bottom: 0.35rem;
+}
+
+.contrast-box:last-child .contrast-label {
+  color: var(--accent-gold);
+}
+
+.contrast-box p {
+  font-size: 0.88rem;
+  color: var(--ink-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .residency-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .outer-contrast-grid {
+    grid-template-columns: 1fr;
+  }
+}

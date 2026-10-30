@@ -25,12 +25,14 @@ import {
   ArrowRight,
   TrendingUp,
   CheckCircle2,
-  FileText
+  FileText,
+  ZoomIn
 } from 'lucide-react';
 import './InteractiveLabSection.css';
 
 type LabTab = 'map' | 'calculator' | 'dilemma';
 type MapFilter = 'all' | 'commodity' | 'famine' | 'resistance' | 'railway-hub';
+type MapZoom = 1 | 1.5 | 2;
 
 export const InteractiveLabSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<LabTab>('map');
@@ -38,6 +40,7 @@ export const InteractiveLabSection: React.FC = () => {
   // --- State Tab 1: Peta Spasial ---
   const [mapFilter, setMapFilter] = useState<MapFilter>('all');
   const [selectedMarkerId, setSelectedMarkerId] = useState<string>('marker-priangan');
+  const [mapZoom, setMapZoom] = useState<MapZoom>(1);
 
   // --- State Tab 2: Kalkulator Kolonial ---
   // Sub-alat A: Kurs Gulden
@@ -57,7 +60,6 @@ export const InteractiveLabSection: React.FC = () => {
     'scenario-parliament-1860': null
   });
 
-  // [vercel-react-best-practices: js-set-map-lookups & rerender-memo]
   const selectedMarker: SpatialMarker = useMemo(() => {
     return spatialMarkersData.find((m) => m.id === selectedMarkerId) || spatialMarkersData[0];
   }, [selectedMarkerId]);
@@ -66,6 +68,27 @@ export const InteractiveLabSection: React.FC = () => {
     if (mapFilter === 'all') return spatialMarkersData;
     return spatialMarkersData.filter((m) => m.category === mapFilter);
   }, [mapFilter]);
+
+  const handleFilterChange = (nextFilter: MapFilter) => {
+    setMapFilter(nextFilter);
+    if (nextFilter !== 'all' && selectedMarker.category !== nextFilter) {
+      const firstMatch = spatialMarkersData.find((m) => m.category === nextFilter);
+      if (firstMatch) setSelectedMarkerId(firstMatch.id);
+    }
+  };
+
+  const getMarkerColor = (category: SpatialMarker['category']) => {
+    switch (category) {
+      case 'commodity':
+        return '#2e7d32';
+      case 'famine':
+        return '#c62828';
+      case 'resistance':
+        return '#e65100';
+      default:
+        return '#1565c0';
+    }
+  };
 
   const activeScenario = useMemo(() => {
     return historicalDilemmasData.find((s) => s.id === activeScenarioId) || historicalDilemmasData[0];
@@ -86,7 +109,6 @@ export const InteractiveLabSection: React.FC = () => {
     return (unitInputVal * selectedUnit.baseMultiplier).toLocaleString('id-ID');
   }, [unitInputVal, selectedUnit]);
 
-  // [vercel-react-best-practices: rerender-derived-state-no-effect with useMemo]
   const simResult = useMemo(() => {
     const statutoryDays = 66; // Staatsblad 1834: max 66 hari per tahun
     let actualDays = 0;
@@ -150,34 +172,39 @@ export const InteractiveLabSection: React.FC = () => {
         </div>
 
         {/* Tab Navigation */}
-        <div className="lab-tab-nav" role="tablist">
-          <button
-            role="tab"
-            aria-selected={activeTab === 'map'}
-            className={`lab-tab-btn ${activeTab === 'map' ? 'active' : ''}`}
-            onClick={() => setActiveTab('map')}
-          >
-            <Compass size={18} />
-            <span>1. Peta Kartografi Antik Spasial</span>
-          </button>
-          <button
-            role="tab"
-            aria-selected={activeTab === 'calculator'}
-            className={`lab-tab-btn ${activeTab === 'calculator' ? 'active' : ''}`}
-            onClick={() => setActiveTab('calculator')}
-          >
-            <Calculator size={18} />
-            <span>2. Kalkulator & Komparator Kolonial</span>
-          </button>
-          <button
-            role="tab"
-            aria-selected={activeTab === 'dilemma'}
-            className={`lab-tab-btn ${activeTab === 'dilemma' ? 'active' : ''}`}
-            onClick={() => setActiveTab('dilemma')}
-          >
-            <ShieldAlert size={18} />
-            <span>3. Simulasi Dilema Sejarah</span>
-          </button>
+        <div className="lab-tab-nav-wrapper">
+          <div className="lab-tab-nav" role="tablist" aria-label="Modul Laboratorium Sejarah">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={activeTab === 'map'}
+              className={`lab-tab-btn ${activeTab === 'map' ? 'active' : ''}`}
+              onClick={() => setActiveTab('map')}
+            >
+              <Compass size={18} />
+              <span>1. Peta Kartografi Spasial</span>
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={activeTab === 'calculator'}
+              className={`lab-tab-btn ${activeTab === 'calculator' ? 'active' : ''}`}
+              onClick={() => setActiveTab('calculator')}
+            >
+              <Calculator size={18} />
+              <span>2. Kalkulator & Komparator Kolonial</span>
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={activeTab === 'dilemma'}
+              className={`lab-tab-btn ${activeTab === 'dilemma' ? 'active' : ''}`}
+              onClick={() => setActiveTab('dilemma')}
+            >
+              <ShieldAlert size={18} />
+              <span>3. Simulasi Dilema Sejarah</span>
+            </button>
+          </div>
         </div>
 
         {/* TAB 1: PETA KARTOGRAFI SPASIAL */}
@@ -187,36 +214,41 @@ export const InteractiveLabSection: React.FC = () => {
             <div className="map-filter-bar">
               <div className="filter-label">
                 <Layers size={16} />
-                <span>Lapisan Peta (*Layer Filter*):</span>
+                <span>Lapisan Peta (<em>Layer Filter</em>):</span>
               </div>
-              <div className="filter-buttons">
+              <div className="filter-buttons" role="group" aria-label="Filter lapisan peta">
                 <button
+                  type="button"
                   className={`map-filter-btn ${mapFilter === 'all' ? 'active' : ''}`}
-                  onClick={() => setMapFilter('all')}
+                  onClick={() => handleFilterChange('all')}
                 >
                   Semua Simpul ({spatialMarkersData.length})
                 </button>
                 <button
+                  type="button"
                   className={`map-filter-btn ${mapFilter === 'commodity' ? 'active' : ''}`}
-                  onClick={() => setMapFilter('commodity')}
+                  onClick={() => handleFilterChange('commodity')}
                 >
                   <MapPin size={14} /> Sentra Komoditas
                 </button>
                 <button
+                  type="button"
                   className={`map-filter-btn ${mapFilter === 'famine' ? 'active' : ''}`}
-                  onClick={() => setMapFilter('famine')}
+                  onClick={() => handleFilterChange('famine')}
                 >
                   <AlertTriangle size={14} /> Titik Kelaparan
                 </button>
                 <button
+                  type="button"
                   className={`map-filter-btn ${mapFilter === 'resistance' ? 'active' : ''}`}
-                  onClick={() => setMapFilter('resistance')}
+                  onClick={() => handleFilterChange('resistance')}
                 >
                   <Flame size={14} /> Aksi Resistensi
                 </button>
                 <button
+                  type="button"
                   className={`map-filter-btn ${mapFilter === 'railway-hub' ? 'active' : ''}`}
-                  onClick={() => setMapFilter('railway-hub')}
+                  onClick={() => handleFilterChange('railway-hub')}
                 >
                   <Train size={14} /> Rel Kereta & Hub
                 </button>
@@ -228,186 +260,243 @@ export const InteractiveLabSection: React.FC = () => {
               {/* SVG Canvas Container */}
               <div className="map-canvas-wrapper">
                 <div className="map-canvas-header">
-                  <span className="map-meta-title">KAART VAN JAVA EN ONDERHOORIGHEDEN (1830–1870)</span>
-                  <span className="map-meta-scale">Skala Kartografis Historis • Proyeksi Kolonial</span>
+                  <div className="map-header-titles">
+                    <span className="map-meta-title">KAART VAN JAVA EN ONDERHOORIGHEDEN (1830–1870)</span>
+                    <span className="map-meta-scale">Skala Kartografis Historis • Geser saat diperbesar</span>
+                  </div>
+
+                  {/* Zoom Controls (1x / 1.5x / 2x) */}
+                  <div className="map-zoom-controls" role="group" aria-label="Perbesaran Peta">
+                    <span className="zoom-label">
+                      <ZoomIn size={13} /> Zoom:
+                    </span>
+                    {([1, 1.5, 2] as MapZoom[]).map((z) => (
+                      <button
+                        key={z}
+                        type="button"
+                        className={`map-zoom-btn ${mapZoom === z ? 'active' : ''}`}
+                        onClick={() => setMapZoom(z)}
+                        aria-pressed={mapZoom === z}
+                      >
+                        {z}x
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
-                <svg
-                  viewBox="0 0 1000 450"
-                  className="vintage-svg-map"
-                  aria-label="Peta Interaktif Sebaran Cultuurstelsel di Pulau Jawa dan Kepulauan"
-                >
-                  {/* Background Parchment Tint */}
-                  <rect width="1000" height="450" fill="transparent" />
+                {/* Scrollable & Pannable SVG Viewport */}
+                <div className="map-viewport-scroll">
+                  <svg
+                    viewBox="0 0 1000 450"
+                    className={`vintage-svg-map zoom-${String(mapZoom).replace('.', '-')}`}
+                    style={{
+                      width: `${mapZoom * 100}%`,
+                      minWidth: mapZoom === 1 ? '540px' : `${Math.round(mapZoom * 620)}px`
+                    }}
+                    aria-label="Peta Interaktif Sebaran Cultuurstelsel di Pulau Jawa dan Kepulauan"
+                  >
+                    {/* Background Parchment Tint */}
+                    <rect width="1000" height="450" fill="transparent" />
 
-                  {/* Grid Lines Kartografi Antik */}
-                  <g className="map-grid-lines" stroke="#c8963e" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.35">
-                    <line x1="50" y1="50" x2="950" y2="50" />
-                    <line x1="50" y1="150" x2="950" y2="150" />
-                    <line x1="50" y1="250" x2="950" y2="250" />
-                    <line x1="50" y1="350" x2="950" y2="350" />
-                    <line x1="150" y1="30" x2="150" y2="420" />
-                    <line x1="300" y1="30" x2="300" y2="420" />
-                    <line x1="450" y1="30" x2="450" y2="420" />
-                    <line x1="600" y1="30" x2="600" y2="420" />
-                    <line x1="750" y1="30" x2="750" y2="420" />
-                    <line x1="900" y1="30" x2="900" y2="420" />
-                  </g>
+                    {/* Grid Lines Kartografi Antik */}
+                    <g className="map-grid-lines" stroke="#c8963e" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.35">
+                      <line x1="50" y1="50" x2="950" y2="50" />
+                      <line x1="50" y1="150" x2="950" y2="150" />
+                      <line x1="50" y1="250" x2="950" y2="250" />
+                      <line x1="50" y1="350" x2="950" y2="350" />
+                      <line x1="150" y1="30" x2="150" y2="420" />
+                      <line x1="300" y1="30" x2="300" y2="420" />
+                      <line x1="450" y1="30" x2="450" y2="420" />
+                      <line x1="600" y1="30" x2="600" y2="420" />
+                      <line x1="750" y1="30" x2="750" y2="420" />
+                      <line x1="900" y1="30" x2="900" y2="420" />
+                    </g>
 
-                  {/* Label Lintang & Bujur */}
-                  <text x="55" y="45" fill="#842323" fontSize="10" fontFamily="Cinzel" opacity="0.6">6° Z.B. (Zuid)</text>
-                  <text x="55" y="245" fill="#842323" fontSize="10" fontFamily="Cinzel" opacity="0.6">7° Z.B.</text>
-                  <text x="55" y="345" fill="#842323" fontSize="10" fontFamily="Cinzel" opacity="0.6">8° Z.B.</text>
-                  <text x="145" y="435" fill="#842323" fontSize="10" fontFamily="Cinzel" opacity="0.6">106° O.L.</text>
-                  <text x="445" y="435" fill="#842323" fontSize="10" fontFamily="Cinzel" opacity="0.6">110° O.L.</text>
-                  <text x="745" y="435" fill="#842323" fontSize="10" fontFamily="Cinzel" opacity="0.6">113° O.L.</text>
+                    {/* Label Lintang & Bujur */}
+                    <text x="55" y="45" fill="#d19847" fontSize="10" fontFamily="Cinzel" opacity="0.72">6° Z.B. (Zuid)</text>
+                    <text x="55" y="245" fill="#d19847" fontSize="10" fontFamily="Cinzel" opacity="0.72">7° Z.B.</text>
+                    <text x="55" y="345" fill="#d19847" fontSize="10" fontFamily="Cinzel" opacity="0.72">8° Z.B.</text>
+                    <text x="145" y="435" fill="#d19847" fontSize="10" fontFamily="Cinzel" opacity="0.72">106° O.L.</text>
+                    <text x="445" y="435" fill="#d19847" fontSize="10" fontFamily="Cinzel" opacity="0.72">110° O.L.</text>
+                    <text x="745" y="435" fill="#d19847" fontSize="10" fontFamily="Cinzel" opacity="0.72">113° O.L.</text>
 
-                  {/* Siluet Kepulauan Luar Jawa (Sumatera & Sulawesi/Maluku) */}
-                  {/* Sumatera Barat */}
-                  <path
-                    d="M 40 40 Q 70 80 95 130 Q 80 160 50 200 Q 30 150 20 90 Z"
-                    className="map-island-outer"
-                  />
-                  <text x="45" y="105" className="map-outer-label">Sumatra (Minangkabau)</text>
+                    {/* Siluet Kepulauan Luar Jawa (Sumatera & Sulawesi/Maluku) */}
+                    <path
+                      d="M 40 40 Q 70 80 95 130 Q 80 160 50 200 Q 30 150 20 90 Z"
+                      className="map-island-outer"
+                    />
+                    <text x="45" y="105" className="map-outer-label">Sumatra (Minangkabau)</text>
 
-                  {/* Sulawesi & Maluku Siluet */}
-                  <path
-                    d="M 870 50 Q 890 85 910 110 Q 880 130 870 160"
-                    className="map-island-outer"
-                    fill="none"
-                    strokeWidth="12"
-                    strokeLinecap="round"
-                  />
-                  <text x="850" y="45" className="map-outer-label">Minahasa & Maluku</text>
+                    {/* Sulawesi & Maluku Siluet */}
+                    <path
+                      d="M 870 50 Q 890 85 910 110 Q 880 130 870 160"
+                      className="map-island-outer"
+                      fill="none"
+                      strokeWidth="12"
+                      strokeLinecap="round"
+                    />
+                    <text x="850" y="45" className="map-outer-label">Minahasa & Maluku</text>
 
-                  {/* Garis Pesisir Pulau Jawa (Stylized Cartography Path) */}
-                  <path
-                    d="M 130 185
-                       C 150 170, 180 180, 210 185
-                       C 240 180, 270 190, 310 195
-                       C 340 190, 380 180, 430 185
-                       C 480 180, 520 175, 560 180
-                       C 590 170, 620 165, 660 175
-                       C 690 185, 730 185, 760 195
-                       C 790 205, 830 215, 870 230
-                       C 885 245, 875 270, 850 280
-                       C 810 275, 770 280, 730 270
-                       C 690 260, 650 275, 600 280
-                       C 560 270, 510 285, 470 290
-                       C 420 280, 380 285, 330 285
-                       C 290 280, 250 290, 210 290
-                       C 170 280, 140 270, 120 250
-                       C 105 230, 115 200, 130 185 Z"
-                    className="map-java-landmass"
-                  />
+                    {/* Garis Pesisir Pulau Jawa */}
+                    <path
+                      d="M 130 185
+                         C 150 170, 180 180, 210 185
+                         C 240 180, 270 190, 310 195
+                         C 340 190, 380 180, 430 185
+                         C 480 180, 520 175, 560 180
+                         C 590 170, 620 165, 660 175
+                         C 690 185, 730 185, 760 195
+                         C 790 205, 830 215, 870 230
+                         C 885 245, 875 270, 850 280
+                         C 810 275, 770 280, 730 270
+                         C 690 260, 650 275, 600 280
+                         C 560 270, 510 285, 470 290
+                         C 420 280, 380 285, 330 285
+                         C 290 280, 250 290, 210 290
+                         C 170 280, 140 270, 120 250
+                         C 105 230, 115 200, 130 185 Z"
+                      className="map-java-landmass"
+                    />
 
-                  {/* Garis Pegunungan Pedalaman Jawa */}
-                  <path
-                    d="M 190 255 Q 240 235 280 250 Q 350 240 420 255 Q 490 245 560 260 Q 640 245 720 255 Q 780 245 830 260"
-                    fill="none"
-                    stroke="#c8963e"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeDasharray="2 8"
-                    opacity="0.6"
-                  />
+                    {/* Garis Pegunungan Pedalaman Jawa */}
+                    <path
+                      d="M 190 255 Q 240 235 280 250 Q 350 240 420 255 Q 490 245 560 260 Q 640 245 720 255 Q 780 245 830 260"
+                      fill="none"
+                      stroke="#c8963e"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeDasharray="2 8"
+                      opacity="0.6"
+                    />
 
-                  {/* Jalur Kereta Api Kolonial (Staatsspoorwegen / NIS) */}
-                  <g className="railway-group">
-                    {railwayLinesData.map((rail) => (
-                      <path
-                        key={rail.id}
-                        d={rail.pathD}
-                        className="map-railway-track"
-                      />
-                    ))}
-                  </g>
-
-                  {/* Mawar Kompas Antik (Compass Rose) */}
-                  <g transform="translate(100, 340)" className="map-compass-rose">
-                    <circle r="30" fill="none" stroke="#c8963e" strokeWidth="1" opacity="0.6" />
-                    <line x1="0" y1="-38" x2="0" y2="38" stroke="#842323" strokeWidth="1.5" />
-                    <line x1="-38" y1="0" x2="38" y2="0" stroke="#842323" strokeWidth="1.5" />
-                    <polygon points="0,-35 5,-10 0,0 -5,-10" fill="#842323" />
-                    <polygon points="0,35 5,10 0,0 -5,10" fill="#c8963e" />
-                    <polygon points="35,0 10,5 0,0 10,-5" fill="#c8963e" />
-                    <polygon points="-35,0 -10,5 0,0 -10,-5" fill="#c8963e" />
-                    <text x="-4" y="-42" fill="#842323" fontSize="11" fontWeight="bold" fontFamily="Cinzel">N</text>
-                  </g>
-
-                  {/* Marker Titik Geografis */}
-                  {filteredMarkers.map((marker) => {
-                    const isSelected = marker.id === selectedMarkerId;
-                    const markerColor =
-                      marker.category === 'commodity'
-                        ? '#2e7d32'
-                        : marker.category === 'famine'
-                        ? '#c62828'
-                        : marker.category === 'resistance'
-                        ? '#e65100'
-                        : '#1565c0';
-
-                    return (
-                      <g
-                        key={marker.id}
-                        transform={`translate(${marker.cx}, ${marker.cy})`}
-                        className={`map-node ${isSelected ? 'selected' : ''}`}
-                        onClick={() => setSelectedMarkerId(marker.id)}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        {/* Pulse effect saat terpilih */}
-                        {isSelected && (
-                          <circle
-                            r="18"
-                            fill="none"
-                            stroke={markerColor}
-                            strokeWidth="2"
-                            className="marker-pulse-ring"
-                          />
-                        )}
-                        <circle
-                          r={isSelected ? "9" : "6"}
-                          fill={markerColor}
-                          stroke="#ffffff"
-                          strokeWidth="2"
-                          className="marker-dot"
+                    {/* Jalur Kereta Api Kolonial (Staatsspoorwegen / NIS) */}
+                    <g className="railway-group">
+                      {railwayLinesData.map((rail) => (
+                        <path
+                          key={rail.id}
+                          d={rail.pathD}
+                          className="map-railway-track"
                         />
-                        {/* Label Kota / Karesidenan */}
-                        <text
-                          y={isSelected ? "-14" : "-10"}
-                          textAnchor="middle"
-                          className={`marker-label ${isSelected ? 'active-label' : ''}`}
+                      ))}
+                    </g>
+
+                    {/* Mawar Kompas Antik (Compass Rose) */}
+                    <g transform="translate(100, 340)" className="map-compass-rose">
+                      <circle r="30" fill="none" stroke="#c8963e" strokeWidth="1" opacity="0.6" />
+                      <line x1="0" y1="-38" x2="0" y2="38" stroke="#842323" strokeWidth="1.5" />
+                      <line x1="-38" y1="0" x2="38" y2="0" stroke="#842323" strokeWidth="1.5" />
+                      <polygon points="0,-35 5,-10 0,0 -5,-10" fill="#842323" />
+                      <polygon points="0,35 5,10 0,0 -5,10" fill="#c8963e" />
+                      <polygon points="35,0 10,5 0,0 10,-5" fill="#c8963e" />
+                      <polygon points="-35,0 -10,5 0,0 -10,-5" fill="#c8963e" />
+                      <text x="-4" y="-42" fill="#e5a93c" fontSize="11" fontWeight="bold" fontFamily="Cinzel">N</text>
+                    </g>
+
+                    {/* Marker Titik Geografis */}
+                    {filteredMarkers.map((marker) => {
+                      const isSelected = marker.id === selectedMarkerId;
+                      const markerColor = getMarkerColor(marker.category);
+
+                      return (
+                        <g
+                          key={marker.id}
+                          transform={`translate(${marker.cx}, ${marker.cy})`}
+                          className={`map-node ${isSelected ? 'selected' : ''}`}
+                          onClick={() => setSelectedMarkerId(marker.id)}
+                          role="button"
+                          tabIndex={0}
+                          aria-label={`Pilih lokasi ${marker.name}`}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              setSelectedMarkerId(marker.id);
+                            }
+                          }}
+                          style={{ cursor: 'pointer' }}
                         >
-                          {marker.name}
-                        </text>
-                      </g>
-                    );
-                  })}
-                </svg>
+                          {/* Expanded transparent touch target (r="18") for finger accuracy */}
+                          <circle r="18" fill="transparent" />
+
+                          {/* Pulse effect saat terpilih */}
+                          {isSelected && (
+                            <circle
+                              r="18"
+                              fill="none"
+                              stroke={markerColor}
+                              strokeWidth="2"
+                              className="marker-pulse-ring"
+                            />
+                          )}
+                          <circle
+                            r={isSelected ? '9.5' : '6.5'}
+                            fill={markerColor}
+                            stroke="#ffffff"
+                            strokeWidth="2"
+                            className="marker-dot"
+                          />
+                          {/* Label Kota / Karesidenan */}
+                          <text
+                            y={isSelected ? '-14' : '-10'}
+                            textAnchor="middle"
+                            className={`marker-label ${isSelected ? 'active-label' : ''}`}
+                          >
+                            {marker.name}
+                          </text>
+                        </g>
+                      );
+                    })}
+                  </svg>
+                </div>
+
+                {/* Quick-Select Location Chips for effortless Mobile/Tablet selection */}
+                <div className="map-quick-chips-wrap">
+                  <span className="quick-chips-title">Pilih Cepat Lokasi:</span>
+                  <div className="map-quick-chips" role="tablist" aria-label="Pilih Cepat Titik Lokasi Peta">
+                    {filteredMarkers.map((marker) => {
+                      const isSelected = marker.id === selectedMarkerId;
+                      return (
+                        <button
+                          key={marker.id}
+                          type="button"
+                          role="tab"
+                          aria-selected={isSelected}
+                          className={`map-chip-btn ${isSelected ? 'active' : ''}`}
+                          onClick={() => setSelectedMarkerId(marker.id)}
+                        >
+                          <span
+                            className="chip-color-dot"
+                            style={{ backgroundColor: getMarkerColor(marker.category) }}
+                          />
+                          <span>{marker.name}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
 
                 {/* Legend Bar */}
                 <div className="map-legend-bar">
                   <div className="legend-item">
-                    <span className="legend-dot dot-commodity"></span>
+                    <span className="legend-dot dot-commodity" />
                     <span>Sentra Komoditas Wajib</span>
                   </div>
                   <div className="legend-item">
-                    <span className="legend-dot dot-famine"></span>
+                    <span className="legend-dot dot-famine" />
                     <span>Tragedi Kelaparan / Krisis</span>
                   </div>
                   <div className="legend-item">
-                    <span className="legend-dot dot-resistance"></span>
+                    <span className="legend-dot dot-resistance" />
                     <span>Aksi Resistensi Petani</span>
                   </div>
                   <div className="legend-item">
-                    <span className="legend-dot dot-railway"></span>
+                    <span className="legend-dot dot-railway" />
                     <span>Hub Pelabuhan & Rel Kereta Api</span>
                   </div>
                 </div>
               </div>
 
               {/* Panel Detail Samping */}
-              <div className="map-detail-panel">
+              <div className="map-detail-panel" aria-live="polite">
                 <div className="detail-panel-header">
                   <span className="detail-badge">{selectedMarker.badge}</span>
                   <span className="detail-period">{selectedMarker.period}</span>
@@ -469,8 +558,8 @@ export const InteractiveLabSection: React.FC = () => {
                 <div className="calc-card-header">
                   <Coins className="calc-card-icon" size={20} />
                   <div>
-                    <h3 className="calc-card-title">Konverter Kurs Gulden (1850) $\leftrightarrow$ IDR (2026)</h3>
-                    <p className="calc-card-desc">Berdasarkan daya beli beras komparatif (f. 1 ≈ Rp 175.000,- nilai sekarang)</p>
+                    <h3 className="calc-card-title">Konverter Kurs Gulden (1850) ⇄ IDR (2026)</h3>
+                    <p className="calc-card-desc">Berdasarkan daya beli beras komparatif (ƒ 1 ≈ Rp 175.000,- nilai sekarang)</p>
                   </div>
                 </div>
 
@@ -581,7 +670,7 @@ export const InteractiveLabSection: React.FC = () => {
                   <h3 className="sim-title">Simulator Beban Petani & Neraca Pajak (Jan Breman Metric)</h3>
                   <p className="sim-desc">
                     Hitung hari kerja riil yang dirampas kolonial dan apakah petani Anda untung atau justru
-                    mengalami skandal "Nombok Pajak" (*deficit*).
+                    mengalami skandal "Nombok Pajak" (<em>deficit</em>).
                   </p>
                 </div>
               </div>
@@ -656,13 +745,13 @@ export const InteractiveLabSection: React.FC = () => {
                 </div>
 
                 <div className="metric-card">
-                  <span className="metric-label">Upah Tebasan Panen (*Plantloon*)</span>
+                  <span className="metric-label">Upah Tebasan Panen (<em>Plantloon</em>)</span>
                   <div className="metric-val">ƒ {simResult.grossEarning.toFixed(2)}</div>
                   <span className="metric-sub">Harga beli sepihak pemerintah kolonial</span>
                 </div>
 
                 <div className="metric-card">
-                  <span className="metric-label">Kewajiban Pajak Tanah (*Landrent*)</span>
+                  <span className="metric-label">Kewajiban Pajak Tanah (<em>Landrent</em>)</span>
                   <div className="metric-val">ƒ {simResult.taxDeduction.toFixed(2)}</div>
                   <span className="metric-sub">Pajak tetap ditagih tunai meski panen gagal</span>
                 </div>
@@ -692,10 +781,13 @@ export const InteractiveLabSection: React.FC = () => {
             {/* Scenario Switcher Header */}
             <div className="dilemma-selector-bar">
               <span className="dilemma-bar-label">Pilih Skenario Peran Sejarah:</span>
-              <div className="dilemma-pills">
+              <div className="dilemma-pills" role="tablist" aria-label="Pilih skenario peran sejarah">
                 {historicalDilemmasData.map((scenario) => (
                   <button
                     key={scenario.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={activeScenarioId === scenario.id}
                     className={`dilemma-pill ${activeScenarioId === scenario.id ? 'active' : ''}`}
                     onClick={() => setActiveScenarioId(scenario.id)}
                   >
@@ -733,10 +825,19 @@ export const InteractiveLabSection: React.FC = () => {
                     return (
                       <div
                         key={choice.id}
+                        role="button"
+                        tabIndex={0}
+                        aria-pressed={isSelected}
                         className={`choice-card ${isSelected ? 'selected' : ''}`}
                         onClick={() =>
                           setChosenOption((prev) => ({ ...prev, [activeScenario.id]: choice }))
                         }
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setChosenOption((prev) => ({ ...prev, [activeScenario.id]: choice }));
+                          }
+                        }}
                       >
                         <div className="choice-header">
                           <span className="choice-badge">{choice.choiceLabel}</span>
@@ -774,7 +875,7 @@ export const InteractiveLabSection: React.FC = () => {
                   <div className="epilogue-archive-card">
                     <div className="epilogue-header">
                       <BookOpen size={18} />
-                      <h4>Fakta Sejarah Otentik (*What Actually Happened in History*):</h4>
+                      <h4>Fakta Sejarah Otentik (<em>What Actually Happened in History</em>):</h4>
                     </div>
                     <p className="epilogue-main">{activeScenario.historicalEpilogue.whatActuallyHappened}</p>
                     <p className="epilogue-outcome">

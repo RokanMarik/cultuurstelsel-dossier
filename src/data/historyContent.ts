@@ -116,6 +116,8 @@ export interface BibliographyItem {
   title: string;
   publisher: string;
   type: 'Buku' | 'Jurnal' | 'Arsip Kolonial';
+  doiUrl?: string;
+  fullCitation?: string;
 }
 
 export interface VanDenBoschControversyPoint {
@@ -1229,6 +1231,53 @@ export const bibliographyData: BibliographyItem[] = [
     title: "Mobilizing Labour for the Global Coffee Market: The Java Sugar and Coffee Plantations, 1830–1870 (Keuntungan Kolonial dari Kerja Paksa)",
     publisher: "Amsterdam University Press / Yayasan Pustaka Obor Indonesia",
     type: "Buku",
+  },
+  {
+    id: "hermawati-2013",
+    authors: "Hermawati, M.",
+    year: "2013",
+    title: "Tanam Paksa Sebagai Tindakan Eksploitasi",
+    publisher: "AVATARA E-Journal Pendidikan Sejarah, 1(1), 64–70",
+    type: "Jurnal",
+    fullCitation: "Hermawati, M. (2013). TANAM PAKSA SEBAGAI TINDAKAN EKSPLOITASI. AVATARA E-Journal Pendidikan Sejarah, 1(1), 64–70.",
+  },
+  {
+    id: "kartodirdjo-suryo-1991",
+    authors: "Kartodirdjo, S., & Suryo, D.",
+    year: "1991",
+    title: "Sejarah Perkebunan di Indonesia: Kajian Sosial Ekonomi",
+    publisher: "Aditya Media",
+    type: "Buku",
+    fullCitation: "Kartodirdjo, S., & Suryo, D. (1991). Sejarah perkebunan di indonesia: Kajian sosial ekonomi. Aditya Media.",
+  },
+  {
+    id: "kurniawan-2015",
+    authors: "Kurniawan, H.",
+    year: "2015",
+    title: "Dampak Sistem Tanam Paksa terhadap Dinamika Perekonomian Petani Jawa 1830-1870",
+    publisher: "SOCIA: Jurnal Ilmu-Ilmu Sosial, 11(2)",
+    type: "Jurnal",
+    doiUrl: "https://doi.org/10.21831/socia.v11i2.5301",
+    fullCitation: "Kurniawan, H. (2015). Dampak Sistem Tanam Paksa terhadap Dinamika Perekonomian Petani Jawa 1830-1870. SOCIA: Jurnal Ilmu-Ilmu Sosial, 11(2). https://doi.org/10.21831/socia.v11i2.5301",
+  },
+  {
+    id: "sondarika-2019",
+    authors: "Sondarika, W.",
+    year: "2019",
+    title: "Dampak Culturstelsel (Tanam Paksa) bagi Masyarakat Indonesia dari Tahun 1830-1870",
+    publisher: "Jurnal Artefak, 3(1), 59–66",
+    type: "Jurnal",
+    doiUrl: "https://doi.org/10.25157/ja.v3i1.337",
+    fullCitation: "Sondarika, W. (2019). DAMPAK CULTURSTELSEL (TANAM PAKSA) BAGI MASYARAKAT INDONESIA DARI TAHUN 1830-1870. Jurnal Artefak, 3(1), 59–66. https://doi.org/10.25157/ja.v3i1.337",
+  },
+  {
+    id: "van-niel-1988",
+    authors: "Van Niel, R.",
+    year: "1988",
+    title: "Warisan Sistem Tanam Paksa bagi Perkembangan Ekonomi Berikutnya",
+    publisher: "Dalam A. Booth & others (Ed.), Sejarah Ekonomi Indonesia (hlm. 99–135). LP3ES",
+    type: "Buku",
+    fullCitation: "Van Niel, R. (1988). Warisan sistem tanam paksa bagi perkembangan ekonomi berikutnya. Dalam A. Booth & others (Ed.), Sejarah ekonomi indonesia (hlm. 99–135). LP3ES.",
   },
 ];
 

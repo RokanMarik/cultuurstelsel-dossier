@@ -203,6 +203,25 @@
   box-shadow: var(--shadow-sm);
 }
 
+.pustaka-filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding: 0 0.35rem;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 800;
+  background-color: var(--bg-parchment-accent);
+  color: var(--ink-secondary);
+}
+
+.pustaka-filter-btn.active .pustaka-filter-count {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
 /* Bibliography List */
 .bibliography-list {
   display: flex;
@@ -259,6 +278,28 @@
 .biblio-publisher {
   font-size: 0.85rem;
   color: var(--ink-muted);
+}
+
+.biblio-doi-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.45rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-verdigris);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color var(--transition-fast);
+}
+
+.biblio-doi-link:hover {
+  color: var(--accent-crimson);
+  text-decoration: underline;
+}
+
+.biblio-doi-link svg {
+  flex-shrink: 0;
 }
 
 .biblio-copy-btn {

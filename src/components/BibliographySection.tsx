@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { bibliographyData, featuredHistoricalQuotes } from '../data/historyContent';
 import type { BibliographyItem } from '../data/historyContent';
-import { BookOpen, FileText, Bookmark, Check, Quote, Sparkles } from 'lucide-react';
+import { BookOpen, FileText, Bookmark, Check, Quote, Sparkles, ScrollText, ExternalLink } from 'lucide-react';
 import './BibliographySection.css';
 
 export const BibliographySection: React.FC = () => {
@@ -12,8 +12,13 @@ export const BibliographySection: React.FC = () => {
     ? bibliographyData 
     : bibliographyData.filter((b) => b.type === filterType);
 
+  const getCountByType = (type: string) =>
+    type === 'Semua'
+      ? bibliographyData.length
+      : bibliographyData.filter((b) => b.type === type).length;
+
   const copyCitation = (item: BibliographyItem) => {
-    const citation = `${item.authors} (${item.year}). ${item.title}. ${item.publisher}.`;
+    const citation = item.fullCitation ?? `${item.authors} (${item.year}). ${item.title}. ${item.publisher}.`;
     navigator.clipboard.writeText(citation);
     setCopiedId(item.id);
     setTimeout(() => setCopiedId(null), 2000);
@@ -85,16 +90,19 @@ export const BibliographySection: React.FC = () => {
 
           {/* Filter Pills */}
           <div className="pustaka-filter-bar">
-            {['Semua', 'Buku', 'Arsip Kolonial'].map((type) => (
+            {['Semua', 'Buku', 'Jurnal', 'Arsip Kolonial'].map((type) => (
               <button
                 key={type}
+                type="button"
                 className={`pustaka-filter-btn ${filterType === type ? 'active' : ''}`}
                 onClick={() => setFilterType(type)}
               >
                 {type === 'Semua' && <BookOpen size={14} />}
                 {type === 'Buku' && <Bookmark size={14} />}
+                {type === 'Jurnal' && <ScrollText size={14} />}
                 {type === 'Arsip Kolonial' && <FileText size={14} />}
                 <span>{type}</span>
+                <span className="pustaka-filter-count">{getCountByType(type)}</span>
               </button>
             ))}
           </div>
@@ -112,8 +120,20 @@ export const BibliographySection: React.FC = () => {
                   </div>
                   <h4 className="biblio-title">{item.title}</h4>
                   <p className="biblio-publisher">{item.publisher}</p>
+                  {item.doiUrl && (
+                    <a
+                      href={item.doiUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="biblio-doi-link"
+                    >
+                      <ExternalLink size={13} />
+                      <span>{item.doiUrl}</span>
+                    </a>
+                  )}
                 </div>
                 <button
+                  type="button"
                   className="biblio-copy-btn"
                   onClick={() => copyCitation(item)}
                   title="Salin Sitasi Lengkap"

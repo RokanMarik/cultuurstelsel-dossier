@@ -1,4 +1,4 @@
-/* Timeline Section Styling (PRD Fase 2) */
+/* Timeline Section Styling */
 .timeline-section {
   background-color: var(--bg-parchment-dark);
   border-bottom: 1px solid var(--border-strong);
@@ -9,7 +9,7 @@
   background: linear-gradient(180deg, var(--bg-parchment-light) 0%, var(--bg-parchment) 100%);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-lg);
-  padding: 3rem 2.5rem;
+  padding: clamp(1.35rem, 4vw, 3rem) clamp(1rem, 3.5vw, 2.5rem);
   box-shadow: var(--shadow-md);
   position: relative;
 }
@@ -25,7 +25,7 @@
 
 .timeline-section-header {
   text-align: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: clamp(1.5rem, 3.5vw, 2.5rem);
   position: relative;
   z-index: 2;
 }
@@ -38,8 +38,8 @@
   border-radius: var(--radius-full);
   background-color: var(--accent-gold-bg);
   color: var(--accent-gold);
-  border: 1px solid rgba(179, 130, 40, 0.3);
-  font-size: 0.8rem;
+  border: 1px solid rgba(158, 111, 25, 0.3);
+  font-size: 0.78rem;
   font-weight: 700;
   font-family: var(--font-serif-heading);
   text-transform: uppercase;
@@ -47,24 +47,28 @@
 }
 
 .timeline-main-title {
-  font-size: 1.85rem;
+  font-size: clamp(1.35rem, 2.8vw, 1.85rem);
   color: var(--ink-primary);
   margin-bottom: 0.5rem;
 }
 
 .timeline-main-subtitle {
-  font-size: 0.95rem;
+  font-size: clamp(0.88rem, 1.1vw, 0.95rem);
   color: var(--ink-muted);
+  max-width: 62ch;
+  margin-inline: auto;
 }
 
 .timeline-stepper-track {
   display: flex;
   align-items: flex-start;
   position: relative;
-  margin-bottom: 2.5rem;
-  padding: 0.5rem 1rem 1.25rem 1rem;
+  margin-bottom: clamp(1.5rem, 3.5vw, 2.25rem);
+  padding: 0.5rem 0.75rem 1.25rem 0.75rem;
   overflow-x: auto;
-  gap: 1.25rem;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  gap: 1.15rem;
   z-index: 2;
   scrollbar-width: thin;
   scrollbar-color: var(--accent-gold) rgba(0, 0, 0, 0.05);
@@ -87,9 +91,9 @@
 .timeline-stepper-track::before {
   content: '';
   position: absolute;
-  top: 32px;
+  top: 33px;
   left: 2rem;
-  width: max(100%, 1100px);
+  width: max(100%, 1180px);
   height: 2px;
   background-color: var(--border-strong);
   z-index: 1;
@@ -102,10 +106,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.55rem;
   position: relative;
   z-index: 2;
   flex-shrink: 0;
+  min-width: 78px;
+  scroll-snap-align: center;
   transition: transform var(--transition-fast);
 }
 
@@ -114,8 +120,8 @@
 }
 
 .step-circle {
-  width: 54px;
-  height: 54px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background-color: var(--bg-parchment-light);
   border: 2px solid var(--border-strong);
@@ -123,23 +129,23 @@
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-sm);
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .step-year {
   font-family: var(--font-serif-heading);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 800;
   color: var(--ink-primary);
 }
 
 .step-badge {
-  font-size: 0.725rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: var(--ink-muted);
-  max-width: 90px;
+  max-width: 92px;
   text-align: center;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
 .timeline-step-node.active .step-circle {
@@ -160,16 +166,61 @@
 /* Featured Timeline Card */
 .featured-timeline-card {
   border-left: 5px solid var(--accent-crimson);
-  padding: 2.25rem;
+  padding: var(--space-card);
   position: relative;
   z-index: 2;
+}
+
+/* Prev / Next Stepper Bar */
+.timeline-quick-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px dashed var(--border-subtle);
+}
+
+.timeline-nav-step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: var(--touch-target-min);
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-strong);
+  background-color: var(--bg-parchment);
+  color: var(--ink-primary);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.timeline-nav-step-btn:hover:not(:disabled) {
+  background-color: var(--accent-gold-bg);
+  border-color: var(--accent-gold);
+  color: var(--accent-crimson);
+}
+
+.timeline-nav-step-btn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.timeline-step-counter {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  text-align: center;
 }
 
 .featured-card-header {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 1.25rem;
+  gap: 1.25rem;
+  margin-bottom: 1.15rem;
 }
 
 .featured-year-box {
@@ -187,54 +238,67 @@
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  opacity: 0.85;
+  opacity: 0.88;
 }
 
 .featured-year-number {
   font-family: var(--font-serif-heading);
-  font-size: 1.35rem;
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
   font-weight: 900;
-  line-height: 1;
+  line-height: 1.1;
 }
 
 .featured-title-wrap {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 0.35rem;
 }
 
 .featured-event-title {
-  font-size: 1.35rem;
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
   color: var(--ink-primary);
 }
 
 .featured-event-short-desc {
-  font-size: 1.05rem;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem);
   line-height: 1.75;
   color: var(--ink-secondary);
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
+  max-width: var(--reading-measure);
 }
 
 .featured-card-action {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 
 .action-hint {
-  font-size: 0.825rem;
+  font-size: 0.8rem;
   color: var(--ink-muted);
   font-style: italic;
 }
 
 @media (max-width: 768px) {
-  .timeline-interactive-container {
-    padding: 1.75rem 1.25rem;
-  }
   .featured-card-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;
+  }
+
+  .featured-card-action .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 440px) {
+  .timeline-nav-step-btn span {
+    font-size: 0.76rem;
+  }
+
+  .timeline-nav-step-btn {
+    padding: 0.45rem 0.65rem;
   }
 }

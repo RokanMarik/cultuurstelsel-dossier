@@ -3,28 +3,31 @@
   border-bottom: 1px solid var(--border-strong);
 }
 
-/* Impact Tabs Switcher */
+/* Impact Polarity Switcher */
 .impact-tab-switcher {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin-bottom: 3rem;
+  gap: 0.85rem;
+  margin-bottom: 2.25rem;
   flex-wrap: wrap;
 }
 
 .impact-switch-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.6rem;
-  padding: 0.85rem 1.6rem;
+  min-height: var(--touch-target-min);
+  padding: 0.75rem 1.4rem;
   border-radius: var(--radius-full);
   border: 1px solid var(--border-strong);
   background-color: var(--bg-parchment);
   color: var(--ink-secondary);
-  font-size: 0.95rem;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
 }
 
 .impact-switch-btn:hover {
@@ -36,28 +39,28 @@
   background-color: var(--accent-crimson);
   color: #fff;
   border-color: var(--accent-crimson);
-  box-shadow: 0 4px 12px rgba(140, 40, 30, 0.35);
+  box-shadow: 0 4px 12px rgba(140, 37, 27, 0.3);
 }
 
 .impact-switch-btn.active-positive {
   background-color: var(--accent-verdigris);
   color: #fff;
   border-color: var(--accent-verdigris);
-  box-shadow: 0 4px 12px rgba(29, 77, 84, 0.35);
+  box-shadow: 0 4px 12px rgba(27, 75, 82, 0.3);
 }
 
 /* Cards Grid */
 .impact-cards-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 4.5rem;
+  gap: 1.35rem;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 
 .impact-card {
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  padding: var(--space-card);
 }
 
 .impact-card.negative {
@@ -75,81 +78,83 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.1rem;
 }
 
 .impact-card-indicator.red {
   background-color: var(--accent-crimson-bg);
   color: var(--accent-crimson);
-  border: 1px solid rgba(140, 40, 30, 0.2);
+  border: 1px solid rgba(140, 37, 27, 0.2);
 }
 
 .impact-card-indicator.green {
   background-color: var(--accent-verdigris-bg);
   color: var(--accent-verdigris);
-  border: 1px solid rgba(29, 77, 84, 0.2);
+  border: 1px solid rgba(27, 75, 82, 0.2);
 }
 
 .impact-item-title {
-  font-size: 1.25rem;
+  font-size: clamp(1.1rem, 1.7vw, 1.25rem);
   color: var(--ink-primary);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.65rem;
 }
 
 .impact-item-desc {
-  font-size: 0.95rem;
+  font-size: 0.94rem;
   line-height: 1.7;
   color: var(--ink-secondary);
 }
 
 /* Famine Spotlight */
 .famine-cases-block {
-  margin-bottom: 4rem;
+  margin-bottom: clamp(2.5rem, 5vw, 3.75rem);
   background-color: var(--bg-parchment);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-lg);
-  padding: 2.5rem;
+  padding: var(--space-card);
 }
 
 .famine-header {
   text-align: center;
-  margin-bottom: 2.25rem;
+  margin-bottom: 2rem;
 }
 
 .famine-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background-color: rgba(140, 40, 30, 0.12);
+  background-color: rgba(140, 37, 27, 0.12);
   color: var(--accent-crimson);
-  border: 1px solid rgba(140, 40, 30, 0.3);
-  padding: 0.3rem 0.8rem;
+  border: 1px solid rgba(140, 37, 27, 0.3);
+  padding: 0.3rem 0.85rem;
   border-radius: var(--radius-full);
-  font-size: 0.775rem;
+  font-size: 0.76rem;
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 0.75rem;
 }
 
 .famine-title {
-  font-size: 1.65rem;
+  font-size: clamp(1.35rem, 2.5vw, 1.65rem);
   color: var(--ink-primary);
   margin-bottom: 0.4rem;
 }
 
 .famine-subtitle {
-  font-size: 0.95rem;
+  font-size: 0.94rem;
   color: var(--ink-muted);
+  max-width: 60ch;
+  margin-inline: auto;
 }
 
 .famine-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1.35rem;
 }
 
 .famine-card {
-  padding: 1.75rem;
+  padding: var(--space-card);
   border-left: 4px solid var(--accent-crimson);
 }
 
@@ -157,11 +162,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.95rem;
 }
 
 .famine-region-name {
-  font-size: 1.25rem;
+  font-size: clamp(1.12rem, 1.8vw, 1.25rem);
   color: var(--ink-primary);
 }
 
@@ -171,7 +178,7 @@
 
 .famine-meta-label {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--ink-muted);
@@ -180,7 +187,7 @@
 }
 
 .famine-meta-val {
-  font-size: 0.875rem;
+  font-size: 0.88rem;
   color: var(--ink-secondary);
 }
 
@@ -188,7 +195,7 @@
   background-color: var(--accent-crimson-bg);
   border-radius: var(--radius-sm);
   padding: 0.6rem 0.85rem;
-  border: 1px dashed rgba(140, 40, 30, 0.25);
+  border: 1px dashed rgba(140, 37, 27, 0.25);
 }
 
 .famine-victim-text {
@@ -205,17 +212,24 @@
 
 /* Critics Gallery */
 .critics-block {
-  margin-bottom: 4rem;
+  margin-top: clamp(2.75rem, 5.5vw, 4rem);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.critics-section-heading {
+  font-size: clamp(1.45rem, 2.8vw, 1.85rem);
+  color: var(--ink-primary);
+  margin-bottom: 0.6rem;
 }
 
 .critics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 285px), 1fr));
+  gap: 1.35rem;
 }
 
 .critic-card {
-  padding: 1.6rem;
+  padding: clamp(1.2rem, 2.8vw, 1.6rem);
   display: flex;
   flex-direction: column;
   border-top: 3px solid var(--accent-gold);
@@ -227,33 +241,25 @@
   border-color: var(--accent-crimson);
 }
 
-.critic-card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.75rem;
-}
-
 .critic-period-text {
   font-family: var(--font-serif-heading);
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   font-weight: 700;
   color: var(--ink-muted);
 }
 
 .critic-name {
   font-family: var(--font-serif-heading);
-  font-size: 1.2rem;
+  font-size: clamp(1.08rem, 1.6vw, 1.2rem);
   font-weight: 800;
   color: var(--ink-primary);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
 }
 
 .critic-role-title {
-  font-size: 0.825rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--accent-crimson);
-  margin-bottom: 0.85rem;
 }
 
 .critic-work-box {
@@ -278,12 +284,12 @@
   font-size: 0.825rem;
   font-style: italic;
   color: var(--ink-primary);
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 .critic-contribution-text {
-  font-size: 0.875rem;
-  line-height: 1.6;
+  font-size: 0.88rem;
+  line-height: 1.62;
   color: var(--ink-secondary);
   margin-bottom: 0.85rem;
   flex-grow: 1;
@@ -291,19 +297,19 @@
 
 .critic-impact-footer {
   font-size: 0.8rem;
-  line-height: 1.45;
+  line-height: 1.48;
   color: var(--accent-verdigris);
   background-color: var(--accent-verdigris-bg);
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(29, 77, 84, 0.2);
+  border: 1px solid rgba(27, 75, 82, 0.2);
 }
 
 /* Reform Card */
 .reform-card {
   background: linear-gradient(135deg, var(--bg-parchment-accent) 0%, var(--bg-parchment-light) 100%);
   border: 1px solid var(--border-strong);
-  padding: 2.25rem;
+  padding: var(--space-card);
 }
 
 .reform-badge-wrap {
@@ -316,48 +322,37 @@
 
 .reform-badge-text {
   font-family: var(--font-serif-heading);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 .reform-title {
-  font-size: 1.45rem;
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
   color: var(--ink-primary);
   margin-bottom: 0.75rem;
 }
 
 .reform-narrative {
-  font-size: 1.05rem;
-  line-height: 1.75;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+  line-height: 1.76;
   color: var(--ink-secondary);
-}
-
-@media (max-width: 768px) {
-  .impact-cards-grid {
-    grid-template-columns: 1fr;
-  }
-  .famine-cards-grid {
-    grid-template-columns: 1fr;
-  }
-  .critics-grid {
-    grid-template-columns: 1fr;
-  }
+  max-width: var(--reading-measure);
 }
 
 /* Critic Profile Header & Historical Portrait Avatar */
 .critic-profile-header {
   display: flex;
   align-items: flex-start;
-  gap: 1rem;
+  gap: 0.9rem;
   margin-bottom: 0.85rem;
 }
 
 .critic-avatar-box {
   position: relative;
-  width: 72px;
-  height: 72px;
+  width: 68px;
+  height: 68px;
   flex-shrink: 0;
   border-radius: var(--radius-sm);
   overflow: hidden;
@@ -365,13 +360,13 @@
   background-color: #1a1511;
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(34, 28, 23, 0.12);
-  transition: all var(--transition-fast);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 }
 
 .critic-avatar-box:hover {
   border-color: var(--accent-gold);
   transform: scale(1.04);
-  box-shadow: 0 4px 12px rgba(179, 130, 40, 0.25);
+  box-shadow: 0 4px 12px rgba(158, 111, 25, 0.25);
 }
 
 .critic-avatar-img {
@@ -399,8 +394,8 @@
 }
 
 .critic-avatar-fallback {
-  width: 72px;
-  height: 72px;
+  width: 68px;
+  height: 68px;
   flex-shrink: 0;
   border-radius: var(--radius-sm);
   background-color: var(--bg-parchment-accent);
@@ -424,8 +419,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
-  margin-bottom: 0.35rem;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.3rem;
 }
 
 /* ==========================================
@@ -433,10 +429,10 @@
    ========================================== */
 .resistance-hero-banner {
   display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 2.25rem;
-  margin-bottom: 2.5rem;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: var(--space-card);
+  margin-bottom: 2rem;
   border-left: 4px solid var(--accent-crimson);
   background: linear-gradient(to right, var(--bg-parchment-card), rgba(247, 243, 235, 0.95));
 }
@@ -444,31 +440,33 @@
 .resistance-hero-icon {
   color: var(--accent-crimson);
   flex-shrink: 0;
+  margin-top: 0.15rem;
 }
 
 .resistance-hero-title {
   font-family: var(--font-serif-heading);
-  font-size: 1.75rem;
+  font-size: clamp(1.3rem, 2.5vw, 1.75rem);
   color: var(--ink-primary);
   margin: 0.4rem 0 0.6rem 0;
 }
 
 .resistance-hero-lead {
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 1.15vw, 1rem);
   color: var(--ink-secondary);
-  line-height: 1.65;
+  line-height: 1.68;
   margin: 0;
+  max-width: var(--reading-measure);
 }
 
 .resistance-cards-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.6rem;
-  margin-bottom: 2.5rem;
+  gap: 1.35rem;
+  margin-bottom: 2.25rem;
 }
 
 .resistance-card {
-  padding: 1.75rem;
+  padding: var(--space-card);
   display: flex;
   flex-direction: column;
   border-left: 4px solid var(--accent-crimson);
@@ -478,18 +476,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   margin-bottom: 0.85rem;
 }
 
 .resistance-loc-tag {
-  font-size: 0.775rem;
+  font-size: 0.78rem;
   color: var(--ink-muted);
   font-weight: 600;
 }
 
 .resistance-card-title {
   font-family: var(--font-serif-heading);
-  font-size: 1.25rem;
+  font-size: clamp(1.12rem, 1.8vw, 1.25rem);
   color: var(--ink-primary);
   margin-bottom: 0.65rem;
   line-height: 1.4;
@@ -498,8 +498,8 @@
 .resistance-card-desc {
   font-size: 0.9rem;
   color: var(--ink-secondary);
-  line-height: 1.6;
-  margin-bottom: 1.2rem;
+  line-height: 1.62;
+  margin-bottom: 1.15rem;
   flex-grow: 1;
 }
 
@@ -520,22 +520,21 @@
 }
 
 .res-impact-text {
-  font-size: 0.825rem;
+  font-size: 0.83rem;
   color: var(--ink-secondary);
-  line-height: 1.5;
+  line-height: 1.52;
   margin: 0;
 }
 
 .breman-resistance-quote-card {
-  padding: 2rem 2.25rem;
+  padding: var(--space-card);
   border-left: 4px solid var(--accent-gold);
-  margin-bottom: 3.5rem;
   background-color: var(--bg-parchment-accent);
 }
 
 .breman-quote-inner h4 {
   font-family: var(--font-serif-heading);
-  font-size: 1.3rem;
+  font-size: clamp(1.15rem, 2vw, 1.3rem);
   color: var(--ink-primary);
   margin: 0.6rem 0 0.75rem 0;
 }
@@ -543,9 +542,9 @@
 .breman-quote-inner p {
   font-family: var(--font-serif-body);
   font-style: italic;
-  font-size: 1.05rem;
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
   color: var(--ink-secondary);
-  line-height: 1.7;
+  line-height: 1.72;
   margin: 0;
 }
 
@@ -553,34 +552,35 @@
    TAB 3: PARLIAMENTARY POLITICS (1848–1870)
    ========================================== */
 .politics-hero-banner {
-  padding: 2.25rem;
-  margin-bottom: 2.5rem;
+  padding: var(--space-card);
+  margin-bottom: 2rem;
   border-left: 4px solid var(--accent-gold);
 }
 
 .politics-hero-title {
   font-family: var(--font-serif-heading);
-  font-size: 1.85rem;
+  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
   color: var(--ink-primary);
   margin: 0.5rem 0 0.75rem 0;
 }
 
 .politics-hero-desc {
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 1.15vw, 1rem);
   color: var(--ink-secondary);
-  line-height: 1.65;
+  line-height: 1.68;
   margin: 0;
+  max-width: var(--reading-measure);
 }
 
 .parliamentary-timeline-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.6rem;
-  margin-bottom: 2.5rem;
+  gap: 1.35rem;
+  margin-bottom: 2.25rem;
 }
 
 .pol-card {
-  padding: 1.75rem;
+  padding: var(--space-card);
   display: flex;
   flex-direction: column;
 }
@@ -589,6 +589,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   margin-bottom: 0.85rem;
 }
 
@@ -600,7 +602,7 @@
 
 .pol-title {
   font-family: var(--font-serif-heading);
-  font-size: 1.25rem;
+  font-size: clamp(1.12rem, 1.8vw, 1.25rem);
   color: var(--ink-primary);
   margin-bottom: 0.85rem;
   line-height: 1.4;
@@ -614,6 +616,7 @@
 
 .pol-outcome-box {
   margin-top: auto;
+  margin-bottom: 0;
   background-color: var(--bg-parchment-accent);
   padding: 0.75rem 1rem;
   border-radius: var(--radius-sm);
@@ -635,43 +638,44 @@
 
 .pol-box-text {
   color: var(--ink-secondary);
-  line-height: 1.55;
+  line-height: 1.58;
   margin: 0;
 }
 
 .agrarische-wet-card {
-  padding: 2.25rem;
+  padding: var(--space-card);
   border-left: 4px solid var(--accent-gold);
-  margin-bottom: 3.5rem;
 }
 
 .agrarische-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.65rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.35rem;
 }
 
 .agrarische-header h4 {
   font-family: var(--font-serif-heading);
-  font-size: 1.45rem;
+  font-size: clamp(1.2rem, 2.2vw, 1.45rem);
   color: var(--ink-primary);
   margin: 0;
 }
 
 .agrarische-icon {
   color: var(--accent-gold);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
 }
 
 .agrarische-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
+  gap: 1.35rem;
 }
 
 .agrarische-pilar {
   background-color: var(--bg-parchment-accent);
-  padding: 1.35rem;
+  padding: 1.25rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-medium);
 }
@@ -687,7 +691,7 @@
 .agrarische-pilar p {
   font-size: 0.88rem;
   color: var(--ink-secondary);
-  line-height: 1.6;
+  line-height: 1.62;
   margin: 0;
 }
 
@@ -695,30 +699,34 @@
    TAB 4: SINTESIS HISTORIOGRAFI 3 TOKOH
    ========================================== */
 .historiography-hero-banner {
-  padding: 2.25rem;
-  margin-bottom: 2.5rem;
+  padding: var(--space-card);
+  margin-bottom: 2rem;
   border-left: 4px solid var(--accent-gold);
 }
 
 .hist-hero-title {
   font-family: var(--font-serif-heading);
-  font-size: 1.85rem;
+  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
   color: var(--ink-primary);
   margin: 0.5rem 0 0.75rem 0;
 }
 
 .hist-hero-lead {
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 1.15vw, 1rem);
   color: var(--ink-secondary);
   line-height: 1.7;
   margin: 0;
+  max-width: var(--reading-measure);
+}
+
+.hist-table-wrap {
+  margin-bottom: 2.25rem;
 }
 
 .hist-data-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.88rem;
-  margin-bottom: 2.5rem;
 }
 
 .hist-data-table th,
@@ -741,20 +749,20 @@
 .hist-cards-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 3.5rem;
+  gap: 1.35rem;
 }
 
 .hist-lens-card {
-  padding: 1.75rem;
+  padding: var(--space-card);
   display: flex;
   flex-direction: column;
 }
 
 .hist-lens-top {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-start;
+  gap: 0.4rem;
   margin-bottom: 1rem;
 }
 
@@ -762,7 +770,7 @@
   font-family: var(--font-serif-heading);
   font-size: 1.25rem;
   color: var(--ink-primary);
-  margin: 0.4rem 0 0 0;
+  margin: 0;
 }
 
 .hist-framework-box {
@@ -791,7 +799,7 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--ink-muted);
   margin-bottom: 1rem;
 }
@@ -805,9 +813,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  font-size: 0.85rem;
+  font-size: 0.86rem;
   color: var(--ink-secondary);
-  line-height: 1.55;
+  line-height: 1.58;
   border-top: 1px dashed var(--border-medium);
   padding-top: 0.75rem;
   margin-top: auto;
@@ -817,9 +825,148 @@
   display: block;
   font-weight: 700;
   color: var(--ink-primary);
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   text-transform: uppercase;
   margin-bottom: 0.15rem;
+}
+
+/* ==========================================
+   TAB 5: LAPORAN VAN REES 1867 & REFORMASI PRIANGAN
+   ========================================== */
+.van-rees-hero-card {
+  padding: var(--space-card);
+  margin-bottom: 1.75rem;
+  border-left: 4px solid var(--accent-gold);
+}
+
+.van-rees-hero-title {
+  margin: 0.6rem 0 0.7rem 0;
+  font-size: clamp(1.25rem, 2.3vw, 1.65rem);
+  color: var(--ink-primary);
+}
+
+.van-rees-hero-lead {
+  color: var(--ink-secondary);
+  line-height: 1.72;
+  margin: 0;
+  font-size: clamp(0.94rem, 1.15vw, 1rem);
+  max-width: var(--reading-measure);
+}
+
+.van-rees-monetization-card {
+  margin-top: 2rem;
+  padding: var(--space-card);
+}
+
+.van-rees-monetization-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  margin-bottom: 1.25rem;
+}
+
+.van-rees-monetization-header h4 {
+  margin: 0;
+  font-size: clamp(1.1rem, 1.8vw, 1.28rem);
+  color: var(--ink-primary);
+}
+
+.van-rees-gold-icon {
+  color: var(--accent-gold);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.van-rees-phases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr));
+  gap: 1rem;
+}
+
+.van-rees-phase-item {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.05rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.van-rees-phase-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.45rem;
+}
+
+.van-rees-phase-label {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--ink-primary);
+}
+
+.van-rees-phase-pill {
+  font-size: 0.7rem;
+  padding: 0.12rem 0.5rem;
+  border-radius: var(--radius-full);
+  color: #fff;
+  font-weight: 700;
+}
+
+.van-rees-phase-title {
+  font-size: 0.92rem;
+  color: var(--ink-primary);
+  display: block;
+  margin-bottom: 0.45rem;
+  line-height: 1.4;
+}
+
+.van-rees-phase-list {
+  padding-left: 1.15rem;
+  font-size: 0.83rem;
+  color: var(--ink-secondary);
+  line-height: 1.58;
+  margin: 0 0 0.75rem 0;
+  flex-grow: 1;
+}
+
+.van-rees-phase-fact {
+  margin-top: auto;
+  padding: 0.45rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.van-rees-aftermath-card {
+  margin-top: 1.5rem;
+  padding: var(--space-card);
+  border-left: 4px solid #27ae60;
+}
+
+.van-rees-aftermath-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+  color: var(--ink-primary);
+  font-size: 1rem;
+}
+
+.van-rees-green-icon {
+  color: #27ae60;
+  flex-shrink: 0;
+}
+
+.van-rees-aftermath-card p {
+  margin: 0;
+  color: var(--ink-secondary);
+  font-size: 0.93rem;
+  line-height: 1.7;
+  max-width: var(--reading-measure);
 }
 
 @media (max-width: 1024px) {
@@ -831,3 +978,30 @@
   }
 }
 
+@media (max-width: 768px) {
+  .impact-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resistance-hero-banner {
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .impact-section .comparison-table-wrapper,
+  .impact-section .comparison-table-wrapper.parchment-card {
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    overflow: visible;
+  }
+}
+
+@media (max-width: 560px) {
+  .impact-switch-btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.86rem;
+  }
+}

@@ -51,8 +51,11 @@ export const ImplementationSection: React.FC = () => {
 
         {/* Tab Switcher */}
         <div className="dossier-tabs-nav-wrapper">
-          <div className="dossier-tabs-nav">
+          <div className="dossier-tabs-nav" role="tablist" aria-label="Sub-bagian Pelaksanaan">
             <button
+              type="button"
+              role="tab"
+              aria-selected={activeTab === 'three-residencies'}
               className={`dossier-tab-btn ${activeTab === 'three-residencies' ? 'active' : ''}`}
               onClick={() => setActiveTab('three-residencies')}
             >
@@ -61,6 +64,9 @@ export const ImplementationSection: React.FC = () => {
             </button>
 
             <button
+              type="button"
+              role="tab"
+              aria-selected={activeTab === 'staatsblad'}
               className={`dossier-tab-btn ${activeTab === 'staatsblad' ? 'active' : ''}`}
               onClick={() => setActiveTab('staatsblad')}
             >
@@ -69,6 +75,9 @@ export const ImplementationSection: React.FC = () => {
             </button>
 
             <button
+              type="button"
+              role="tab"
+              aria-selected={activeTab === 'outer-java'}
               className={`dossier-tab-btn ${activeTab === 'outer-java' ? 'active' : ''}`}
               onClick={() => setActiveTab('outer-java')}
             >
@@ -77,6 +86,9 @@ export const ImplementationSection: React.FC = () => {
             </button>
 
             <button
+              type="button"
+              role="tab"
+              aria-selected={activeTab === 'bupati'}
               className={`dossier-tab-btn ${activeTab === 'bupati' ? 'active' : ''}`}
               onClick={() => setActiveTab('bupati')}
             >
@@ -100,8 +112,8 @@ export const ImplementationSection: React.FC = () => {
             </div>
 
             {/* Comprehensive Comparison Table */}
-            <div className="comparison-table-wrapper parchment-card">
-              <table className="residency-data-table">
+            <div className="comparison-table-wrapper residency-table-wrap parchment-card">
+              <table className="residency-data-table adaptive-table">
                 <thead>
                   <tr>
                     <th>Indikator Statistik</th>
@@ -112,44 +124,56 @@ export const ImplementationSection: React.FC = () => {
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>Keterlibatan Populasi</strong></td>
-                    <td>{residencyComparisonData[0].populationInvolvement}</td>
-                    <td>{residencyComparisonData[1].populationInvolvement}</td>
-                    <td>{residencyComparisonData[2].populationInvolvement}</td>
+                    <td data-label="Indikator Statistik"><strong>Keterlibatan Populasi</strong></td>
+                    <td data-label="Priangan (Kopi Pegunungan)">{residencyComparisonData[0].populationInvolvement}</td>
+                    <td data-label="Cirebon (Nila & Tebu Sawah)">{residencyComparisonData[1].populationInvolvement}</td>
+                    <td data-label="Pasuruan (Tebu & Kopi Subur)">{residencyComparisonData[2].populationInvolvement}</td>
                   </tr>
                   <tr>
-                    <td><strong>Penyitaan Sawah Desa</strong></td>
-                    <td>{residencyComparisonData[0].sawahConfiscated}</td>
-                    <td><span className="badge badge-crimson">{residencyComparisonData[1].sawahConfiscated}</span></td>
-                    <td>{residencyComparisonData[2].sawahConfiscated}</td>
+                    <td data-label="Indikator Statistik"><strong>Penyitaan Sawah Desa</strong></td>
+                    <td data-label="Priangan (Kopi Pegunungan)">{residencyComparisonData[0].sawahConfiscated}</td>
+                    <td data-label="Cirebon (Nila & Tebu Sawah)">
+                      <span className="badge badge-crimson">{residencyComparisonData[1].sawahConfiscated}</span>
+                    </td>
+                    <td data-label="Pasuruan (Tebu & Kopi Subur)">{residencyComparisonData[2].sawahConfiscated}</td>
                   </tr>
                   <tr>
-                    <td><strong>Sistem Pajak Tanah (Landrent)</strong></td>
-                    <td><span className="badge badge-gold">{residencyComparisonData[0].landrentSystem}</span></td>
-                    <td><span className="table-val-accent">{residencyComparisonData[1].landrentSystem}</span></td>
-                    <td>{residencyComparisonData[2].landrentSystem}</td>
+                    <td data-label="Indikator Statistik"><strong>Sistem Pajak Tanah (Landrent)</strong></td>
+                    <td data-label="Priangan (Kopi Pegunungan)">
+                      <span className="badge badge-gold">{residencyComparisonData[0].landrentSystem}</span>
+                    </td>
+                    <td data-label="Cirebon (Nila & Tebu Sawah)">
+                      <span className="table-val-accent">{residencyComparisonData[1].landrentSystem}</span>
+                    </td>
+                    <td data-label="Pasuruan (Tebu & Kopi Subur)">{residencyComparisonData[2].landrentSystem}</td>
                   </tr>
                   <tr>
-                    <td><strong>Upah (Plantloon) per Keluarga</strong></td>
-                    <td><strong className="table-val-accent">{residencyComparisonData[0].plantloonPerFamily}</strong></td>
-                    <td>{residencyComparisonData[1].plantloonPerFamily}</td>
-                    <td><strong className="table-upah-highlight">{residencyComparisonData[2].plantloonPerFamily}</strong></td>
+                    <td data-label="Indikator Statistik"><strong>Upah (Plantloon) per Keluarga</strong></td>
+                    <td data-label="Priangan (Kopi Pegunungan)">
+                      <strong className="table-val-accent">{residencyComparisonData[0].plantloonPerFamily}</strong>
+                    </td>
+                    <td data-label="Cirebon (Nila & Tebu Sawah)">{residencyComparisonData[1].plantloonPerFamily}</td>
+                    <td data-label="Pasuruan (Tebu & Kopi Subur)">
+                      <strong className="table-upah-highlight">{residencyComparisonData[2].plantloonPerFamily}</strong>
+                    </td>
                   </tr>
                   <tr>
-                    <td><strong>Bonus Pejabat (Cultuurprocenten)</strong></td>
-                    <td><span className="badge badge-crimson">{residencyComparisonData[0].cultuurprocenten}</span></td>
-                    <td>{residencyComparisonData[1].cultuurprocenten}</td>
-                    <td>{residencyComparisonData[2].cultuurprocenten}</td>
+                    <td data-label="Indikator Statistik"><strong>Bonus Pejabat (Cultuurprocenten)</strong></td>
+                    <td data-label="Priangan (Kopi Pegunungan)">
+                      <span className="badge badge-crimson">{residencyComparisonData[0].cultuurprocenten}</span>
+                    </td>
+                    <td data-label="Cirebon (Nila & Tebu Sawah)">{residencyComparisonData[1].cultuurprocenten}</td>
+                    <td data-label="Pasuruan (Tebu & Kopi Subur)">{residencyComparisonData[2].cultuurprocenten}</td>
                   </tr>
                   <tr>
-                    <td><strong>Status Kesejahteraan Riil</strong></td>
-                    <td>
+                    <td data-label="Indikator Statistik"><strong>Status Kesejahteraan Riil</strong></td>
+                    <td data-label="Priangan (Kopi Pegunungan)">
                       <span className="status-pill status-feodal">Feodalisme & Kemiskinan</span>
                     </td>
-                    <td>
+                    <td data-label="Cirebon (Nila & Tebu Sawah)">
                       <span className="status-pill status-defisit">Defisit Nombok Pajak</span>
                     </td>
-                    <td>
+                    <td data-label="Pasuruan (Tebu & Kopi Subur)">
                       <span className="status-pill status-surplus">Surplus Uang (Booming)</span>
                     </td>
                   </tr>
@@ -306,7 +330,9 @@ export const ImplementationSection: React.FC = () => {
             <div className="outer-java-hero-banner parchment-card">
               <div className="outer-java-hero-header">
                 <span className="badge badge-gold">Monopoli & Penyerahan Wajib di Luar Jawa</span>
-                <h3 className="outer-java-hero-title">Perluasan Sistem Monopoli ke Wilayah Luar Pulau Jawa (*Outer Islands*)</h3>
+                <h3 className="outer-java-hero-title">
+                  Perluasan Sistem Monopoli ke Wilayah Luar Pulau Jawa (<em>Outer Islands</em>)
+                </h3>
                 <p className="outer-java-hero-desc">
                   Meskipun Tanam Paksa dipusatkan secara masif di 18 Karesidenan Jawa, pemerintah kolonial memberlakukan sistem penyerahan wajib serupa di wilayah strategis luar Jawa dengan memanfaatkan pemimpin tradisional (seperti para penghulu di Minangkabau) dan membebani kerja fisik infrastruktur jalan.
                 </p>
@@ -353,7 +379,6 @@ export const ImplementationSection: React.FC = () => {
         {/* TAB 4: BUPATI & SISTEM INDIRECT RULE */}
         {activeTab === 'bupati' && (
           <div className="dossier-tab-content tab-fade-in">
-
             {/* Intro Card */}
             <div className="residency-lead-card parchment-card">
               <div className="residency-lead-header">
@@ -375,11 +400,19 @@ export const ImplementationSection: React.FC = () => {
                 <div key={role.id} className="staatsblad-card parchment-card">
                   <div className="staatsblad-card-header">
                     <div className="rule-number-badge">Peran {String(role.roleNumber).padStart(2, '0')}</div>
-                    <span className={`badge ${
-                      role.roleNumber <= 2 ? 'badge-red' :
-                      role.roleNumber === 3 ? 'badge-amber' :
-                      role.roleNumber === 4 ? 'badge-red' : 'badge-amber'
-                    }`}>{role.badge}</span>
+                    <span
+                      className={`badge ${
+                        role.roleNumber <= 2
+                          ? 'badge-red'
+                          : role.roleNumber === 3
+                          ? 'badge-amber'
+                          : role.roleNumber === 4
+                          ? 'badge-red'
+                          : 'badge-amber'
+                      }`}
+                    >
+                      {role.badge}
+                    </span>
                   </div>
                   <h4 className="staatsblad-rule-title">{role.title}</h4>
                   <p className="staatsblad-official-text">{role.summary}</p>
@@ -398,20 +431,18 @@ export const ImplementationSection: React.FC = () => {
             </div>
 
             {/* Preangerstelsel Blueprint */}
-            <div className="parchment-card" style={{ marginTop: '2rem', padding: '1.5rem 2rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-                <GitBranch size={22} style={{ color: 'var(--color-gold)' }} />
-                <h4 style={{ margin: 0, fontSize: '1.1rem', color: 'var(--color-parchment-dark)' }}>
-                  Preangerstelsel sebagai Cetak Biru Cultuurstelsel
-                </h4>
+            <div className="parchment-card preanger-blueprint-card">
+              <div className="preanger-blueprint-header">
+                <GitBranch size={22} className="preanger-blueprint-icon" />
+                <h4>Preangerstelsel sebagai Cetak Biru Cultuurstelsel</h4>
               </div>
-              <p style={{ color: 'var(--color-ink-medium)', lineHeight: 1.7, marginBottom: '1.25rem', fontSize: '0.95rem' }}>
+              <p className="preanger-blueprint-lead">
                 Sistem Priangan (Preangerstelsel) yang dikembangkan VOC di dataran tinggi Jawa Barat sejak abad ke-18
                 dijadikan <strong>cetak biru</strong> oleh Van den Bosch saat merancang Cultuurstelsel pada 1830.
                 Berikut adalah 4 elemen kunci yang diadopsi:
               </p>
               <div className="comparison-table-wrapper">
-                <table className="residency-data-table">
+                <table className="residency-data-table adaptive-table">
                   <thead>
                     <tr>
                       <th>#</th>
@@ -424,11 +455,11 @@ export const ImplementationSection: React.FC = () => {
                   <tbody>
                     {preangerBlueprintData.map((el) => (
                       <tr key={el.id}>
-                        <td><strong>{el.elementNumber}</strong></td>
-                        <td><strong>{el.title}</strong></td>
-                        <td>{el.preangerstelselOrigin}</td>
-                        <td>{el.cultuurstelselAdoption}</td>
-                        <td><em>{el.significance}</em></td>
+                        <td data-label="No. Elemen"><strong>0{el.elementNumber}</strong></td>
+                        <td data-label="Elemen Kebijakan"><strong>{el.title}</strong></td>
+                        <td data-label="Asal Preangerstelsel (VOC)">{el.preangerstelselOrigin}</td>
+                        <td data-label="Adopsi Cultuurstelsel">{el.cultuurstelselAdoption}</td>
+                        <td data-label="Signifikansi Sejarah"><em>{el.significance}</em></td>
                       </tr>
                     ))}
                   </tbody>
@@ -437,7 +468,7 @@ export const ImplementationSection: React.FC = () => {
             </div>
 
             {/* VOC Expansion Mechanisms */}
-            <h4 className="subsection-heading" style={{ marginTop: '2rem' }}>Lima Mekanisme Ekspansi VOC ke Pedalaman Priangan</h4>
+            <h4 className="subsection-heading bupati-sub-top">Lima Mekanisme Ekspansi VOC ke Pedalaman Priangan</h4>
             <div className="outer-regions-grid">
               {vocExpansionData.map((mech) => (
                 <div key={mech.id} className="region-card parchment-card">
@@ -447,10 +478,10 @@ export const ImplementationSection: React.FC = () => {
                   </div>
                   <h4 className="region-name">{mech.title}</h4>
                   <p className="region-desc">{mech.description}</p>
-                  <div className="staatsblad-reality-block" style={{ marginTop: '0.75rem' }}>
-                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
-                      <ArrowRight size={14} style={{ marginTop: '0.2rem', flexShrink: 0, color: 'var(--color-amber)' }} />
-                      <span style={{ fontSize: '0.85rem', color: 'var(--color-ink-medium)' }}><strong>Dampak Jangka Panjang:</strong> {mech.longTermImpact}</span>
+                  <div className="staatsblad-reality-block voc-impact-callout">
+                    <div className="voc-impact-row">
+                      <ArrowRight size={14} className="voc-impact-arrow" />
+                      <span><strong>Dampak Jangka Panjang:</strong> {mech.longTermImpact}</span>
                     </div>
                   </div>
                 </div>
@@ -458,39 +489,55 @@ export const ImplementationSection: React.FC = () => {
             </div>
 
             {/* Monetisasi Priangan Timeline */}
-            <div className="parchment-card" style={{ marginTop: '2rem', padding: '1.5rem 2rem' }}>
-              <h4 style={{ marginBottom: '1rem', color: 'var(--color-parchment-dark)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <DollarSign size={20} style={{ color: 'var(--color-gold)' }} />
-                Proses Monetisasi di Pedesaan Priangan (Abad ke-18 – Pasca-1870)
+            <div className="parchment-card monetization-card">
+              <h4 className="monetization-card-title">
+                <DollarSign size={20} className="preanger-blueprint-icon" />
+                <span>Proses Monetisasi di Pedesaan Priangan (Abad ke-18 – Pasca-1870)</span>
               </h4>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
+              <div className="monetization-phases-grid">
                 {prianganMonetizationData.map((phase) => {
                   const levelColor = {
                     'Sangat Rendah': '#c0392b',
                     'Rendah': '#d35400',
-                    'Terbatas': '#f39c12',
+                    'Terbatas': '#c88a22',
                     'Berkembang Pesat': '#27ae60'
                   }[phase.monetizationLevel];
                   return (
-                    <div key={phase.id} style={{ border: `1px solid ${levelColor}33`, borderRadius: '8px', padding: '1rem', background: `${levelColor}08` }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                        <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--color-parchment-dark)' }}>{phase.phase}</span>
-                        <span style={{ fontSize: '0.72rem', padding: '0.15rem 0.5rem', borderRadius: '12px', background: levelColor, color: '#fff', fontWeight: 600 }}>{phase.monetizationLevel}</span>
+                    <div
+                      key={phase.id}
+                      className="monetization-phase-item"
+                      style={{
+                        borderColor: `${levelColor}38`,
+                        backgroundColor: `${levelColor}08`
+                      }}
+                    >
+                      <div className="monetization-phase-top">
+                        <span className="monetization-phase-name">{phase.phase}</span>
+                        <span
+                          className="monetization-level-pill"
+                          style={{ backgroundColor: levelColor }}
+                        >
+                          {phase.monetizationLevel}
+                        </span>
                       </div>
-                      <div style={{ fontSize: '0.75rem', color: 'var(--color-ink-light)', marginBottom: '0.5rem' }}>{phase.periodLabel}</div>
-                      <strong style={{ fontSize: '0.9rem', color: 'var(--color-ink-dark)' }}>{phase.title}</strong>
-                      <ul style={{ marginTop: '0.5rem', paddingLeft: '1.2rem', fontSize: '0.82rem', color: 'var(--color-ink-medium)', lineHeight: 1.6 }}>
-                        {phase.characteristics.map((c, i) => <li key={i}>{c}</li>)}
+                      <div className="monetization-period-label">{phase.periodLabel}</div>
+                      <strong className="monetization-phase-heading">{phase.title}</strong>
+                      <ul className="monetization-char-list">
+                        {phase.characteristics.map((c, i) => (
+                          <li key={i}>{c}</li>
+                        ))}
                       </ul>
-                      <div style={{ marginTop: '0.75rem', padding: '0.5rem', background: `${levelColor}15`, borderRadius: '6px', fontSize: '0.8rem', fontStyle: 'italic', color: levelColor }}>
-                        💡 {phase.keyFact}
+                      <div
+                        className="monetization-fact-note"
+                        style={{ backgroundColor: `${levelColor}16`, color: levelColor }}
+                      >
+                        {phase.keyFact}
                       </div>
                     </div>
                   );
                 })}
               </div>
             </div>
-
           </div>
         )}
       </div>

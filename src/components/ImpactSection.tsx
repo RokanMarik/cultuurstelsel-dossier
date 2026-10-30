@@ -51,10 +51,13 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
           </div>
         </div>
 
-        {/* 4 MAIN TABS NAVIGATION */}
+        {/* 5 MAIN TABS NAVIGATION */}
         <div className="dossier-tabs-nav-wrapper">
-          <div className="dossier-tabs-nav">
+          <div className="dossier-tabs-nav" role="tablist" aria-label="Sub-bagian Dampak">
             <button
+              type="button"
+              role="tab"
+              aria-selected={activeMainTab === 'famines-impact'}
               className={`dossier-tab-btn ${activeMainTab === 'famines-impact' ? 'active' : ''}`}
               onClick={() => setActiveMainTab('famines-impact')}
             >
@@ -63,6 +66,9 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
             </button>
 
             <button
+              type="button"
+              role="tab"
+              aria-selected={activeMainTab === 'resistance'}
               className={`dossier-tab-btn ${activeMainTab === 'resistance' ? 'active' : ''}`}
               onClick={() => setActiveMainTab('resistance')}
             >
@@ -71,6 +77,9 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
             </button>
 
             <button
+              type="button"
+              role="tab"
+              aria-selected={activeMainTab === 'politics'}
               className={`dossier-tab-btn ${activeMainTab === 'politics' ? 'active' : ''}`}
               onClick={() => setActiveMainTab('politics')}
             >
@@ -79,6 +88,9 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
             </button>
 
             <button
+              type="button"
+              role="tab"
+              aria-selected={activeMainTab === 'historiography'}
               className={`dossier-tab-btn ${activeMainTab === 'historiography' ? 'active' : ''}`}
               onClick={() => setActiveMainTab('historiography')}
             >
@@ -87,6 +99,9 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
             </button>
 
             <button
+              type="button"
+              role="tab"
+              aria-selected={activeMainTab === 'van-rees'}
               className={`dossier-tab-btn ${activeMainTab === 'van-rees' ? 'active' : ''}`}
               onClick={() => setActiveMainTab('van-rees')}
             >
@@ -146,6 +161,7 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
 
               <div className="impact-tab-switcher">
                 <button
+                  type="button"
                   id="tab-impact-negative"
                   className={`impact-switch-btn ${activeImpactPolarity === 'negative' ? 'active-negative' : ''}`}
                   onClick={() => setActiveImpactPolarity('negative')}
@@ -154,6 +170,7 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
                   <span>Dampak Negatif & Penderitaan Petani</span>
                 </button>
                 <button
+                  type="button"
                   id="tab-impact-positive"
                   className={`impact-switch-btn ${activeImpactPolarity === 'positive' ? 'active-positive' : ''}`}
                   onClick={() => setActiveImpactPolarity('positive')}
@@ -199,7 +216,7 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
                 <span className="badge badge-crimson">Resistensi & 'Senjata Kaum Lemah'</span>
                 <h3 className="resistance-hero-title">Ragam Perlawanan Rakyat Pribumi: Terbuka, Bersenjata, & Sabotase</h3>
                 <p className="resistance-hero-lead">
-                  Rakyat Jawa tidak pernah pasrah menjadi korban bisu eksploitasi kolonial. Ketika jalur konfrontasi bersenjata dihadapi kekerasan militer Belanda, petani melancarkan sabotase fisik, demonstrasi berani, pelarian massal, hingga pelumpuhan dari dalam (*paralysis from within*).
+                  Rakyat Jawa tidak pernah pasrah menjadi korban bisu eksploitasi kolonial. Ketika jalur konfrontasi bersenjata dihadapi kekerasan militer Belanda, petani melancarkan sabotase fisik, demonstrasi berani, pelarian massal, hingga pelumpuhan dari dalam (<em>paralysis from within</em>).
                 </p>
               </div>
             </div>
@@ -310,8 +327,8 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
             </div>
 
             {/* Historiographical Comparison Table */}
-            <div className="comparison-table-wrapper parchment-card">
-              <table className="hist-data-table">
+            <div className="comparison-table-wrapper hist-table-wrap parchment-card">
+              <table className="hist-data-table adaptive-table">
                 <thead>
                   <tr>
                     <th>Dimensi Analisis</th>
@@ -322,34 +339,34 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>Mazhab & Landasan</strong></td>
-                    <td>{historiographicalSynthesisData[0].schoolName}</td>
-                    <td>{historiographicalSynthesisData[1].schoolName}</td>
-                    <td>{historiographicalSynthesisData[2].schoolName}</td>
+                    <td data-label="Dimensi Analisis"><strong>Mazhab & Landasan</strong></td>
+                    <td data-label="Clifford Geertz (1963)">{historiographicalSynthesisData[0].schoolName}</td>
+                    <td data-label="Cornelis Fasseur (1992)">{historiographicalSynthesisData[1].schoolName}</td>
+                    <td data-label="Jan Breman (2014)">{historiographicalSynthesisData[2].schoolName}</td>
                   </tr>
                   <tr>
-                    <td><strong>Fokus & Sudut Pandang</strong></td>
-                    <td>{historiographicalSynthesisData[0].primaryPerspective}</td>
-                    <td>{historiographicalSynthesisData[1].primaryPerspective}</td>
-                    <td>{historiographicalSynthesisData[2].primaryPerspective}</td>
+                    <td data-label="Dimensi Analisis"><strong>Fokus & Sudut Pandang</strong></td>
+                    <td data-label="Clifford Geertz (1963)">{historiographicalSynthesisData[0].primaryPerspective}</td>
+                    <td data-label="Cornelis Fasseur (1992)">{historiographicalSynthesisData[1].primaryPerspective}</td>
+                    <td data-label="Jan Breman (2014)">{historiographicalSynthesisData[2].primaryPerspective}</td>
                   </tr>
                   <tr>
-                    <td><strong>Sumber Data Primer</strong></td>
-                    <td>{historiographicalSynthesisData[0].primarySources}</td>
-                    <td>{historiographicalSynthesisData[1].primarySources}</td>
-                    <td>{historiographicalSynthesisData[2].primarySources}</td>
+                    <td data-label="Dimensi Analisis"><strong>Sumber Data Primer</strong></td>
+                    <td data-label="Clifford Geertz (1963)">{historiographicalSynthesisData[0].primarySources}</td>
+                    <td data-label="Cornelis Fasseur (1992)">{historiographicalSynthesisData[1].primarySources}</td>
+                    <td data-label="Jan Breman (2014)">{historiographicalSynthesisData[2].primarySources}</td>
                   </tr>
                   <tr>
-                    <td><strong>Penilaian Dampak Ekonomi</strong></td>
-                    <td>{historiographicalSynthesisData[0].economicAssessment}</td>
-                    <td>{historiographicalSynthesisData[1].economicAssessment}</td>
-                    <td>{historiographicalSynthesisData[2].economicAssessment}</td>
+                    <td data-label="Dimensi Analisis"><strong>Penilaian Dampak Ekonomi</strong></td>
+                    <td data-label="Clifford Geertz (1963)">{historiographicalSynthesisData[0].economicAssessment}</td>
+                    <td data-label="Cornelis Fasseur (1992)">{historiographicalSynthesisData[1].economicAssessment}</td>
+                    <td data-label="Jan Breman (2014)">{historiographicalSynthesisData[2].economicAssessment}</td>
                   </tr>
                   <tr>
-                    <td><strong>Penjelasan Sebab Keruntuhan</strong></td>
-                    <td>{historiographicalSynthesisData[0].collapseExplanation}</td>
-                    <td>{historiographicalSynthesisData[1].collapseExplanation}</td>
-                    <td>{historiographicalSynthesisData[2].collapseExplanation}</td>
+                    <td data-label="Dimensi Analisis"><strong>Penjelasan Sebab Keruntuhan</strong></td>
+                    <td data-label="Clifford Geertz (1963)">{historiographicalSynthesisData[0].collapseExplanation}</td>
+                    <td data-label="Cornelis Fasseur (1992)">{historiographicalSynthesisData[1].collapseExplanation}</td>
+                    <td data-label="Jan Breman (2014)">{historiographicalSynthesisData[2].collapseExplanation}</td>
                   </tr>
                 </tbody>
               </table>
@@ -390,11 +407,120 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
           </div>
         )}
 
+        {/* TAB 5: LAPORAN VAN REES 1867 & REFORMASI PRIANGAN */}
+        {activeMainTab === 'van-rees' && (
+          <div className="dossier-tab-content tab-fade-in">
+            {/* Hero Card */}
+            <div className="parchment-card van-rees-hero-card">
+              <span className="badge badge-gold">Dokumen Investigasi Kolonial Terpenting</span>
+              <h3 className="van-rees-hero-title">
+                Laporan Rahasia Ono van Rees (Oktober 1867): Membongkar Kebobrokan Preangerstelsel
+              </h3>
+              <p className="van-rees-hero-lead">
+                Setelah melakukan penyelidikan langsung selama enam bulan di dataran tinggi Priangan (1866–1867),
+                Komisaris Pemerintah Ono van Rees menyusun laporan tebal yang secara menyeluruh membongkar kebobrokan
+                Sistem Priangan dan menjadi dasar utama bagi pembubaran sistem tersebut oleh pemerintah kolonial Belanda.
+                Bagian kedua laporan ini <strong>sengaja dirahasiakan</strong> dari Parlemen Belanda.
+              </p>
+            </div>
+
+            {/* 4 Temuan Utama */}
+            <h4 className="subsection-heading">Empat Temuan & Rekomendasi Utama Laporan Van Rees</h4>
+            <div className="staatsblad-cards-grid">
+              {vanReesReportData.map((section) => (
+                <div key={section.id} className="staatsblad-card parchment-card">
+                  <div className="staatsblad-card-header">
+                    <div className="rule-number-badge">Temuan {String(section.sectionNumber).padStart(2, '0')}</div>
+                    <span className={`badge ${section.sectionNumber === 4 ? 'badge-amber' : 'badge-red'}`}>
+                      {section.badge}
+                    </span>
+                  </div>
+                  <h4 className="staatsblad-rule-title">{section.title}</h4>
+                  <div className="staatsblad-reality-block">
+                    <ul className="staatsblad-reality-list">
+                      {section.findings.map((f, i) => (
+                        <li key={i}>{f}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="source-citation-box">
+                    <span className="source-label">Signifikansi:</span> {section.significance}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Monetisasi Timeline */}
+            <div className="parchment-card van-rees-monetization-card">
+              <div className="van-rees-monetization-header">
+                <ArrowUpRight size={22} className="van-rees-gold-icon" />
+                <h4>Empat Fase Monetisasi Priangan: Dari Garam sebagai Alat Tukar hingga Ekonomi Uang Modern</h4>
+              </div>
+              <div className="van-rees-phases-grid">
+                {prianganMonetizationData.map((phase) => {
+                  const levelColor = {
+                    'Sangat Rendah': '#c0392b',
+                    'Rendah': '#d35400',
+                    'Terbatas': '#c88a22',
+                    'Berkembang Pesat': '#27ae60'
+                  }[phase.monetizationLevel];
+                  return (
+                    <div
+                      key={phase.id}
+                      className="van-rees-phase-item"
+                      style={{
+                        borderColor: `${levelColor}40`,
+                        backgroundColor: `${levelColor}08`
+                      }}
+                    >
+                      <div className="van-rees-phase-top">
+                        <span className="van-rees-phase-label">
+                          {phase.phase}: {phase.periodLabel}
+                        </span>
+                        <span className="van-rees-phase-pill" style={{ backgroundColor: levelColor }}>
+                          {phase.monetizationLevel}
+                        </span>
+                      </div>
+                      <strong className="van-rees-phase-title">{phase.title}</strong>
+                      <ul className="van-rees-phase-list">
+                        {phase.characteristics.map((c, i) => (
+                          <li key={i}>{c}</li>
+                        ))}
+                      </ul>
+                      <div
+                        className="van-rees-phase-fact"
+                        style={{ backgroundColor: `${levelColor}16`, color: levelColor }}
+                      >
+                        {phase.keyFact}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Aftermath summary */}
+            <div className="parchment-card van-rees-aftermath-card">
+              <div className="van-rees-aftermath-top">
+                <CheckCircle size={18} className="van-rees-green-icon" />
+                <strong>Hasil Akhir: Ordonansi Staatsblad 1870</strong>
+              </div>
+              <p>
+                Rekomendasi Van Rees menjadi cetak biru bagi pengesahan <strong>Ordonansi Staatsblad 1870</strong>,
+                yang secara resmi <strong>menghapuskan Sistem Priangan dan tradisi ngawula per 1 Januari 1871</strong>.
+                Meskipun sempat ditentang Gubernur Jenderal Mijer dan sebagian laporan dirahasiakan,
+                dokumen ini akhirnya berhasil membuka babak baru: masuknya perkebunan swasta (teh K.F. Holle),
+                pembentukan kelas buruh upahan, dan dimulainya monetisasi sejati di pedesaan Priangan.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* PERSISTENT SECTION: GALERI TOKOH PENGKRITIK SEJARAH */}
         <div className="critics-block">
           <div className="section-header">
             <span className="section-tag">Gelombang Oposisi & Nurani Moral</span>
-            <h3 className="section-title" style={{ fontSize: '1.85rem' }}>Tokoh-Tokoh Pengkritik Cultuurstelsel</h3>
+            <h3 className="critics-section-heading">Tokoh-Tokoh Pengkritik Cultuurstelsel</h3>
             <p className="section-subtitle">
               Dari mantan pejabat kolonial, sastrawan, anggota parlemen, hingga pakar pertanian yang membongkar eksploitasi
             </p>
@@ -411,6 +537,7 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
                       role="button"
                       tabIndex={0}
                       title="Klik untuk memperbesar arsip potret"
+                      aria-label={`Perbesar potret ${critic.name}`}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           onOpenImage?.(critic.image!, critic.name);
@@ -460,103 +587,6 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
             ))}
           </div>
         </div>
-
-        {/* TAB 5: LAPORAN VAN REES 1867 & REFORMASI PRIANGAN */}
-        {activeMainTab === 'van-rees' && (
-          <div className="dossier-tab-content tab-fade-in">
-
-            {/* Hero Card */}
-            <div className="parchment-card" style={{ padding: '1.5rem 2rem', marginBottom: '1.5rem', borderLeft: '4px solid var(--color-gold)' }}>
-              <span className="badge badge-gold" style={{ marginBottom: '0.75rem', display: 'inline-block' }}>Dokumen Investigasi Kolonial Terpenting</span>
-              <h3 style={{ margin: '0.5rem 0', fontSize: '1.3rem', color: 'var(--color-parchment-dark)' }}>
-                Laporan Rahasia Ono van Rees (Oktober 1867): Membongkar Kebobrokan Preangerstelsel
-              </h3>
-              <p style={{ color: 'var(--color-ink-medium)', lineHeight: 1.7, marginBottom: 0, fontSize: '0.95rem' }}>
-                Setelah melakukan penyelidikan langsung selama enam bulan di dataran tinggi Priangan (1866–1867),
-                Komisaris Pemerintah Ono van Rees menyusun laporan tebal yang secara menyeluruh membongkar kebobrokan
-                Sistem Priangan dan menjadi dasar utama bagi pembubaran sistem tersebut oleh pemerintah kolonial Belanda.
-                Bagian kedua laporan ini <strong>sengaja dirahasiakan</strong> dari Parlemen Belanda.
-              </p>
-            </div>
-
-            {/* 4 Temuan Utama */}
-            <h4 className="subsection-heading">Empat Temuan & Rekomendasi Utama Laporan Van Rees</h4>
-            <div className="staatsblad-cards-grid">
-              {vanReesReportData.map((section) => (
-                <div key={section.id} className="staatsblad-card parchment-card">
-                  <div className="staatsblad-card-header">
-                    <div className="rule-number-badge">Temuan {String(section.sectionNumber).padStart(2, '0')}</div>
-                    <span className={`badge ${
-                      section.sectionNumber === 4 ? 'badge-amber' : 'badge-red'
-                    }`}>{section.badge}</span>
-                  </div>
-                  <h4 className="staatsblad-rule-title">{section.title}</h4>
-                  <div className="staatsblad-reality-block">
-                    <ul className="staatsblad-reality-list">
-                      {section.findings.map((f, i) => (
-                        <li key={i}>{f}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="source-citation-box">
-                    <span className="source-label">Signifikansi:</span> {section.significance}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Monetisasi Timeline */}
-            <div className="parchment-card" style={{ marginTop: '2rem', padding: '1.5rem 2rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-                <ArrowUpRight size={22} style={{ color: 'var(--color-gold)' }} />
-                <h4 style={{ margin: 0, fontSize: '1.1rem', color: 'var(--color-parchment-dark)' }}>
-                  Empat Fase Monetisasi Priangan: Dari Garam sebagai Alat Tukar hingga Ekonomi Uang Modern
-                </h4>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
-                {prianganMonetizationData.map((phase) => {
-                  const levelColor = {
-                    'Sangat Rendah': '#c0392b',
-                    'Rendah': '#d35400',
-                    'Terbatas': '#f39c12',
-                    'Berkembang Pesat': '#27ae60'
-                  }[phase.monetizationLevel];
-                  return (
-                    <div key={phase.id} style={{ border: `1px solid ${levelColor}40`, borderRadius: '8px', padding: '1rem', background: `${levelColor}08` }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                        <span style={{ fontWeight: 700, fontSize: '0.88rem', color: 'var(--color-parchment-dark)' }}>{phase.phase}: {phase.periodLabel}</span>
-                        <span style={{ fontSize: '0.7rem', padding: '0.1rem 0.45rem', borderRadius: '12px', background: levelColor, color: '#fff', fontWeight: 600 }}>{phase.monetizationLevel}</span>
-                      </div>
-                      <strong style={{ fontSize: '0.9rem', color: 'var(--color-ink-dark)', display: 'block', marginBottom: '0.4rem' }}>{phase.title}</strong>
-                      <ul style={{ paddingLeft: '1.2rem', fontSize: '0.82rem', color: 'var(--color-ink-medium)', lineHeight: 1.6, margin: 0 }}>
-                        {phase.characteristics.map((c, i) => <li key={i}>{c}</li>)}
-                      </ul>
-                      <div style={{ marginTop: '0.75rem', padding: '0.4rem 0.75rem', background: `${levelColor}15`, borderRadius: '6px', fontSize: '0.78rem', fontStyle: 'italic', color: levelColor }}>
-                        💡 {phase.keyFact}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Aftermath summary */}
-            <div className="parchment-card" style={{ marginTop: '1.5rem', padding: '1.25rem 2rem', borderLeft: '4px solid #27ae60' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                <CheckCircle size={18} style={{ color: '#27ae60' }} />
-                <strong style={{ color: 'var(--color-parchment-dark)' }}>Hasil Akhir: Ordonansi Staatsblad 1870</strong>
-              </div>
-              <p style={{ margin: 0, color: 'var(--color-ink-medium)', fontSize: '0.9rem', lineHeight: 1.7 }}>
-                Rekomendasi Van Rees menjadi cetak biru bagi pengesahan <strong>Ordonansi Staatsblad 1870</strong>,
-                yang secara resmi <strong>menghapuskan Sistem Priangan dan tradisi ngawula per 1 Januari 1871</strong>.
-                Meskipun sempat ditentang Gubernur Jenderal Mijer dan sebagian laporan dirahasiakan,
-                dokumen ini akhirnya berhasil membuka babak baru: masuknya perkebunan swasta (teh K.F. Holle),
-                pembentukan kelas buruh upahan, dan dimulainya monetisasi sejati di pedesaan Priangan.
-              </p>
-            </div>
-
-          </div>
-        )}
 
         {/* Reform Context: Multatuli & End of Era */}
         <div className="parchment-card reform-card">

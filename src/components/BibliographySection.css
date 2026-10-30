@@ -3,10 +3,10 @@
   border-bottom: 1px solid var(--border-strong);
 }
 
-/* SUB-FITUR PRD FASE 3: Sorotan Quote Penting */
+/* Sorotan Quote Penting */
 .featured-quotes-container {
   max-width: 960px;
-  margin: 0 auto 4.5rem auto;
+  margin: 0 auto clamp(2.75rem, 5.5vw, 4.5rem) auto;
 }
 
 .featured-quotes-header {
@@ -20,10 +20,10 @@
   gap: 0.45rem;
   background-color: var(--accent-crimson-bg);
   color: var(--accent-crimson);
-  border: 1px solid rgba(140, 40, 30, 0.3);
+  border: 1px solid rgba(140, 37, 27, 0.3);
   padding: 0.35rem 0.9rem;
   border-radius: var(--radius-full);
-  font-size: 0.775rem;
+  font-size: 0.76rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -32,24 +32,24 @@
 
 .featured-quotes-title {
   font-family: var(--font-serif-heading);
-  font-size: 1.85rem;
+  font-size: clamp(1.35rem, 2.8vw, 1.85rem);
   color: var(--ink-primary);
   margin-bottom: 0.4rem;
 }
 
 .featured-quotes-subtitle {
-  font-size: 0.95rem;
+  font-size: 0.94rem;
   color: var(--ink-muted);
 }
 
 .featured-quotes-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.75rem;
+  gap: 1.5rem;
 }
 
 .featured-quote-card {
-  padding: 2.25rem 2rem;
+  padding: var(--space-card);
   background-color: var(--bg-parchment-light);
   border: 1px solid var(--border-strong);
   border-left: 4px solid var(--accent-crimson);
@@ -70,22 +70,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.25rem;
+  gap: 0.5rem;
+  margin-bottom: 1.15rem;
 }
 
 .quote-seal-icon {
   color: var(--accent-crimson);
-  opacity: 0.75;
+  opacity: 0.78;
 }
 
 .quote-seal-badge {
-  font-size: 0.725rem;
+  font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   background-color: var(--bg-parchment-accent);
   color: var(--accent-crimson);
-  padding: 0.2rem 0.65rem;
+  padding: 0.22rem 0.65rem;
   border-radius: var(--radius-full);
   border: 1px solid var(--border-subtle);
 }
@@ -93,16 +94,16 @@
 .featured-quote-body {
   font-family: var(--font-serif-body);
   font-style: italic;
-  font-size: 1.075rem;
+  font-size: clamp(0.98rem, 1.25vw, 1.08rem);
   line-height: 1.8;
   color: var(--ink-primary);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.35rem;
   flex-grow: 1;
 }
 
 .featured-quote-footer {
   border-top: 1px dashed var(--border-subtle);
-  padding-top: 1.1rem;
+  padding-top: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -134,25 +135,25 @@
 .quote-context-box {
   background-color: var(--bg-parchment);
   border-radius: var(--radius-sm);
-  padding: 0.6rem 0.8rem;
+  padding: 0.6rem 0.85rem;
   border-left: 2px solid var(--border-ornament);
 }
 
 .quote-context-note {
   font-size: 0.8rem;
-  line-height: 1.5;
+  line-height: 1.52;
   color: var(--ink-secondary);
 }
 
 /* Catalog Title & Header */
 .catalog-header {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.35rem;
 }
 
 .catalog-title {
   font-family: var(--font-serif-heading);
-  font-size: 1.6rem;
+  font-size: clamp(1.3rem, 2.4vw, 1.6rem);
   color: var(--ink-primary);
   margin-bottom: 0.35rem;
 }
@@ -166,24 +167,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
+  gap: 0.65rem;
+  margin-bottom: 1.85rem;
   flex-wrap: wrap;
 }
 
 .pustaka-filter-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.55rem 1.1rem;
+  gap: 0.45rem;
+  min-height: var(--touch-target-min);
+  padding: 0.55rem 1.15rem;
   border-radius: var(--radius-full);
   border: 1px solid var(--border-strong);
   background-color: var(--bg-parchment-light);
   color: var(--ink-secondary);
+  font-family: var(--font-sans);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
 }
 
 .pustaka-filter-btn:hover {
@@ -210,8 +215,8 @@
 .biblio-card {
   display: flex;
   align-items: flex-start;
-  gap: 1.25rem;
-  padding: 1.5rem;
+  gap: 1.15rem;
+  padding: clamp(1.15rem, 2.5vw, 1.5rem);
 }
 
 .biblio-number {
@@ -225,12 +230,13 @@
 
 .biblio-content {
   flex-grow: 1;
+  min-width: 0;
 }
 
 .biblio-header-row {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.55rem;
   margin-bottom: 0.4rem;
   flex-wrap: wrap;
 }
@@ -244,10 +250,10 @@
 .biblio-title {
   font-family: var(--font-serif-body);
   font-style: italic;
-  font-size: 1.05rem;
+  font-size: clamp(0.98rem, 1.2vw, 1.05rem);
   color: var(--ink-primary);
   margin-bottom: 0.35rem;
-  line-height: 1.5;
+  line-height: 1.52;
 }
 
 .biblio-publisher {
@@ -258,16 +264,19 @@
 .biblio-copy-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.45rem 0.8rem;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: var(--touch-target-min);
+  padding: 0.5rem 0.95rem;
   border-radius: var(--radius-sm);
   background-color: var(--bg-parchment-accent);
   border: 1px solid var(--border-strong);
   color: var(--ink-secondary);
-  font-size: 0.775rem;
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
   flex-shrink: 0;
 }
 
@@ -288,11 +297,25 @@
 }
 
 @media (max-width: 650px) {
+  .pustaka-filter-bar {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.4rem;
+    scrollbar-width: none;
+  }
+
+  .pustaka-filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+
   .biblio-card {
     flex-direction: column;
     gap: 0.75rem;
   }
+
   .biblio-copy-btn {
-    align-self: flex-start;
+    align-self: stretch;
   }
 }

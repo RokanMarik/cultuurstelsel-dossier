@@ -72,3 +72,4 @@ Pada layar `< 768px`, tabel dengan kelas `.adaptive-table` mengubah `thead` menj
 1. **Typecheck & Lint**: `npx tsc --noEmit` dan `npm run lint` (0 error, 0 warning).
 2. **Production Build**: `npm run build` sukses dengan exit code 0.
 3. **Uji Browser Multi-Viewport**: Pemeriksaan langsung di ukuran layar **Mobile (375×812)**, **Tablet (768×1024)**, dan **Desktop (1440×900)** untuk memastikan keterbacaan teks, fungsi tab, tabel adaptif, peta interaktif, dan ketiadaan *horizontal overflow*.
+

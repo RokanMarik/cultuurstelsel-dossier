@@ -173,3 +173,4 @@ Expected: Oxlint 0 warnings/errors, Vite production build sukses.
 Pastikan seluruh komponen (Navbar + Bottom Dock, Hero, Background, Exploitation, Timeline, Implementation, Impact, Interactive Lab, Bibliography, Lightbox) tampil rapi tanpa *horizontal overflow* di viewport Mobile, Tablet, dan Desktop.
 
 **Step 3: Commit seluruh perubahan dan perbarui `docs/plans/task.md`**
+

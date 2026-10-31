@@ -66,6 +66,6 @@
 | TASK-65 | Brainstorming Evaluasi Website Step 4: Present design sections & get approval | Completed | Spesifikasi desain optimasi WebP, lazy-loading, & code-splitting disetujui user |
 | TASK-66 | Brainstorming Evaluasi Website Step 5: Write design doc & commit | Completed | Dokumen desain disimpan di docs/plans/2026-10-31-performance-webp-optimization-design.md dan di-commit |
 | TASK-67 | Brainstorming Evaluasi Website Step 6: Transition to writing-plans skill | Completed | Rencana implementasi disimpan di docs/plans/2026-10-31-performance-webp-optimization-plan.md |
-| TASK-68 | Perf Plan Task 1: Konversi 12 Aset ke WebP HD + Thumbnail Hero & Path Data | In Progress | Mengonversi gambar ke .webp HD + van-den-bosch-thumb.webp dan memperbarui historyContent.ts |
-| TASK-69 | Perf Plan Task 2: Optimasi img (thumbSrc, loading=lazy, decoding=async, dimensi) | Pending | Memperbarui elemen img di Hero, Background, Exploitation, Impact, & Lightbox |
-| TASK-70 | Perf Plan Task 3: Code-Splitting Anti-CLS (App.tsx & vite.config.ts) & Verifikasi Penuh | Pending | Menerapkan React.lazy berjangkar tetap + vendor chunking Rolldown dan verifikasi build 0 warning |
+| TASK-68 | Perf Plan Task 1: Konversi 12 Aset ke WebP HD + Thumbnail Hero & Path Data | Completed | 14 aset dikonversi ke WebP HD + van-den-bosch-thumb.webp (3.4 KB), total ukuran turun 89.5% (9.92 MB -> 1.04 MB), 15 path terverifikasi |
+| TASK-69 | Perf Plan Task 2: Optimasi img (thumbSrc, loading=lazy, decoding=async, dimensi) | Completed | thumbSrc di Hero + loading=lazy & decoding=async diterapkan di 5 komponen; tsc & oxlint 0 error |
+| TASK-70 | Perf Plan Task 3: Code-Splitting Anti-CLS (App.tsx & vite.config.ts) & Verifikasi Penuh | Completed | index.js turun 523kB -> 229kB, CSS utama turun 143kB -> 105kB, 0 chunk warning, oxlint 0 error, vite build exit code 0 |

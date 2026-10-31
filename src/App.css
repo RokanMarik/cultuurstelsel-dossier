@@ -16,3 +16,24 @@
 .prose-measure {
   max-width: var(--reading-measure);
 }
+
+/* Zero-CLS Anchor-Preserving Lazy Section Placeholders */
+.lazy-section-placeholder {
+  min-height: 540px;
+  display: flex;
+  align-items: center;
+}
+
+.lazy-skeleton-card {
+  max-width: 720px;
+  margin: 0 auto;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--font-serif-heading);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}

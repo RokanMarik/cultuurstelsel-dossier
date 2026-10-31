@@ -3,6 +3,7 @@ export interface HistoricalImage {
   alt: string;
   caption: string;
   archiveSource: string;
+  thumbSrc?: string;
 }
 
 export interface QuoteItem {
@@ -328,7 +329,8 @@ export const heroData = {
     { label: "Surplus Kas (Batig Slot)", value: "> 800 Juta Gulden", note: "Keuntungan Mengalir ke Den Haag" },
   ],
   image: {
-    src: "/images/van-den-bosch.jpg",
+    src: "/images/van-den-bosch.webp",
+    thumbSrc: "/images/van-den-bosch-thumb.webp",
     alt: "Potret Gubernur Jenderal Johannes van den Bosch oleh Raden Saleh",
     caption: "Johannes Graaf van den Bosch (1780–1844), Gubernur Jenderal Hindia Belanda (1830–1833) dan pencetus Sistem Tanam Paksa. Lukisan potret resmi karya Raden Saleh.",
     archiveSource: "Rijksmuseum Amsterdam / Raden Saleh (1836)"
@@ -416,7 +418,7 @@ export const backgroundData = {
       impact: "Perlawanan terhebat yang dipimpin Pangeran Diponegoro melumpuhkan kontrol Belanda di Jawa Tengah dan memakan korban jiwa ratusan ribu jiwa. Menjadi penyebab utama kosongnya kas kolonial Hindia Belanda (Hermawati, 2013).",
       cost: "± 20 – 25 Juta Gulden (menguras kas kolonial)",
       image: {
-        src: "/images/perang-diponegoro.jpg",
+        src: "/images/perang-diponegoro.webp",
         alt: "Lukisan Penangkapan Pangeran Diponegoro oleh Raden Saleh",
         caption: "Lukisan 'Penangkapan Pangeran Diponegoro' (1857) karya Raden Saleh. Menggambarkan penangkapan di Magelang yang menandai akhir Perang Jawa (1825–1830), perlawanan paling mahal yang menguras kas Belanda dan memicu diberlakukannya Cultuurstelsel.",
         archiveSource: "Koleksi Istana Kepresidenan Republik Indonesia / Karya Raden Saleh (1857)"
@@ -429,7 +431,7 @@ export const backgroundData = {
       impact: "Konflik berkepanjangan melawan kaum Padri di pedalaman Sumatera Barat semakin memperparah kekosongan kas yang sudah kritis. Menuntut konsentrasi militer dan logistik yang sangat mahal (Hermawati, 2013; Sondarika, 2019).",
       cost: "Jutaan Gulden & Ribuan Pasukan Kolonial",
       image: {
-        src: "/images/perang-padri.jpg",
+        src: "/images/perang-padri.webp",
         alt: "Ilustrasi Kolonel Raaff dalam Perang Padri oleh J.P. de Veer",
         caption: "Kolonel Antoine Theodore Raaff memimpin pasukan kolonial Belanda dalam Perang Padri (1821–1837) di Sumatera Barat, perang panjang berbiaya besar yang turut menguras kas Hindia Belanda.",
         archiveSource: "Arsip Sejarah / Litografi J.P. de Veer (Raaff tijdens de Padri-Oorlogen)"
@@ -442,7 +444,7 @@ export const backgroundData = {
       impact: "Pemisahan Belgia dari Kerajaan Bersatu Belanda memutus wilayah industri utama dan melipatgandakan utang negara induk. Ketiga perang ini terjadi hampir bersamaan, membawa pemerintah kolonial ke titik kritis (Sondarika, 2019).",
       cost: "Defisit Anggaran Nasional Belanda Berlipat Ganda",
       image: {
-        src: "/images/perang-belgia.jpg",
+        src: "/images/perang-belgia.webp",
         alt: "Lukisan Revolusi Belgia 1830 oleh Gustave Wappers",
         caption: "Lukisan 'Episodes from September Days 1830 on the Place de l’Hôtel de Ville in Brussels' (1835) karya Gustave Wappers. Menggambarkan berkobarnya Revolusi Belgia yang memisahkan diri dari Kerajaan Belanda, merontokkan sektor industri penting dan memperdalam krisis keuangan Willem I.",
         archiveSource: "Royal Museums of Fine Arts of Belgium / Gustave Wappers (1835)"
@@ -547,7 +549,7 @@ export const exploitationData = {
       burdenLevel: "Sangat Berat",
       fact: "Peraturan mewajibkan 66 hari kerja/tahun, namun kenyataannya mencapai 225 hari — hampir tiga kali lipat batas resmi (Breman, 2014, hlm. 259).",
       image: {
-        src: "/images/komoditas-kopi.jpg",
+        src: "/images/komoditas-kopi.webp",
         alt: "Petani dan Pengolahan Kopi di Jawa",
         caption: "Pengolahan buah kopi di perkebunan Jawa. Komoditas kopi menyumbang lebih dari 80% surplus keuntungan kas kolonial (Batig Slot).",
         archiveSource: "Tropenmuseum / Wereldmuseum Amsterdam"
@@ -563,7 +565,7 @@ export const exploitationData = {
       burdenLevel: "Kritis",
       fact: "Penyerobotan sawah padi terbaik untuk rotasi tebu kolonial menjadi pemicu utama bencana kelaparan massal di Cirebon (1844) dan Demak-Grobogan (1848–1850).",
       image: {
-        src: "/images/komoditas-tebu.jpg",
+        src: "/images/komoditas-tebu.webp",
         alt: "Tanaman Tebu dan Industri Gula Kolonial",
         caption: "Tanaman tebu (Saccharum officinarum) yang menyita sawah beririgasi subur di pesisir utara Jawa, memicu kelangkaan beras dan krisis pangan.",
         archiveSource: "Köhler’s Medizinal-Pflanzen (1887)"
@@ -579,7 +581,7 @@ export const exploitationData = {
       burdenLevel: "Sangat Berat",
       fact: "Monopoli nila atas lahan dan air irigasi di Karesidenan Cirebon memicu bencana kelaparan 1843–1844 yang menewaskan puluhan ribu jiwa (Kurniawan, 2015; Sondarika, 2019).",
       image: {
-        src: "/images/komoditas-nila.jpg",
+        src: "/images/komoditas-nila.webp",
         alt: "Tanaman Nila / Tarum (Indigofera tinctoria)",
         caption: "Tanaman nila penghasil pewarna biru tekstil. Fermentasi daun di bak pabrik menghasilkan uap busuk beracun dan memicu tragedi kelaparan Cirebon.",
         archiveSource: "Koleksi Botani / Wikimedia Commons"
@@ -605,7 +607,7 @@ export const exploitationData = {
       burdenLevel: "Berat",
       fact: "Daerah Besuki dan Bojonegoro berkembang menjadi pusat tembakau cerutu terkemuka di pasar dunia.",
       image: {
-        src: "/images/komoditas-tembakau.jpg",
+        src: "/images/komoditas-tembakau.webp",
         alt: "Tanaman Tembakau (Nicotiana tabacum)",
         caption: "Budidaya daun tembakau cerutu kualitas ekspor di sentra perkebunan Besuki, Rembang, dan Bojonegoro.",
         archiveSource: "Koleksi Botani / Wikimedia Commons"
@@ -1048,7 +1050,7 @@ export const impactData = {
       keyContribution: "Menyuarakannya paling awal bahkan sebelum Cultuurstelsel resmi berlaku: mengusulkan pengakuan hak milik tanah bagi petani, penghapusan kerja paksa, dan penarikan pajak tanah moderat sebagai gantinya.",
       impactNote: "Meletakkan gagasan awal mengenai hak kebebasan ekonomi kaum pribumi.",
       image: {
-        src: "/images/van-hogendorp.jpg",
+        src: "/images/van-hogendorp.webp",
         alt: "Potret Dirk van Hogendorp",
         caption: "Dirk van Hogendorp (1761–1822), pemikir awal yang menentang kerja paksa feodal dan mengusulkan hak milik tanah petani sejak 1799.",
         archiveSource: "Collectie Nederland / Wikimedia Commons"
@@ -1064,7 +1066,7 @@ export const impactData = {
       keyContribution: "Mundur dari dinas kolonial setelah laporannya soal pemerasan rakyat oleh Bupati Lebak diabaikan atasannya. Lewat Max Havelaar, ia membongkar persekongkolan birokrasi kolonial dan bupati pribumi dalam memeras rakyat, menggoncang nurani publik Belanda.",
       impactNote: "Menjadi karya sastra politis paling berpengaruh yang mengguncang parlemen Den Haag.",
       image: {
-        src: "/images/multatuli.jpg",
+        src: "/images/multatuli.webp",
         alt: "Potret Eduard Douwes Dekker (Multatuli)",
         caption: "Eduard Douwes Dekker / Multatuli (1820–1887), sastrawan dan mantan birokrat kolonial pengarang mahakarya Max Havelaar.",
         archiveSource: "Nationaal Archief Belanda / Wikimedia Commons"
@@ -1080,7 +1082,7 @@ export const impactData = {
       keyContribution: "Menyaksikan sendiri kesengsaraan rakyat Jawa dalam perjalanannya tahun 1847. Memperkuat gerakan oposisi di parlemen dengan membongkar skandal kemanusiaan bencana kelaparan di Jawa Tengah ke publik Belanda.",
       impactNote: "Memimpin perlawanan fraksi liberal di parlemen melawan fraksi konservatif pembela Batig Slot.",
       image: {
-        src: "/images/baron-van-hoevell.jpg",
+        src: "/images/baron-van-hoevell.webp",
         alt: "Potret Dr. Wolter Robert Baron van Hoëvell",
         caption: "Dr. W.R. Baron van Hoëvell (1812–1879), tokoh gereja dan parlemen liberal Belanda pembela gigih hak-hak petani pribumi Jawa.",
         archiveSource: "Rijksmuseum / Wikimedia Commons"
@@ -1106,7 +1108,7 @@ export const impactData = {
       keyContribution: "Membuktikan melalui penyelidikan data statistik resmi bahwa populasi Karesidenan Priangan tertahan (hanya tumbuh 24% dalam kurun 28 tahun) akibat penderitaan dan pemerasan kerja paksa yang ekstrem.",
       impactNote: "Menyediakan data forensik demografis tak terbantahkan yang mematahkan propaganda kemakmuran Batavia.",
       image: {
-        src: "/images/ono-van-rees.png",
+        src: "/images/ono-van-rees.webp",
         alt: "Potret Otto (Ono) van Rees",
         caption: "Otto (Ono) van Rees (1823–1892), komisaris kolonial dan penyelidik kondisi petani Priangan yang menguak dampak demografis Tanam Paksa.",
         archiveSource: "Collectie Nationaal Archief Belanda / Rijksmuseum"
@@ -1122,7 +1124,7 @@ export const impactData = {
       keyContribution: "Mengkritik Tanam Paksa lewat hitungan ekonomi teknis: menyimpulkan sistem ini pada dasarnya tidak masuk akal karena terus memeras rakyat demi kas negara, merusak daya beli masyarakat, dan mematikan inisiatif produktif desa.",
       impactNote: "Memberi legitimasi ilmiah ekonomi bagi pembatalan bertahap komoditas Tanam Paksa.",
       image: {
-        src: "/images/van-gorkom.jpg",
+        src: "/images/van-gorkom.webp",
         alt: "Potret Dr. K.W. van Gorkom",
         caption: "Dr. Karel Wessel van Gorkom (1835–1910), ahli kimia dan pertanian kolonial yang memaparkan inefisiensi ekonomi Cultuurstelsel.",
         archiveSource: "Nationaal Archief / Arsip Sejarah Kolonial"
@@ -1138,7 +1140,7 @@ export const impactData = {
       keyContribution: "Memimpin perjuangan politik di kabinet: mendorong penghapusan bertahap komoditas lada (1862), nila, teh, kayu manis (1865), dan tembakau (1866), serta merintis rancangan undang-undang yang jadi dasar disahkannya Undang-Undang Agraria 1870.",
       impactNote: "Arsitek kunci penghapusan monopoli negara dan transisi ke era baru yang mengilhami Politik Etis.",
       image: {
-        src: "/images/fransen-van-de-putte.jpg",
+        src: "/images/fransen-van-de-putte.webp",
         alt: "Potret Isaac Dignus Fransen van de Putte",
         caption: "I.D. Fransen van de Putte (1822–1902), Menteri Urusan Tanah Jajahan yang memimpin deregulasi dan penghapusan monopoli Cultuurstelsel.",
         archiveSource: "Nationaal Archief / Wikimedia Commons"

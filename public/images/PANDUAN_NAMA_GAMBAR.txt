@@ -1,29 +1,24 @@
-FOLDER ASET GAMBAR SEJARAH CULTUURSTELSEL
-=============================================
-Simpan file gambar Anda di folder ini (public/images/) sesuai rekomendasi nama berikut:
+FOLDER ASET GAMBAR SEJARAH CULTUURSTELSEL (WEBP EDITION)
+=========================================================
+Seluruh aset gambar arsip pada folder ini (public/images/) telah dioptimalkan ke format .webp HD:
 
 1. TOKOH SEJARAH (Potret/Lukisan):
-   - van-den-bosch.jpg     : Potret Gubernur Jenderal Johannes van den Bosch
-   - multatuli.jpg         : Potret Eduard Douwes Dekker / Multatuli
-   - baron-van-hoevell.jpg : Potret Dr. W.R. van Hoëvell
-   - fransen-van-de-putte.jpg : Potret I.D. Fransen van de Putte
-   - van-hogendorp.jpg     : Potret Dirk van Hogendorp
-   - ono-van-rees.png      : Potret Otto (Ono) van Rees
-   - van-gorkom.jpg        : Potret Dr. K.W. van Gorkom
-   - van-deventer.jpg      : Potret C. Th. van Deventer
+   - van-den-bosch.webp        : Potret Gubernur Jenderal Johannes van den Bosch (HD Lightbox)
+   - van-den-bosch-thumb.webp  : Thumbnail cepat 160x160px khusus avatar Hero
+   - multatuli.webp            : Potret Eduard Douwes Dekker / Multatuli
+   - baron-van-hoevell.webp    : Potret Dr. W.R. van Hoëvell
+   - fransen-van-de-putte.webp : Potret I.D. Fransen van de Putte
+   - van-hogendorp.webp        : Potret Dirk van Hogendorp
+   - ono-van-rees.webp         : Potret Otto (Ono) van Rees
+   - van-gorkom.webp           : Potret Dr. K.W. van Gorkom
 
 2. LATAR BELAKANG & PERISTIWA:
-   - perang-diponegoro.jpg : Lukisan Penangkapan Diponegoro (Raden Saleh)
-   - perang-padri.jpg      : Litografi Raaff tijdens de Padri-Oorlogen (Perang Padri)
-   - perang-belgia.jpg     : Lukisan Revolusi Belgia 1830 (Gustave Wappers)
-   - kelaparan-cirebon.jpg : Arsip ilustrasi dampak kelaparan / kemiskinan
+   - perang-diponegoro.webp    : Lukisan Penangkapan Diponegoro (Raden Saleh)
+   - perang-padri.webp         : Litografi Raaff tijdens de Padri-Oorlogen (Perang Padri)
+   - perang-belgia.webp        : Lukisan Revolusi Belgia 1830 (Gustave Wappers)
 
 3. KOMODITAS & PERKEBUNAN:
-   - komoditas-nila.jpg     : Pabrik / pekerja tanaman nila (indigo)
-   - komoditas-tebu.jpg     : Pabrik gula tradisional / pengangkutan tebu
-   - komoditas-kopi.jpg     : Pemetikan / penjemuran kopi Priangan
-   - komoditas-tembakau.jpg : Pemrosesan daun tembakau
-
-Catatan:
-- Format file bisa .jpg, .jpeg, .png, atau .webp.
-- Ukuran resolusi bebas (CSS sudah diatur otomatis agar seragam, presisi, dan tidak gepeng).
+   - komoditas-nila.webp       : Tanaman & pemrosesan nila (indigo)
+   - komoditas-tebu.webp       : Tanaman tebu gula kolonial
+   - komoditas-kopi.webp       : Pemetikan / penjemuran kopi Priangan
+   - komoditas-tembakau.webp   : Tanaman tembakau ekspor

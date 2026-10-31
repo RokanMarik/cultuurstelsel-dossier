@@ -64,6 +64,7 @@ export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({
             src={image.src}
             alt={image.alt}
             className="lightbox-image"
+            decoding="async"
           />
         </div>
 

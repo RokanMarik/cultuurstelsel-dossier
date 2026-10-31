@@ -175,9 +175,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenImage }) => {
                     }}
                   >
                     <img
-                      src={heroData.image.src}
+                      src={heroData.image.thumbSrc ?? heroData.image.src}
                       alt={heroData.image.alt}
                       className="highlight-portrait-img"
+                      width={46}
+                      height={46}
+                      decoding="async"
                     />
                   </div>
                 ) : (

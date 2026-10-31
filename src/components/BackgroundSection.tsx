@@ -55,6 +55,8 @@ export const BackgroundSection: React.FC<BackgroundSectionProps> = ({ onOpenImag
                     src={crisis.image.src}
                     alt={crisis.image.alt}
                     className="crisis-image-media"
+                    loading="lazy"
+                    decoding="async"
                     onError={(e) => {
                       const parent = e.currentTarget.parentElement;
                       if (parent) parent.style.display = 'none';
@@ -139,6 +141,8 @@ export const BackgroundSection: React.FC<BackgroundSectionProps> = ({ onOpenImag
                     src={heroData.image.src}
                     alt={heroData.image.alt}
                     className="vandenbosch-portrait-media"
+                    loading="lazy"
+                    decoding="async"
                     onError={(e) => {
                       const parent = e.currentTarget.parentElement;
                       if (parent) parent.style.display = 'none';

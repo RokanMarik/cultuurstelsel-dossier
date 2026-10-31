@@ -548,6 +548,10 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
                         src={critic.image.src}
                         alt={critic.image.alt}
                         className="critic-avatar-img"
+                        width={72}
+                        height={72}
+                        loading="lazy"
+                        decoding="async"
                         onError={(e) => {
                           const parent = e.currentTarget.parentElement;
                           if (parent) parent.classList.add('avatar-error');

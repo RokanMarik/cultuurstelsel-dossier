@@ -367,6 +367,7 @@ export const heroData = {
     { label: "Garis Waktu (Timeline)", targetId: "timeline-section", icon: "clock" },
     { label: "Dampak & Kelaparan", targetId: "dampak", icon: "alert" },
     { label: "Lab Sejarah Interaktif", targetId: "interactive-lab", icon: "compass" },
+    { label: "TTS & Kuis Satir", targetId: "permainan-sejarah", icon: "gamepad" },
     { label: "Daftar Pustaka", targetId: "pustaka", icon: "bookmark" },
   ],
 };

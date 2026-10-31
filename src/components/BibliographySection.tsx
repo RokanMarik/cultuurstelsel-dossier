@@ -29,7 +29,7 @@ export const BibliographySection: React.FC = () => {
       <div className="container">
         {/* Header */}
         <div className="section-header">
-          <span className="section-tag">Bagian VI: Rujukan & Dokumen</span>
+          <span className="section-tag">Bagian VII: Rujukan & Dokumen</span>
           <h2 className="section-title">Kutipan Kunci & Daftar Pustaka</h2>
           <p className="section-subtitle">
             Katalog literatur primer, telaah sejarah kritis, dan karya sastra monumental era Tanam Paksa

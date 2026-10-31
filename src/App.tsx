@@ -7,6 +7,7 @@ import { TimelineSection } from './components/TimelineSection';
 import { ImplementationSection } from './components/ImplementationSection';
 import { ImpactSection } from './components/ImpactSection';
 import { InteractiveLabSection } from './components/InteractiveLabSection';
+import { HistoricalGamesSection } from './components/HistoricalGamesSection';
 import { BibliographySection } from './components/BibliographySection';
 import { Footer } from './components/Footer';
 import { ImageLightboxModal } from './components/ImageLightboxModal';
@@ -35,6 +36,7 @@ export const App: React.FC = () => {
         <ImplementationSection />
         <ImpactSection onOpenImage={handleOpenImage} />
         <InteractiveLabSection />
+        <HistoricalGamesSection />
         <BibliographySection />
       </main>
       <Footer />

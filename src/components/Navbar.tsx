@@ -6,9 +6,9 @@ import {
   BookOpen,
   History,
   Coins,
-  Calendar,
   Flame,
-  Compass
+  Compass,
+  Gamepad2
 } from 'lucide-react';
 import './Navbar.css';
 
@@ -25,15 +25,16 @@ const navItems: NavItem[] = [
   { id: 'pelaksanaan', label: 'Staatsblad 1834' },
   { id: 'dampak', label: 'Dampak' },
   { id: 'interactive-lab', label: 'Lab Sejarah' },
+  { id: 'permainan-sejarah', label: 'TTS & Kuis' },
   { id: 'pustaka', label: 'Pustaka' },
 ];
 
 const quickDockItems = [
   { id: 'latar-belakang', shortLabel: 'Latar', icon: History },
   { id: 'eksploitasi', shortLabel: 'Fiskal', icon: Coins },
-  { id: 'timeline-section', shortLabel: 'Kronik', icon: Calendar },
   { id: 'dampak', shortLabel: 'Dampak', icon: Flame },
   { id: 'interactive-lab', shortLabel: 'Lab', icon: Compass },
+  { id: 'permainan-sejarah', shortLabel: 'TTS/Kuis', icon: Gamepad2 },
 ];
 
 export const Navbar: React.FC = () => {
@@ -69,7 +70,7 @@ export const Navbar: React.FC = () => {
     setIsMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      const navHeight = window.innerWidth <= 1060 ? 64 : 72;
+      const navHeight = window.innerWidth <= 1160 ? 64 : 72;
       const elementPosition = element.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({
         top: elementPosition - navHeight,
@@ -159,7 +160,9 @@ export const Navbar: React.FC = () => {
                   className={`mobile-nav-link ${activeSection === item.id ? 'active' : ''}`}
                   onClick={(e) => scrollToSection(e, item.id)}
                 >
-                  <span className="mobile-nav-index">0{idx + 1}</span>
+                  <span className="mobile-nav-index">
+                    {String(idx + 1).padStart(2, '0')}
+                  </span>
                   <span>{item.label}</span>
                 </a>
               ))}

@@ -55,3 +55,8 @@
 | TASK-54 | Brainstorming TTS & Kuis Step 4: Present design sections & get approval | Completed | Spesifikasi desain Bagian 1 (TTS & Navigasi) dan Bagian 2 (Kuis Satir, Streak, Piagam, & Data) disetujui penuh oleh user |
 | TASK-55 | Brainstorming TTS & Kuis Step 5: Write design doc & commit | Completed | Dokumen desain disimpan di docs/plans/2026-10-31-tts-quiz-arcade-design.md dan di-commit |
 | TASK-56 | Brainstorming TTS & Kuis Step 6: Transition to writing-plans skill | Completed | Rencana implementasi tersimpan di docs/plans/2026-10-31-tts-quiz-arcade-plan.md |
+| TASK-57 | Plan Task 1: Dataset & Matriks Tervalidasi TTS (11x12) + Kuis Satir (gamesContent.ts) | Completed | Dataset 10 kata TTS bebas konflik, 8 soal kuis satir, & 4 jenjang piagam selesai; tsc & oxlint 0 error |
+| TASK-58 | Plan Task 2: Komponen Utama & Tab 1 Teka-Teki Silang (HistoricalGamesSection.tsx) | Completed | Mesin TTS 11x12, keyboard fisik & mesin ketik mini ramah HP, 3x Hint, Cek Huruf, & auto-save selesai; tsc & oxlint 0 error |
+| TASK-59 | Plan Task 3: Tab 2 Kuis Satir Sidang Komisi Hindia & Piagam Pangkat (HistoricalGamesSection.tsx) | Completed | Tab 2 Kuis 8 soal (PG + Stempel), Streak Api, reaksi satir, & Piagam Pangkat + salin skor selesai; tsc, oxlint, & build exit code 0 |
+| TASK-60 | Plan Task 4: Styling Koran Kolonial Antik & Responsivitas Multi-Viewport (HistoricalGamesSection.css) | Pending | Menyusun styling papan TTS anti-scroll horizontal, tuts mesin ketik antik, kartu kuis, & piagam |
+| TASK-61 | Plan Task 5: Integrasi ke Halaman Utama, Navigasi, & Verifikasi Produksi Penuh | Pending | Menghubungkan section ke App.tsx, Navbar.tsx, Hero.tsx, BibliographySection.tsx, & verifikasi akhir |

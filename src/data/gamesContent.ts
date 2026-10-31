@@ -207,7 +207,7 @@ export const quizQuestionsData: QuizQuestion[] = [
     contextTag: 'Uji Stempel Pasal Staatsblad 1834',
     question:
       '"Kegagalan panen tanaman ekspor yang bukan disebabkan kesalahan atau kemalasan petani sepenuhnya menjadi tanggungan pemerintah kolonial."',
-    options: ['📜 Janji Manis Staatsblad', '⛏️ Realita Pahit Lapangan'],
+    options: ['Janji Manis Staatsblad', 'Realita Pahit Lapangan'],
     correctIndex: 0,
     funnyRightReaction:
       'Tepat! Di atas kertas Staatsblad 1834 No. 22 bunyinya mulia sekali, padahal pas gagal panen tetap petani desa yang disuruh menomboki!',
@@ -246,7 +246,7 @@ export const quizQuestionsData: QuizQuestion[] = [
     contextTag: 'Audit Jam Kerja Perkebunan',
     question:
       '"Petani Jawa dipaksa bekerja mengurus kebun kopi dan tebu hingga 180–220 hari setahun sehingga sawah padinya sendiri terbengkalai."',
-    options: ['📜 Janji Manis Staatsblad', '⛏️ Realita Pahit Lapangan'],
+    options: ['Janji Manis Staatsblad', 'Realita Pahit Lapangan'],
     correctIndex: 1,
     funnyRightReaction:
       'Tajam! Aturan kertasnya maksimal 66 hari (3 bulan), tapi di lapangan petani disuruh kerja hampir sepanjang tahun tanpa libur akhir pekan!',
@@ -307,7 +307,7 @@ export const quizQuestionsData: QuizQuestion[] = [
     contextTag: 'Bedah Klaim Sawah Pedesaan',
     question:
       '"Penggunaan tanah desa untuk tanaman ekspor dibatasi maksimal hanya 1/5 (20%) dari luas sawah pertanian agar produksi padi rakyat tetap aman."',
-    options: ['📜 Janji Manis Staatsblad', '⛏️ Realita Pahit Lapangan'],
+    options: ['Janji Manis Staatsblad', 'Realita Pahit Lapangan'],
     correctIndex: 0,
     funnyRightReaction:
       'Betul! Angka 1/5 itu cuma pajangan cantik di dokumen Staatsblad. Di daerah subur, 1/3 sampai hampir seluruh sawah beririgasi bagus disikat untuk tebu!',

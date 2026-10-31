@@ -2234,8 +2234,11 @@ export interface SpatialMarker {
   id: string;
   name: string;
   category: 'commodity' | 'famine' | 'resistance' | 'railway-hub';
-  cx: number; // Persentase koordinat SVG (0 - 1000)
-  cy: number; // Persentase koordinat SVG (0 - 450)
+  lat: number; // Lintang geografis asli WGS84 (-11.6 s/d 7.4)
+  lon: number; // Bujur geografis asli WGS84 (94.0 s/d 142.4)
+  regionGroup: 'jawa' | 'luar-jawa';
+  labelPos?: 'top' | 'bottom' | 'left' | 'right';
+  showLabelInNusantara?: boolean;
   residency: string;
   period: string;
   badge: string;
@@ -2253,7 +2256,7 @@ export interface SpatialMarker {
 export interface RailwayLine {
   id: string;
   name: string;
-  pathD: string;
+  coordinates: [number, number][]; // Array [lon, lat] stasiun kolonial asli
   startPoint: string;
   endPoint: string;
   yearBuilt: string;
@@ -2309,11 +2312,36 @@ export interface HistoricalDilemmaScenario {
 
 export const spatialMarkersData: SpatialMarker[] = [
   {
+    id: "marker-batavia",
+    name: "Batavia",
+    category: "railway-hub",
+    lat: -6.13,
+    lon: 106.82,
+    regionGroup: "jawa",
+    labelPos: "top",
+    showLabelInNusantara: true,
+    residency: "Batavia (Sunda Kelapa)",
+    period: "1830–1870",
+    badge: "Pusat Kuasa & Markas NHM",
+    title: "Kantor Gubernur Jenderal & Konsorsium NHM",
+    summary: "Pusat birokrasi pemerintahan kolonial dan kantor pusat Nederlandsche Handel-Maatschappij (NHM) yang memegang hak monopoli pengapalan seluruh komoditas Tanam Paksa menuju pelabuhan Amsterdam dan Rotterdam.",
+    historicalDetails: {
+      commodities: ["Pusat Logistik & Finansial"],
+      statistics: "Mengelola lebih dari 832,4 juta gulden aliran dana surplus Batig Slot.",
+      impactSummary: "Pusat penerbitan Staatsblad dan pengawasan Algemeene Rekenkamer.",
+      vanDenBoschPolicyNote: "Van den Bosch merancang jalur logistik terpusat dari pelabuhan Batavia langsung ke pasar lelang Belanda.",
+      archivalReference: "C. Fasseur (1992), 'The Politics of Colonial Exploitation'."
+    }
+  },
+  {
     id: "marker-priangan",
     name: "Priangan (Preanger)",
     category: "commodity",
-    cx: 215,
-    cy: 265,
+    lat: -6.95,
+    lon: 107.61,
+    regionGroup: "jawa",
+    labelPos: "bottom",
+    showLabelInNusantara: false,
     residency: "Karesidenan Priangan",
     period: "1830–1870",
     badge: "Sentra Kopi Dunia",
@@ -2331,8 +2359,11 @@ export const spatialMarkersData: SpatialMarker[] = [
     id: "marker-cirebon",
     name: "Cirebon",
     category: "famine",
-    cx: 345,
-    cy: 220,
+    lat: -6.72,
+    lon: 108.56,
+    regionGroup: "jawa",
+    labelPos: "top",
+    showLabelInNusantara: false,
     residency: "Karesidenan Cirebon",
     period: "1843–1846",
     badge: "Tragedi Nila & Kelaparan",
@@ -2341,7 +2372,7 @@ export const spatialMarkersData: SpatialMarker[] = [
     historicalDetails: {
       commodities: ["Nila (Indigo)", "Tebu / Gula"],
       statistics: "Lebih dari 30.000 jiwa mengungsi dan tewas akibat wabah kelaparan dan demam 1843–1844.",
-      impactSummary: "Memicu kehancuran struktur agraris lokal dan gelombang protes keras dari pejabat kolonial terkejut (vitalis & de Seriere).",
+      impactSummary: "Memicu kehancuran struktur agraris lokal dan gelombang protes keras dari pejabat kolonial terkejut (Vitalis & de Seriere).",
       vanDenBoschPolicyNote: "Target pabrik nila modern bertenaga air memaksa rotasi sawah tanpa henti hingga tanah kehilangan unsur hara.",
       archivalReference: "Kultuurverslag 1844 & Surat Protes Residen Cirebon de Seriere."
     }
@@ -2350,8 +2381,11 @@ export const spatialMarkersData: SpatialMarker[] = [
     id: "marker-pekalongan",
     name: "Pekalongan",
     category: "resistance",
-    cx: 435,
-    cy: 195,
+    lat: -6.89,
+    lon: 109.67,
+    regionGroup: "jawa",
+    labelPos: "top",
+    showLabelInNusantara: false,
     residency: "Karesidenan Pekalongan",
     period: "1847",
     badge: "Demonstrasi Akbar 1847",
@@ -2366,11 +2400,36 @@ export const spatialMarkersData: SpatialMarker[] = [
     }
   },
   {
+    id: "marker-kedu",
+    name: "Kedu",
+    category: "resistance",
+    lat: -7.48,
+    lon: 110.22,
+    regionGroup: "jawa",
+    labelPos: "bottom",
+    showLabelInNusantara: false,
+    residency: "Karesidenan Kedu",
+    period: "1843",
+    badge: "Protes Tembakau & Boikot",
+    title: "Resistensi Tembakau dan Sabotase Bibit Kedu",
+    summary: "Petani lereng Gunung Sindoro-Sumbing melakukan mogok siram, pencabutan bibit tembakau di malam hari, dan aksi protes ke rumah residen akibat penetapan harga beli daun tembakau yang dirasa sangat merugikan.",
+    historicalDetails: {
+      commodities: ["Tembakau Kedu", "Kopi"],
+      statistics: "Ratusan hektar kebun tembakau mengalami kerusakan bibit misterius akibat sabotase terorganisir.",
+      impactSummary: "Birokrasi kolonial terpaksa menghapus kewajiban tanam tembakau di Kedu dan menyerahkannya ke pedagang bebas.",
+      vanDenBoschPolicyNote: "Kegagalan sistem tanam paksa tembakau di Jawa Tengah membuktikan bahwa tanaman daun rapuh tidak cocok di bawah sistem rodi.",
+      archivalReference: "Jan Breman (1983), 'Control of Land and Labour in Colonial Java'."
+    }
+  },
+  {
     id: "marker-demak",
     name: "Demak & Grobogan",
     category: "famine",
-    cx: 550,
-    cy: 195,
+    lat: -6.98,
+    lon: 110.75,
+    regionGroup: "jawa",
+    labelPos: "top",
+    showLabelInNusantara: false,
     residency: "Karesidenan Semarang (Demak-Grobogan)",
     period: "1848–1850",
     badge: "Krisis Kelaparan Terparah",
@@ -2385,30 +2444,14 @@ export const spatialMarkersData: SpatialMarker[] = [
     }
   },
   {
-    id: "marker-kedu",
-    name: "Kedu",
-    category: "resistance",
-    cx: 485,
-    cy: 260,
-    residency: "Karesidenan Kedu",
-    period: "1843",
-    badge: "Protes Tembakau & Boikot",
-    title: "Resistensi Tembakau dan Sabotase Bibit Kedu",
-    summary: "Petani lereng Gunung Sindoro-Sumbing melakukan mogok siram, pencabutan bibit tembakau di malam hari, dan aksi protes ke rumah residen akibat penetapan harga beli daun tembakau yang dirasa sangat merugikan.",
-    historicalDetails: {
-      commodities: ["Tembakau Kedu", "Kopi"],
-      statistics: "Ratusan hektar kebun tembakau mengalami kerusakan bibit misterius akibat sabotase terorganisir.",
-      impactSummary: "Birokrasi kolonial terpaksa menghapus kewajiban tanam tembakau di Kedu dan menyerahkannya ke pedagang bebas.",
-      vanDenBoschPolicyNote: "Kagagalan sistem tanam paksa tembakau di Jawa Tengah membuktikan bahwa tanaman daun rapuh tidak cocok di bawah sistem rodi.",
-      archivalReference: "Jan Breman (1983), 'Control of Land and Labour in Colonial Java'."
-    }
-  },
-  {
     id: "marker-pasuruan",
     name: "Pasuruan",
     category: "commodity",
-    cx: 735,
-    cy: 245,
+    lat: -7.65,
+    lon: 112.91,
+    regionGroup: "jawa",
+    labelPos: "bottom",
+    showLabelInNusantara: true,
     residency: "Karesidenan Pasuruan",
     period: "1835–1865",
     badge: "Ibukota Gula Hindia Belanda",
@@ -2423,110 +2466,158 @@ export const spatialMarkersData: SpatialMarker[] = [
     }
   },
   {
-    id: "marker-batavia",
-    name: "Batavia (Sunda Kelapa)",
-    category: "railway-hub",
-    cx: 170,
-    cy: 195,
-    residency: "Batavia",
-    period: "1830–1870",
-    badge: "Pusat Kuasa & Markas NHM",
-    title: "Kantor Gubernur Jenderal & Konsorsium NHM",
-    summary: "Pusat birokrasi pemerintahan kolonial dan kantor pusat Nederlandsche Handel-Maatschappij (NHM) yang memegang hak monopoli pengapalan seluruh komoditas Tanam Paksa menuju pelabuhan Amsterdam dan Rotterdam.",
-    historicalDetails: {
-      commodities: ["Pusat Logistik & Finansial"],
-      statistics: "Mengelola lebih dari 690 juta gulden aliran dana surplus Batig Slot.",
-      impactSummary: "Pusat penerbitan Staatsblad dan pengawasan algemeene rekenkamer.",
-      vanDenBoschPolicyNote: "Van den Bosch merancang jalur logistik terpusat dari Batavia langsung ke pasar lelang Belanda.",
-      archivalReference: "C. Fasseur (1992), 'The Politics of Colonial Exploitation'."
-    }
-  },
-  {
     id: "marker-minangkabau",
-    name: "Minangkabau (Sumatera Barat)",
+    name: "Minangkabau",
     category: "commodity",
-    cx: 90,
-    cy: 110,
-    residency: "Sumatra's Westkust",
+    lat: -0.30,
+    lon: 100.37,
+    regionGroup: "luar-jawa",
+    labelPos: "left",
+    showLabelInNusantara: true,
+    residency: "Sumatra's Westkust (Sumatera Barat)",
     period: "1847–1908",
     badge: "Tanam Paksa Kopi Luar Jawa",
     title: "Koffiestelsel Minangkabau & Kerja Rodi Jalan",
     summary: "Diberlakukan oleh Gubernur J.V. Michiels pasca Perang Padri. Setiap keluarga petani wajib menanam 150 batang kopi dan menyetorkannya ke gudang kolonial (Koffiepakhuis) dengan harga murah, serta rodi membuka jalan perbukitan.",
     historicalDetails: {
-      commodities: ["Kopi Robusta & Arabika"],
+      commodities: ["Kopi Arabika & Kayu Manis"],
       statistics: "Penyerahan kopi wajib berlaku hingga dihapuskan pada tahun 1908 akibat Perang Belasting.",
       impactSummary: "Merusak tatanan nagari tradisional dan memicu perlawanan rakyat terhadap pajak uang.",
-      vanDenBoschPolicyNote: "Eksperimen pembuktian bahwa Tanam Paksa dapat direplikasi di luar Jawa.",
+      vanDenBoschPolicyNote: "Eksperimen pembuktian bahwa Tanam Paksa dapat direplikasi secara menguntungkan di luar Jawa.",
       archivalReference: "M.C. Ricklefs (2008), 'A History of Modern Indonesia'."
     }
   },
   {
-    id: "marker-minahasa",
-    name: "Minahasa (Sulawesi Utara)",
+    id: "marker-lampung",
+    name: "Lampung & Palembang",
     category: "commodity",
-    cx: 890,
-    cy: 90,
-    residency: "Karesidenan Manado",
-    period: "1853–1899",
-    badge: "Monopoli Kopi Timur",
-    title: "Koffiestelsel Minahasa & Aliansi Walak",
-    summary: "Pemerintah kolonial memonopoli komoditas kopi melalui para Hukum Tua (kepala walak). Petani dipaksa membuka lereng-lereng pegunungan dan menanam kopi dengan imbalan harga beli monopoli yang ditetapkan sepihak.",
+    lat: -5.42,
+    lon: 105.26,
+    regionGroup: "luar-jawa",
+    labelPos: "left",
+    showLabelInNusantara: true,
+    residency: "Lampongsche Districten & Palembang",
+    period: "1832–1862",
+    badge: "Sentra Lada & Kopi Selatan",
+    title: "Penyerahan Wajib Lada & Kopi Sumatera Selatan",
+    summary: "Dataran tinggi Sumatera bagian selatan dan pesisir Lampung dijadikan sentra komoditas kopi serta lada wajib untuk memenuhi bursa lelang rempah Amsterdam dan Rotterdam.",
     historicalDetails: {
-      commodities: ["Kopi Minahasa"],
-      statistics: "Menghasilkan ribuan pikul kopi kualitas premium untuk lelang NHM di Eropa.",
-      impactSummary: "Mendorong monetisasi awal namun mengikis kemandirian pertanian subsisten masyarakat lokal.",
-      vanDenBoschPolicyNote: "Penggunaan struktur adat Walak mirip dengan pemanfaatan bupati di Pulau Jawa.",
-      archivalReference: "David Henley (2005), 'Fertility, Food and Fever: Population, economy and environment in North and Central Sulawesi'."
+      commodities: ["Lada Hitam/Putih", "Kopi Sumatera Selatan"],
+      statistics: "Kewajiban lada pemerintah resmi diakhiri bertahap pada tahun 1862 seiring menyusutnya margin monopoli.",
+      impactSummary: "Memperkuat kontrol militer dan pos gudang kolonial di sepanjang Selat Sunda hingga pedalaman Bukit Barisan.",
+      vanDenBoschPolicyNote: "Ekspansi komoditas bernilai tinggi di luar Jawa guna menambah devisa pendamping kopi Priangan.",
+      archivalReference: "Jan Breman (2014) & Kultuurverslagen Hindia Belanda."
+    }
+  },
+  {
+    id: "marker-bangka",
+    name: "Bangka",
+    category: "commodity",
+    lat: -2.13,
+    lon: 106.11,
+    regionGroup: "luar-jawa",
+    labelPos: "right",
+    showLabelInNusantara: true,
+    residency: "Karesidenan Bangka & Belitung",
+    period: "1830–1870",
+    badge: "Monopoli Komoditas Khusus",
+    title: "Ekstraksi Timah & Lada Kepulauan Bangka",
+    summary: "Bangka menjadi salah satu pilar devisa luar Jawa yang menyokong Batig Slot bersama kopi dan gula Jawa melalui monopoli timah negara dan perkebunan lada.",
+    historicalDetails: {
+      commodities: ["Timah Bangka (Banka-tin)", "Lada"],
+      statistics: "Menyumbang jutaan gulden ke kas kolonial melalui lelang komoditas khusus NHM di Belanda.",
+      impactSummary: "Eksploitasi kuli tambang parit (kongsi) dan kontrol ketat perdagangan maritim Selat Bangka.",
+      vanDenBoschPolicyNote: "Seluruh komoditas tambang dan rempah strategis dikapalkan lewat jaringan konsinyasi NHM.",
+      archivalReference: "C. Fasseur (1992) & R. Van Niel (1988), 'Sejarah Ekonomi Indonesia'."
+    }
+  },
+  {
+    id: "marker-minahasa",
+    name: "Minahasa",
+    category: "commodity",
+    lat: 1.45,
+    lon: 124.84,
+    regionGroup: "luar-jawa",
+    labelPos: "top",
+    showLabelInNusantara: true,
+    residency: "Karesidenan Manado (Sulawesi Utara)",
+    period: "1822–1899",
+    badge: "Monopoli Kopi Timur",
+    title: "Koffiestelsel Minahasa & Aliansi Kepala Walak",
+    summary: "Pemerintah kolonial memonopoli komoditas kopi melalui para Hukum Besar / Kepala Walak. Petani dipaksa membuka lereng pegunungan vulkanik dan menanam kopi dengan harga beli monopoli sepihak.",
+    historicalDetails: {
+      commodities: ["Kopi Minahasa Premium"],
+      statistics: "Menghasilkan ribuan pikul kopi kualitas unggulan dengan harga tertinggi di lelang NHM Eropa.",
+      impactSummary: "Mendorong monetisasi awal dan jaringan jalan pedalaman, namun mengikis pertanian pangan lokal.",
+      vanDenBoschPolicyNote: "Pemanfaatan struktur adat Walak di Sulawesi paralel dengan aliansi feodal bupati di Pulau Jawa.",
+      archivalReference: "David Henley (2005) & Jan Breman (2014)."
     }
   },
   {
     id: "marker-maluku",
     name: "Maluku (Ambon & Banda)",
     category: "commodity",
-    cx: 940,
-    cy: 155,
+    lat: -3.69,
+    lon: 128.18,
+    regionGroup: "luar-jawa",
+    labelPos: "bottom",
+    showLabelInNusantara: true,
     residency: "Karesidenan Maluku",
     period: "1830–1864",
     badge: "Monopoli Rempah Klasik",
-    title: "Penyerahan Rempah Wajib Cengkeh & Pala",
-    summary: "Penerusan dari sistem monopoli rempah-rempah kuno VOC. Penduduk diwajibkan memelihara pohon cengkeh dan pala, melarang penjualan bebas ke pedagang Bugis atau Makassar dengan ancaman pidana berat.",
+    title: "Penyerahan Wajib Cengkeh Ambon & Pala Banda",
+    summary: "Penerusan sistem monopoli rempah warisan VOC. Penduduk wajib memelihara pohon cengkeh dan pala serta dilarang keras menjual hasil panen ke pelaut Bugis-Makassar.",
     historicalDetails: {
       commodities: ["Cengkeh", "Pala & Fuli"],
-      statistics: "Dihapuskan secara bertahap pada tahun 1864 seiring jatuhnya harga rempah di pasar global.",
-      impactSummary: "Mengakibatkan stagnasi ekonomi kepulauan Maluku dibandingkan sentra perkebunan gula/kopi di Jawa.",
-      vanDenBoschPolicyNote: "Kewajiban rempah tetap dipertahankan sebagai benteng cadangan fiskal pemerintah kolonial.",
-      archivalReference: "G.J. Resink (1968), 'Indonesia's History Between the Myths'."
+      statistics: "Monopoli rempah negara dihapuskan bertahap pada 1863–1864 seiring turunnya harga rempah dunia.",
+      impactSummary: "Mengakibatkan stagnasi ekonomi kepulauan Maluku dibandingkan pesatnya sentra gula dan kopi di Jawa.",
+      vanDenBoschPolicyNote: "Dipertahankan sebagai pos komoditas eksklusif bursa rempah Amsterdam.",
+      archivalReference: "M.C. Ricklefs (2008) & Breman (2014)."
     }
   }
 ];
 
 export const railwayLinesData: RailwayLine[] = [
   {
+    id: "rail-ss-west",
+    name: "Jalur SS Batavia–Buitenzorg",
+    coordinates: [
+      [106.82, -6.13],
+      [106.83, -6.40],
+      [106.80, -6.60]
+    ],
+    startPoint: "Batavia (Pelabuhan Sunda Kelapa)",
+    endPoint: "Buitenzorg (Bogor)",
+    yearBuilt: "1873",
+    purpose: "Jalur kereta api pertama di Jawa Barat untuk mempercepat arus pasokan kopi dan teh pegunungan Priangan menuju pelabuhan ekspor Batavia."
+  },
+  {
     id: "rail-nis-central",
     name: "Jalur NIS Semarang–Solo–Yogyakarta",
-    pathD: "M 550 195 Q 520 225 500 240 T 485 260",
+    coordinates: [
+      [110.42, -6.96],
+      [110.63, -7.17],
+      [110.82, -7.56],
+      [110.37, -7.79]
+    ],
     startPoint: "Semarang (Pelabuhan Ekspor)",
     endPoint: "Vorstenlanden (Solo & Yogyakarta)",
     yearBuilt: "1867–1872",
-    purpose: "Mengangkut gula, tembakau, dan nila dari Vorstenlanden ke pelabuhan kapal uap Semarang dengan memangkas waktu tempuh dari 4 hari menjadi 4 jam."
-  },
-  {
-    id: "rail-ss-west",
-    name: "Jalur SS Batavia–Buitenzorg",
-    pathD: "M 170 195 L 180 230",
-    startPoint: "Batavia (Kota)",
-    endPoint: "Buitenzorg (Bogor)",
-    yearBuilt: "1873",
-    purpose: "Jalur kereta api pertama di Jawa Barat untuk mempercepat arus pasokan kopi pegunungan Priangan menuju pelabuhan Sunda Kelapa."
+    purpose: "Jalur kereta api pertama di Indonesia yang mengangkut gula, tembakau, dan nila dari pedalaman Jawa Tengah ke pelabuhan Semarang."
   },
   {
     id: "rail-ss-east",
     name: "Jalur SS Surabaya–Pasuruan–Probolinggo",
-    pathD: "M 710 215 Q 735 245 770 250",
+    coordinates: [
+      [112.74, -7.25],
+      [112.78, -7.60],
+      [112.91, -7.65],
+      [113.22, -7.75]
+    ],
     startPoint: "Surabaya (Pelabuhan Ujung)",
     endPoint: "Pasuruan & Probolinggo",
     yearBuilt: "1878",
-    purpose: "Menghubungkan puluhan pabrik gula uap di Pasuruan langsung dengan dermaga kapal dagang internasional Surabaya."
+    purpose: "Menghubungkan sabuk pabrik gula uap terkaya di Pasuruan dan Probolinggo langsung ke dermaga kapal uap internasional Surabaya."
   }
 ];
 

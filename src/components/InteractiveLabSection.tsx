@@ -9,6 +9,21 @@ import {
   type DilemmaChoice
 } from '../data/historyContent';
 import {
+  MAP_BOUNDS,
+  NUSANTARA_VIEWBOX,
+  JAVA_FOCUS_RECT,
+  JAVA_VIEWBOX,
+  NEIGHBOR_CONTEXT_PATHS,
+  INDONESIA_OUTER_PATHS,
+  JAVA_MADURA_PATHS,
+  SEA_LABELS,
+  ISLAND_LABELS,
+  JAVA_VOLCANIC_SPINE_COORDS,
+  projectLon,
+  projectLat,
+  projectCoordsToPath
+} from '../data/indonesiaGeoPaths';
+import {
   Compass,
   Calculator,
   ShieldAlert,
@@ -26,21 +41,30 @@ import {
   TrendingUp,
   CheckCircle2,
   FileText,
-  ZoomIn
+  ZoomIn,
+  Globe,
+  Maximize2
 } from 'lucide-react';
 import './InteractiveLabSection.css';
 
 type LabTab = 'map' | 'calculator' | 'dilemma';
 type MapFilter = 'all' | 'commodity' | 'famine' | 'resistance' | 'railway-hub';
 type MapZoom = 1 | 1.5 | 2;
+type MapRegionView = 'nusantara' | 'jawa';
+
+function formatHistoricalCoord(lat: number, lon: number): string {
+  const latDir = lat >= 0 ? 'LU' : 'LS';
+  return `${Math.abs(lat).toFixed(2)}° ${latDir}, ${lon.toFixed(2)}° BT`;
+}
 
 export const InteractiveLabSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<LabTab>('map');
 
-  // --- State Tab 1: Peta Spasial ---
+  // --- State Tab 1: Peta Spasial Geospasial ---
   const [mapFilter, setMapFilter] = useState<MapFilter>('all');
   const [selectedMarkerId, setSelectedMarkerId] = useState<string>('marker-priangan');
   const [mapZoom, setMapZoom] = useState<MapZoom>(1);
+  const [mapRegionView, setMapRegionView] = useState<MapRegionView>('nusantara');
 
   // --- State Tab 2: Kalkulator Kolonial ---
   // Sub-alat A: Kurs Gulden
@@ -69,11 +93,21 @@ export const InteractiveLabSection: React.FC = () => {
     return spatialMarkersData.filter((m) => m.category === mapFilter);
   }, [mapFilter]);
 
+  const handleSelectMarker = (marker: SpatialMarker) => {
+    setSelectedMarkerId(marker.id);
+    // Jika sedang di Fokus Jawa namun memilih lokasi Luar Jawa (kecuali Lampung di tepi Selat Sunda), kembali ke Nusantara
+    if (mapRegionView === 'jawa' && marker.regionGroup === 'luar-jawa' && marker.id !== 'marker-lampung') {
+      setMapRegionView('nusantara');
+    }
+  };
+
   const handleFilterChange = (nextFilter: MapFilter) => {
     setMapFilter(nextFilter);
     if (nextFilter !== 'all' && selectedMarker.category !== nextFilter) {
       const firstMatch = spatialMarkersData.find((m) => m.category === nextFilter);
-      if (firstMatch) setSelectedMarkerId(firstMatch.id);
+      if (firstMatch) {
+        handleSelectMarker(firstMatch);
+      }
     }
   };
 
@@ -89,6 +123,18 @@ export const InteractiveLabSection: React.FC = () => {
         return '#1565c0';
     }
   };
+
+  // Faktor skala dinamis proporsional terhadap lebar viewBox aktif (1000 vs ~214.88)
+  const k = mapRegionView === 'nusantara' ? 1 : Number((JAVA_FOCUS_RECT.width / MAP_BOUNDS.width).toFixed(4));
+  const activeViewBox = mapRegionView === 'nusantara' ? NUSANTARA_VIEWBOX : JAVA_VIEWBOX;
+  const vbBox = useMemo(() => {
+    if (mapRegionView === 'nusantara') {
+      return { x: 0, y: 0, width: MAP_BOUNDS.width, height: MAP_BOUNDS.height };
+    }
+    return JAVA_FOCUS_RECT;
+  }, [mapRegionView]);
+
+  const volcanicSpinePath = useMemo(() => projectCoordsToPath(JAVA_VOLCANIC_SPINE_COORDS), []);
 
   const activeScenario = useMemo(() => {
     return historicalDilemmasData.find((s) => s.id === activeScenarioId) || historicalDilemmasData[0];
@@ -166,8 +212,8 @@ export const InteractiveLabSection: React.FC = () => {
           </div>
           <h2 className="lab-title">Laboratorium Sejarah Interaktif</h2>
           <p className="lab-subtitle">
-            Instrumen investigasi spasial, kalkulator komparasi sosio-ekonomi, dan simulasi pengambilan
-            keputusan dilema moral para aktor sejarah Sistem Tanam Paksa (1830–1870).
+            Instrumen investigasi spasial berstandar geospasial Nusantara, kalkulator komparasi sosio-ekonomi,
+            dan simulasi pengambilan keputusan dilema moral para aktor sejarah Sistem Tanam Paksa (1830–1870).
           </p>
         </div>
 
@@ -261,196 +307,633 @@ export const InteractiveLabSection: React.FC = () => {
               <div className="map-canvas-wrapper">
                 <div className="map-canvas-header">
                   <div className="map-header-titles">
-                    <span className="map-meta-title">KAART VAN JAVA EN ONDERHOORIGHEDEN (1830–1870)</span>
-                    <span className="map-meta-scale">Skala Kartografis Historis • Geser saat diperbesar</span>
+                    <span className="map-meta-title">
+                      {mapRegionView === 'nusantara'
+                        ? 'ALGEMEENE KAART VAN NEDERLANDSCH-INDIË (NUSANTARA 95°–141° BT)'
+                        : 'DETAIL KAART VAN JAVA EN MADOERA (105°–115° BT • 1830–1870)'}
+                    </span>
+                    <span className="map-meta-scale">
+                      Proyeksi Geospasial WGS84 Khatulistiwa •{' '}
+                      {mapRegionView === 'nusantara'
+                        ? 'Klik Pulau Jawa atau sakelar kanan untuk perbesar detail 7 karesidenan'
+                        : 'Menampilkan garis pantai presisi tinggi Jawa, Selat Sunda, Madura & rel kereta kolonial'}
+                    </span>
                   </div>
 
-                  {/* Zoom Controls (1x / 1.5x / 2x) */}
-                  <div className="map-zoom-controls" role="group" aria-label="Perbesaran Peta">
-                    <span className="zoom-label">
-                      <ZoomIn size={13} /> Zoom:
-                    </span>
-                    {([1, 1.5, 2] as MapZoom[]).map((z) => (
+                  <div className="map-controls-toolbar">
+                    {/* Dual Camera Region Switcher */}
+                    <div className="map-region-switcher" role="group" aria-label="Cakupan Wilayah Peta">
                       <button
-                        key={z}
                         type="button"
-                        className={`map-zoom-btn ${mapZoom === z ? 'active' : ''}`}
-                        onClick={() => setMapZoom(z)}
-                        aria-pressed={mapZoom === z}
+                        className={`map-region-btn ${mapRegionView === 'nusantara' ? 'active' : ''}`}
+                        onClick={() => setMapRegionView('nusantara')}
+                        aria-pressed={mapRegionView === 'nusantara'}
                       >
-                        {z}x
+                        <Globe size={13} />
+                        <span>Seluruh Nusantara</span>
                       </button>
-                    ))}
+                      <button
+                        type="button"
+                        className={`map-region-btn ${mapRegionView === 'jawa' ? 'active' : ''}`}
+                        onClick={() => setMapRegionView('jawa')}
+                        aria-pressed={mapRegionView === 'jawa'}
+                      >
+                        <Maximize2 size={13} />
+                        <span>Fokus Jawa & Madura</span>
+                      </button>
+                    </div>
+
+                    {/* Zoom Controls (1x / 1.5x / 2x) */}
+                    <div className="map-zoom-controls" role="group" aria-label="Perbesaran Peta">
+                      <span className="zoom-label">
+                        <ZoomIn size={13} /> Zoom:
+                      </span>
+                      {([1, 1.5, 2] as MapZoom[]).map((z) => (
+                        <button
+                          key={z}
+                          type="button"
+                          className={`map-zoom-btn ${mapZoom === z ? 'active' : ''}`}
+                          onClick={() => setMapZoom(z)}
+                          aria-pressed={mapZoom === z}
+                        >
+                          {z}x
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
                 {/* Scrollable & Pannable SVG Viewport */}
                 <div className="map-viewport-scroll">
                   <svg
-                    viewBox="0 0 1000 450"
-                    className={`vintage-svg-map zoom-${String(mapZoom).replace('.', '-')}`}
+                    viewBox={activeViewBox}
+                    className={`vintage-svg-map view-${mapRegionView} zoom-${String(mapZoom).replace('.', '-')}`}
                     style={{
                       width: `${mapZoom * 100}%`,
-                      minWidth: mapZoom === 1 ? '540px' : `${Math.round(mapZoom * 620)}px`
+                      minWidth: mapZoom === 1 ? '560px' : `${Math.round(mapZoom * 640)}px`
                     }}
-                    aria-label="Peta Interaktif Sebaran Cultuurstelsel di Pulau Jawa dan Kepulauan"
+                    aria-label={
+                      mapRegionView === 'nusantara'
+                        ? 'Peta Geospasial Kepulauan Indonesia (Sabang sampai Merauke) Era Cultuurstelsel'
+                        : 'Peta Geospasial Detail Pulau Jawa dan Madura Era Cultuurstelsel'
+                    }
                   >
-                    {/* Background Parchment Tint */}
-                    <rect width="1000" height="450" fill="transparent" />
+                    <defs>
+                      <clipPath id="atlas-frame-clip">
+                        <rect x="0" y="0" width={MAP_BOUNDS.width} height={MAP_BOUNDS.height} />
+                      </clipPath>
+                      <radialGradient id="atlas-ocean-grad" cx="50%" cy="50%" r="65%">
+                        <stop offset="0%" stopColor="#2c231a" />
+                        <stop offset="65%" stopColor="#201912" />
+                        <stop offset="100%" stopColor="#17120d" />
+                      </radialGradient>
+                      <linearGradient id="atlas-land-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#56432e" />
+                        <stop offset="100%" stopColor="#3f3020" />
+                      </linearGradient>
+                      <linearGradient id="atlas-java-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#6a5033" />
+                        <stop offset="100%" stopColor="#4c3822" />
+                      </linearGradient>
+                    </defs>
 
-                    {/* Grid Lines Kartografi Antik */}
-                    <g className="map-grid-lines" stroke="#c8963e" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.35">
-                      <line x1="50" y1="50" x2="950" y2="50" />
-                      <line x1="50" y1="150" x2="950" y2="150" />
-                      <line x1="50" y1="250" x2="950" y2="250" />
-                      <line x1="50" y1="350" x2="950" y2="350" />
-                      <line x1="150" y1="30" x2="150" y2="420" />
-                      <line x1="300" y1="30" x2="300" y2="420" />
-                      <line x1="450" y1="30" x2="450" y2="420" />
-                      <line x1="600" y1="30" x2="600" y2="420" />
-                      <line x1="750" y1="30" x2="750" y2="420" />
-                      <line x1="900" y1="30" x2="900" y2="420" />
-                    </g>
+                    <g clipPath="url(#atlas-frame-clip)">
+                      {/* 1. Ocean Background */}
+                      <rect
+                        x="0"
+                        y="0"
+                        width={MAP_BOUNDS.width}
+                        height={MAP_BOUNDS.height}
+                        fill="url(#atlas-ocean-grad)"
+                      />
 
-                    {/* Label Lintang & Bujur */}
-                    <text x="55" y="45" fill="#d19847" fontSize="10" fontFamily="Cinzel" opacity="0.72">6° Z.B. (Zuid)</text>
-                    <text x="55" y="245" fill="#d19847" fontSize="10" fontFamily="Cinzel" opacity="0.72">7° Z.B.</text>
-                    <text x="55" y="345" fill="#d19847" fontSize="10" fontFamily="Cinzel" opacity="0.72">8° Z.B.</text>
-                    <text x="145" y="435" fill="#d19847" fontSize="10" fontFamily="Cinzel" opacity="0.72">106° O.L.</text>
-                    <text x="445" y="435" fill="#d19847" fontSize="10" fontFamily="Cinzel" opacity="0.72">110° O.L.</text>
-                    <text x="745" y="435" fill="#d19847" fontSize="10" fontFamily="Cinzel" opacity="0.72">113° O.L.</text>
+                      {/* 2. Graticule Grid (Garis Lintang, Khatulistiwa 0°, & Bujur Asli) */}
+                      {mapRegionView === 'nusantara' ? (
+                        <g className="map-graticule-nusantara">
+                          {[5, -5, -10].map((lat) => {
+                            const y = projectLat(lat);
+                            return (
+                              <g key={`lat-${lat}`}>
+                                <line
+                                  x1={0}
+                                  y1={y}
+                                  x2={MAP_BOUNDS.width}
+                                  y2={y}
+                                  stroke="#c8963e"
+                                  strokeWidth={0.45}
+                                  strokeDasharray="4 4"
+                                  opacity={0.26}
+                                />
+                                <text
+                                  x={8}
+                                  y={y - 3}
+                                  fill="#cda053"
+                                  fontSize={8.2}
+                                  fontFamily="Cinzel, serif"
+                                  opacity={0.72}
+                                >
+                                  {Math.abs(lat)}° {lat > 0 ? 'LU' : 'LS'}
+                                </text>
+                              </g>
+                            );
+                          })}
 
-                    {/* Siluet Kepulauan Luar Jawa (Sumatera & Sulawesi/Maluku) */}
-                    <path
-                      d="M 40 40 Q 70 80 95 130 Q 80 160 50 200 Q 30 150 20 90 Z"
-                      className="map-island-outer"
-                    />
-                    <text x="45" y="105" className="map-outer-label">Sumatra (Minangkabau)</text>
+                          {/* Garis Khatulistiwa 0° (Equator) */}
+                          <line
+                            x1={0}
+                            y1={projectLat(0)}
+                            x2={MAP_BOUNDS.width}
+                            y2={projectLat(0)}
+                            stroke="#e5a93c"
+                            strokeWidth={0.85}
+                            strokeDasharray="8 3 2 3"
+                            opacity={0.55}
+                          />
+                          <text
+                            x={8}
+                            y={projectLat(0) - 4}
+                            fill="#f0be63"
+                            fontSize={8.5}
+                            fontWeight="bold"
+                            fontFamily="Cinzel, serif"
+                            opacity={0.88}
+                          >
+                            0° KHATULISTIWA (LINIE)
+                          </text>
 
-                    {/* Sulawesi & Maluku Siluet */}
-                    <path
-                      d="M 870 50 Q 890 85 910 110 Q 880 130 870 160"
-                      className="map-island-outer"
-                      fill="none"
-                      strokeWidth="12"
-                      strokeLinecap="round"
-                    />
-                    <text x="850" y="45" className="map-outer-label">Minahasa & Maluku</text>
+                          {[95, 100, 105, 110, 115, 120, 125, 130, 135, 140].map((lon) => {
+                            const x = projectLon(lon);
+                            return (
+                              <g key={`lon-${lon}`}>
+                                <line
+                                  x1={x}
+                                  y1={0}
+                                  x2={x}
+                                  y2={MAP_BOUNDS.height}
+                                  stroke="#c8963e"
+                                  strokeWidth={0.42}
+                                  strokeDasharray="4 4"
+                                  opacity={0.22}
+                                />
+                                {lon % 10 === 0 && (
+                                  <text
+                                    x={x + 3}
+                                    y={MAP_BOUNDS.height - 6}
+                                    fill="#cda053"
+                                    fontSize={8.2}
+                                    fontFamily="Cinzel, serif"
+                                    opacity={0.72}
+                                  >
+                                    {lon}° BT
+                                  </text>
+                                )}
+                              </g>
+                            );
+                          })}
+                        </g>
+                      ) : (
+                        <g className="map-graticule-jawa">
+                          {[-5, -6, -7, -8, -9].map((lat) => {
+                            const y = projectLat(lat);
+                            return (
+                              <g key={`jlat-${lat}`}>
+                                <line
+                                  x1={JAVA_FOCUS_RECT.x}
+                                  y1={y}
+                                  x2={JAVA_FOCUS_RECT.x + JAVA_FOCUS_RECT.width}
+                                  y2={y}
+                                  stroke="#c8963e"
+                                  strokeWidth={0.45 * k}
+                                  strokeDasharray={`${3.5 * k} ${3.5 * k}`}
+                                  opacity={0.3}
+                                />
+                                <text
+                                  x={JAVA_FOCUS_RECT.x + 3 * k}
+                                  y={y - 2.5 * k}
+                                  fill="#cda053"
+                                  fontSize={8.2 * k}
+                                  fontFamily="Cinzel, serif"
+                                  opacity={0.78}
+                                >
+                                  {Math.abs(lat)}° LS
+                                </text>
+                              </g>
+                            );
+                          })}
+                          {[105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115].map((lon) => {
+                            const x = projectLon(lon);
+                            return (
+                              <g key={`jlon-${lon}`}>
+                                <line
+                                  x1={x}
+                                  y1={JAVA_FOCUS_RECT.y}
+                                  x2={x}
+                                  y2={JAVA_FOCUS_RECT.y + JAVA_FOCUS_RECT.height}
+                                  stroke="#c8963e"
+                                  strokeWidth={0.42 * k}
+                                  strokeDasharray={`${3.5 * k} ${3.5 * k}`}
+                                  opacity={0.25}
+                                />
+                                {lon % 2 === 0 && (
+                                  <text
+                                    x={x + 2.5 * k}
+                                    y={JAVA_FOCUS_RECT.y + JAVA_FOCUS_RECT.height - 4 * k}
+                                    fill="#cda053"
+                                    fontSize={8.2 * k}
+                                    fontFamily="Cinzel, serif"
+                                    opacity={0.78}
+                                  >
+                                    {lon}° BT
+                                  </text>
+                                )}
+                              </g>
+                            );
+                          })}
+                        </g>
+                      )}
 
-                    {/* Garis Pesisir Pulau Jawa */}
-                    <path
-                      d="M 130 185
-                         C 150 170, 180 180, 210 185
-                         C 240 180, 270 190, 310 195
-                         C 340 190, 380 180, 430 185
-                         C 480 180, 520 175, 560 180
-                         C 590 170, 620 165, 660 175
-                         C 690 185, 730 185, 760 195
-                         C 790 205, 830 215, 870 230
-                         C 885 245, 875 270, 850 280
-                         C 810 275, 770 280, 730 270
-                         C 690 260, 650 275, 600 280
-                         C 560 270, 510 285, 470 290
-                         C 420 280, 380 285, 330 285
-                         C 290 280, 250 290, 210 290
-                         C 170 280, 140 270, 120 250
-                         C 105 230, 115 200, 130 185 Z"
-                      className="map-java-landmass"
-                    />
+                      {/* 3. Siluet Wilayah Tetangga Kontekstual (Malaya, Kalimantan Utara, Timor Timur, Papua Timur) */}
+                      <g className="map-neighbor-group">
+                        {NEIGHBOR_CONTEXT_PATHS.map((feat) => (
+                          <path
+                            key={feat.id}
+                            d={feat.pathD}
+                            fillRule="evenodd"
+                            fill="rgba(54, 43, 31, 0.52)"
+                            stroke="rgba(168, 132, 74, 0.34)"
+                            strokeWidth={0.7 * k}
+                            strokeDasharray={`${2.6 * k} ${1.8 * k}`}
+                          />
+                        ))}
+                        {mapRegionView === 'nusantara' && (
+                          <g className="map-neighbor-labels" pointerEvents="none">
+                            <text x={projectLon(102.0)} y={projectLat(4.4)} className="map-neighbor-label">
+                              Semenanjung Malaya
+                            </text>
+                            <text x={projectLon(114.8)} y={projectLat(3.2)} className="map-neighbor-label">
+                              Kalimantan Utara
+                            </text>
+                            <text x={projectLon(126.4)} y={projectLat(-8.65)} className="map-neighbor-label">
+                              Timor Timur
+                            </text>
+                          </g>
+                        )}
+                      </g>
 
-                    {/* Garis Pegunungan Pedalaman Jawa */}
-                    <path
-                      d="M 190 255 Q 240 235 280 250 Q 350 240 420 255 Q 490 245 560 260 Q 640 245 720 255 Q 780 245 830 260"
-                      fill="none"
-                      stroke="#c8963e"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeDasharray="2 8"
-                      opacity="0.6"
-                    />
+                      {/* 4. Efek Pesisir Dangkal (Coastal Shelf Glow) */}
+                      <g className="map-coastal-glow" pointerEvents="none">
+                        {INDONESIA_OUTER_PATHS.map((feat) => (
+                          <path
+                            key={`glow-${feat.id}`}
+                            d={feat.pathD}
+                            fill="none"
+                            stroke="rgba(218, 168, 82, 0.14)"
+                            strokeWidth={3.2 * k}
+                            strokeLinejoin="round"
+                          />
+                        ))}
+                        {JAVA_MADURA_PATHS.map((feat) => (
+                          <path
+                            key={`glow-${feat.id}`}
+                            d={feat.pathD}
+                            fill="none"
+                            stroke="rgba(235, 185, 92, 0.22)"
+                            strokeWidth={3.8 * k}
+                            strokeLinejoin="round"
+                          />
+                        ))}
+                      </g>
 
-                    {/* Jalur Kereta Api Kolonial (Staatsspoorwegen / NIS) */}
-                    <g className="railway-group">
-                      {railwayLinesData.map((rail) => (
-                        <path
-                          key={rail.id}
-                          d={rail.pathD}
-                          className="map-railway-track"
-                        />
-                      ))}
-                    </g>
+                      {/* 5. Daratan Utama Kepulauan Nusantara (Sumatera, Kalimantan, Sulawesi, Bali-NT, Maluku, Papua) */}
+                      <g className="map-outer-islands-group">
+                        {INDONESIA_OUTER_PATHS.map((feat) => (
+                          <path
+                            key={feat.id}
+                            d={feat.pathD}
+                            fillRule="evenodd"
+                            fill="url(#atlas-land-grad)"
+                            stroke="#cf9b46"
+                            strokeWidth={0.82 * k}
+                            strokeLinejoin="round"
+                            className="map-archipelago-land"
+                          />
+                        ))}
+                      </g>
 
-                    {/* Mawar Kompas Antik (Compass Rose) */}
-                    <g transform="translate(100, 340)" className="map-compass-rose">
-                      <circle r="30" fill="none" stroke="#c8963e" strokeWidth="1" opacity="0.6" />
-                      <line x1="0" y1="-38" x2="0" y2="38" stroke="#842323" strokeWidth="1.5" />
-                      <line x1="-38" y1="0" x2="38" y2="0" stroke="#842323" strokeWidth="1.5" />
-                      <polygon points="0,-35 5,-10 0,0 -5,-10" fill="#842323" />
-                      <polygon points="0,35 5,10 0,0 -5,10" fill="#c8963e" />
-                      <polygon points="35,0 10,5 0,0 10,-5" fill="#c8963e" />
-                      <polygon points="-35,0 -10,5 0,0 -10,-5" fill="#c8963e" />
-                      <text x="-4" y="-42" fill="#e5a93c" fontSize="11" fontWeight="bold" fontFamily="Cinzel">N</text>
-                    </g>
+                      {/* 6. Daratan Resolusi Tinggi Pulau Jawa & Madura (Klik di Mode Nusantara -> Zoom ke Jawa) */}
+                      <g
+                        className={`map-java-group ${mapRegionView === 'nusantara' ? 'is-zoomable' : ''}`}
+                        onClick={
+                          mapRegionView === 'nusantara'
+                            ? () => setMapRegionView('jawa')
+                            : undefined
+                        }
+                      >
+                        {JAVA_MADURA_PATHS.map((feat) => (
+                          <path
+                            key={feat.id}
+                            d={feat.pathD}
+                            fillRule="evenodd"
+                            fill="url(#atlas-java-grad)"
+                            stroke="#efc26c"
+                            strokeWidth={mapRegionView === 'nusantara' ? 1.05 : 1.15 * k}
+                            strokeLinejoin="round"
+                            className="map-java-landmass"
+                          />
+                        ))}
+                      </g>
 
-                    {/* Marker Titik Geografis */}
-                    {filteredMarkers.map((marker) => {
-                      const isSelected = marker.id === selectedMarkerId;
-                      const markerColor = getMarkerColor(marker.category);
-
-                      return (
+                      {/* Bingkai Sorot Interaktif Pulau Jawa saat di Mode Nusantara */}
+                      {mapRegionView === 'nusantara' && (
                         <g
-                          key={marker.id}
-                          transform={`translate(${marker.cx}, ${marker.cy})`}
-                          className={`map-node ${isSelected ? 'selected' : ''}`}
-                          onClick={() => setSelectedMarkerId(marker.id)}
-                          role="button"
-                          tabIndex={0}
-                          aria-label={`Pilih lokasi ${marker.name}`}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              e.preventDefault();
-                              setSelectedMarkerId(marker.id);
-                            }
-                          }}
+                          className="map-java-focus-callout"
+                          onClick={() => setMapRegionView('jawa')}
                           style={{ cursor: 'pointer' }}
                         >
-                          {/* Expanded transparent touch target (r="18") for finger accuracy */}
-                          <circle r="18" fill="transparent" />
-
-                          {/* Pulse effect saat terpilih */}
-                          {isSelected && (
-                            <circle
-                              r="18"
-                              fill="none"
-                              stroke={markerColor}
-                              strokeWidth="2"
-                              className="marker-pulse-ring"
-                            />
-                          )}
-                          <circle
-                            r={isSelected ? '9.5' : '6.5'}
-                            fill={markerColor}
-                            stroke="#ffffff"
-                            strokeWidth="2"
-                            className="marker-dot"
+                          <rect
+                            x={JAVA_FOCUS_RECT.x}
+                            y={JAVA_FOCUS_RECT.y}
+                            width={JAVA_FOCUS_RECT.width}
+                            height={JAVA_FOCUS_RECT.height}
+                            rx={4}
+                            fill="rgba(229, 169, 60, 0.04)"
+                            stroke="#e5a93c"
+                            strokeWidth={0.9}
+                            strokeDasharray="4 3"
+                            opacity={0.72}
                           />
-                          {/* Label Kota / Karesidenan */}
                           <text
-                            y={isSelected ? '-14' : '-10'}
-                            textAnchor="middle"
-                            className={`marker-label ${isSelected ? 'active-label' : ''}`}
+                            x={JAVA_FOCUS_RECT.x + JAVA_FOCUS_RECT.width - 4}
+                            y={JAVA_FOCUS_RECT.y + JAVA_FOCUS_RECT.height - 4}
+                            textAnchor="end"
+                            fill="#ffd57e"
+                            fontSize={7.6}
+                            fontFamily="Cinzel, serif"
+                            fontWeight="bold"
+                            opacity={0.9}
                           >
-                            {marker.name}
+                            KLIK → FOKUS JAWA & MADURA
                           </text>
                         </g>
-                      );
-                    })}
+                      )}
+
+                      {/* 7. Sabuk Gunung Api Pedalaman Jawa */}
+                      <path
+                        d={volcanicSpinePath}
+                        fill="none"
+                        stroke="#dfb05c"
+                        strokeWidth={1.6 * k}
+                        strokeLinecap="round"
+                        strokeDasharray={`${1.4 * k} ${4.2 * k}`}
+                        opacity={0.55}
+                        pointerEvents="none"
+                      />
+
+                      {/* 8. Label Perairan & Kepulauan Bersejarah */}
+                      <g className="map-cartographic-labels" pointerEvents="none">
+                        {SEA_LABELS.filter((s) => s.view === 'both' || s.view === mapRegionView).map((sea) => {
+                          const sx = projectLon(sea.lon);
+                          const sy = projectLat(sea.lat);
+                          return (
+                            <text
+                              key={sea.id}
+                              x={sx}
+                              y={sy}
+                              textAnchor="middle"
+                              transform={sea.rotate ? `rotate(${sea.rotate}, ${sx}, ${sy})` : undefined}
+                              className="map-sea-label"
+                              style={{ fontSize: `${8.2 * k}px`, letterSpacing: `${0.14 * k}em` }}
+                            >
+                              {sea.text}
+                            </text>
+                          );
+                        })}
+
+                        {mapRegionView === 'nusantara' ? (
+                          ISLAND_LABELS.map((isl) => (
+                            <g key={isl.id} transform={`translate(${projectLon(isl.lon)}, ${projectLat(isl.lat)})`}>
+                              <text textAnchor="middle" className="map-island-title">
+                                {isl.text}
+                              </text>
+                              {isl.subText && (
+                                <text y={9.5} textAnchor="middle" className="map-island-subtitle">
+                                  ({isl.subText})
+                                </text>
+                              )}
+                            </g>
+                          ))
+                        ) : (
+                          <g className="map-java-subregion-labels">
+                            <text
+                              x={projectLon(113.45)}
+                              y={projectLat(-7.03)}
+                              textAnchor="middle"
+                              className="map-java-region-tag"
+                              style={{ fontSize: `${8.0 * k}px` }}
+                            >
+                              PULAU MADURA
+                            </text>
+                            <text
+                              x={projectLon(110.58)}
+                              y={projectLat(-7.68)}
+                              textAnchor="middle"
+                              className="map-java-region-tag"
+                              style={{ fontSize: `${7.4 * k}px` }}
+                            >
+                              Vorstenlanden (Solo–Yogya)
+                            </text>
+                            <text
+                              x={projectLon(112.74)}
+                              y={projectLat(-7.18)}
+                              textAnchor="middle"
+                              className="map-java-port-tag"
+                              style={{ fontSize: `${7.2 * k}px` }}
+                            >
+                              Pelabuhan Surabaya
+                            </text>
+                            <text
+                              x={projectLon(110.42)}
+                              y={projectLat(-6.86)}
+                              textAnchor="end"
+                              className="map-java-port-tag"
+                              style={{ fontSize: `${7.2 * k}px` }}
+                            >
+                              Pelabuhan Semarang
+                            </text>
+                          </g>
+                        )}
+                      </g>
+
+                      {/* 9. Jalur Kereta Api Kolonial (Staatsspoorwegen / NIS) */}
+                      <g className="railway-group" pointerEvents="none">
+                        {railwayLinesData.map((rail) => (
+                          <path
+                            key={rail.id}
+                            d={projectCoordsToPath(rail.coordinates)}
+                            fill="none"
+                            stroke="#ffd57e"
+                            strokeWidth={2.2 * k}
+                            strokeDasharray={`${3.8 * k} ${2.6 * k}`}
+                            strokeLinecap="round"
+                            opacity={0.94}
+                          />
+                        ))}
+                      </g>
+
+                      {/* 10. Marker Titik Geografis Berkoordinat GPS Asli */}
+                      {filteredMarkers.map((marker) => {
+                        const isSelected = marker.id === selectedMarkerId;
+                        const markerColor = getMarkerColor(marker.category);
+                        const mx = projectLon(marker.lon);
+                        const my = projectLat(marker.lat);
+
+                        // Di mode Fokus Jawa, sembunyikan pin Luar Jawa yang di luar jendela viewBox kecuali Lampung
+                        const inCurrentFrame =
+                          mapRegionView === 'nusantara' ||
+                          (marker.lon >= 104.7 && marker.lon <= 115.1 && marker.lat <= -4.95 && marker.lat >= -9.05);
+                        if (!inCurrentFrame) return null;
+
+                        const showTextLabel =
+                          mapRegionView === 'jawa' || isSelected || Boolean(marker.showLabelInNusantara);
+
+                        // Arah label anti-tumpuk (khusus Lampung di mode Fokus Jawa diarahkan ke kanan agar tidak terpotong tepi kiri)
+                        const effectivePos =
+                          mapRegionView === 'jawa' && marker.id === 'marker-lampung'
+                            ? 'right'
+                            : marker.labelPos || 'top';
+
+                        let labelDx = 0;
+                        let labelDy = -(isSelected ? 12.5 : 10) * k;
+                        let anchor: 'middle' | 'start' | 'end' = 'middle';
+
+                        if (effectivePos === 'bottom') {
+                          labelDx = 0;
+                          labelDy = (isSelected ? 18.5 : 15.8) * k;
+                          anchor = 'middle';
+                        } else if (effectivePos === 'left') {
+                          labelDx = -(isSelected ? 12.5 : 10) * k;
+                          labelDy = 3.2 * k;
+                          anchor = 'end';
+                        } else if (effectivePos === 'right') {
+                          labelDx = (isSelected ? 12.5 : 10) * k;
+                          labelDy = 3.2 * k;
+                          anchor = 'start';
+                        }
+
+                        return (
+                          <g
+                            key={marker.id}
+                            transform={`translate(${mx}, ${my})`}
+                            className={`map-node ${isSelected ? 'selected' : ''}`}
+                            onClick={() => handleSelectMarker(marker)}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={`Pilih lokasi ${marker.name} (${formatHistoricalCoord(marker.lat, marker.lon)})`}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                handleSelectMarker(marker);
+                              }
+                            }}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            {/* Touch target proporsional terhadap kamera */}
+                            <circle r={18 * k} fill="transparent" />
+
+                            {/* Efek gelombang saat terpilih */}
+                            {isSelected && (
+                              <circle
+                                r={9.2 * k}
+                                fill="none"
+                                stroke={markerColor}
+                                strokeWidth={2.0 * k}
+                                className="marker-pulse-ring"
+                              />
+                            )}
+                            <circle
+                              r={(isSelected ? 8.8 : 5.8) * k}
+                              fill={markerColor}
+                              stroke="#fff9ed"
+                              strokeWidth={1.85 * k}
+                              className="marker-dot"
+                            />
+                            {showTextLabel && (
+                              <text
+                                x={labelDx}
+                                y={labelDy}
+                                textAnchor={anchor}
+                                className={`marker-label ${isSelected ? 'active-label' : ''}`}
+                                style={{
+                                  fontSize: `${(isSelected ? 10.2 : 8.7) * k}px`,
+                                  strokeWidth: `${2.8 * k}px`
+                                }}
+                              >
+                                {marker.name}
+                              </text>
+                            )}
+                          </g>
+                        );
+                      })}
+
+                      {/* 11. Mawar Kompas Antik Dinamis (Selalu di Sudut Samudra Hindia Kiri-Bawah ViewBox) */}
+                      <g
+                        transform={`translate(${vbBox.x + 38 * k}, ${vbBox.y + vbBox.height - 38 * k}) scale(${k})`}
+                        className="map-compass-rose"
+                        pointerEvents="none"
+                      >
+                        <circle r="24" fill="rgba(20, 15, 11, 0.58)" stroke="#c8963e" strokeWidth="0.9" />
+                        <circle r="19" fill="none" stroke="#c8963e" strokeWidth="0.5" strokeDasharray="2 2" />
+                        <line x1="0" y1="-29" x2="0" y2="29" stroke="#842323" strokeWidth="1.3" />
+                        <line x1="-29" y1="0" x2="29" y2="0" stroke="#842323" strokeWidth="1.3" />
+                        <polygon points="0,-27 4.2,-8 0,0 -4.2,-8" fill="#a82c2c" />
+                        <polygon points="0,27 4.2,8 0,0 -4.2,8" fill="#c8963e" />
+                        <polygon points="27,0 8,4.2 0,0 8,-4.2" fill="#c8963e" />
+                        <polygon points="-27,0 -8,4.2 0,0 -8,-4.2" fill="#c8963e" />
+                        <text x="0" y="-31" textAnchor="middle" fill="#ffd57e" fontSize="9.5" fontWeight="bold" fontFamily="Cinzel, serif">
+                          U
+                        </text>
+                      </g>
+
+                      {/* 12. Skala Bar Kilometer Akurat Khatulistiwa (1° ≈ 111,32 km) */}
+                      <g
+                        transform={`translate(${vbBox.x + vbBox.width - (mapRegionView === 'nusantara' ? 116 : 112 * k)}, ${vbBox.y + vbBox.height - 18 * k})`}
+                        className="map-scale-bar"
+                        pointerEvents="none"
+                      >
+                        {mapRegionView === 'nusantara' ? (
+                          <>
+                            {/* 500 km = 4.4915° -> (4.4915 / 48.4) * 1000 = 92.8 unit */}
+                            <rect x={-6} y={-14} width={105} height={22} rx={3} fill="rgba(18, 14, 10, 0.72)" stroke="rgba(200, 150, 62, 0.35)" strokeWidth={0.7} />
+                            <rect x={0} y={-2} width={46.4} height={3.5} fill="#e5a93c" />
+                            <rect x={46.4} y={-2} width={46.4} height={3.5} fill="#3b2f22" stroke="#e5a93c" strokeWidth={0.6} />
+                            <text x={0} y={-5} fill="#ebd9b8" fontSize={7.2} fontFamily="Cinzel, serif">0</text>
+                            <text x={46.4} y={-5} textAnchor="middle" fill="#ebd9b8" fontSize={7.2} fontFamily="Cinzel, serif">250</text>
+                            <text x={92.8} y={-5} textAnchor="end" fill="#ffd57e" fontSize={7.2} fontWeight="bold" fontFamily="Cinzel, serif">500 km</text>
+                          </>
+                        ) : (
+                          <>
+                            {/* 100 km = 0.8983° -> (0.8983 / 48.4) * 1000 = 18.56 unit (~86.3px di layar) */}
+                            <rect x={-6 * k} y={-14 * k} width={99 * k} height={22 * k} rx={3 * k} fill="rgba(18, 14, 10, 0.76)" stroke="rgba(200, 150, 62, 0.4)" strokeWidth={0.7 * k} />
+                            <rect x={0} y={-2 * k} width={9.28} height={3.5 * k} fill="#e5a93c" />
+                            <rect x={9.28} y={-2 * k} width={9.28} height={3.5 * k} fill="#3b2f22" stroke="#e5a93c" strokeWidth={0.6 * k} />
+                            <text x={0} y={-5 * k} fill="#ebd9b8" fontSize={7.2 * k} fontFamily="Cinzel, serif">0</text>
+                            <text x={9.28} y={-5 * k} textAnchor="middle" fill="#ebd9b8" fontSize={7.2 * k} fontFamily="Cinzel, serif">50</text>
+                            <text x={18.56} y={-5 * k} textAnchor="end" fill="#ffd57e" fontSize={7.2 * k} fontWeight="bold" fontFamily="Cinzel, serif">100 km</text>
+                          </>
+                        )}
+                      </g>
+                    </g>
                   </svg>
                 </div>
 
                 {/* Quick-Select Location Chips for effortless Mobile/Tablet selection */}
                 <div className="map-quick-chips-wrap">
-                  <span className="quick-chips-title">Pilih Cepat Lokasi:</span>
+                  <div className="quick-chips-header-row">
+                    <span className="quick-chips-title">Pilih Cepat Lokasi ({filteredMarkers.length} Titik GPS):</span>
+                    <span className="quick-chips-coord-readout">
+                      Koordinat Aktif: <strong>{formatHistoricalCoord(selectedMarker.lat, selectedMarker.lon)}</strong>
+                    </span>
+                  </div>
                   <div className="map-quick-chips" role="tablist" aria-label="Pilih Cepat Titik Lokasi Peta">
                     {filteredMarkers.map((marker) => {
                       const isSelected = marker.id === selectedMarkerId;
@@ -461,7 +944,7 @@ export const InteractiveLabSection: React.FC = () => {
                           role="tab"
                           aria-selected={isSelected}
                           className={`map-chip-btn ${isSelected ? 'active' : ''}`}
-                          onClick={() => setSelectedMarkerId(marker.id)}
+                          onClick={() => handleSelectMarker(marker)}
                         >
                           <span
                             className="chip-color-dot"
@@ -503,7 +986,34 @@ export const InteractiveLabSection: React.FC = () => {
                 </div>
 
                 <h3 className="detail-title">{selectedMarker.title}</h3>
-                <h4 className="detail-residency">{selectedMarker.residency}</h4>
+                <div className="detail-residency-row">
+                  <h4 className="detail-residency">{selectedMarker.residency}</h4>
+                  <span className="detail-gps-pill">
+                    {formatHistoricalCoord(selectedMarker.lat, selectedMarker.lon)}
+                  </span>
+                </div>
+
+                {/* Contextual Camera Shortcut when viewing a Java residency in Nusantara view */}
+                {selectedMarker.regionGroup === 'jawa' && mapRegionView === 'nusantara' && (
+                  <button
+                    type="button"
+                    className="detail-focus-java-btn"
+                    onClick={() => setMapRegionView('jawa')}
+                  >
+                    <Maximize2 size={14} />
+                    <span>Perbesar Peta ke Fokus Pulau Jawa & Madura</span>
+                  </button>
+                )}
+                {mapRegionView === 'jawa' && (
+                  <button
+                    type="button"
+                    className="detail-focus-java-btn is-return"
+                    onClick={() => setMapRegionView('nusantara')}
+                  >
+                    <Globe size={14} />
+                    <span>Kembali ke Peta Utuh Seluruh Nusantara</span>
+                  </button>
+                )}
 
                 <p className="detail-summary">{selectedMarker.summary}</p>
 

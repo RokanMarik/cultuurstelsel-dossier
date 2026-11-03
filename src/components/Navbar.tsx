@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Scroll,
   Menu,
   X,
   BookOpen,
@@ -34,7 +33,7 @@ const quickDockItems = [
   { id: 'eksploitasi', shortLabel: 'Fiskal', icon: Coins },
   { id: 'dampak', shortLabel: 'Dampak', icon: Flame },
   { id: 'interactive-lab', shortLabel: 'Lab', icon: Compass },
-  { id: 'permainan-sejarah', shortLabel: 'TTS/Kuis', icon: Gamepad2 },
+  { id: 'permainan-sejarah', shortLabel: 'Kuis', icon: Gamepad2 },
 ];
 
 export const Navbar: React.FC = () => {
@@ -49,7 +48,7 @@ export const Navbar: React.FC = () => {
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
       setScrollProgress(scrolled);
-      setIsScrolled(winScroll > 30);
+      setIsScrolled(winScroll > 24);
 
       const scrollPosition = winScroll + 220;
       for (let i = navItems.length - 1; i >= 0; i--) {
@@ -70,7 +69,7 @@ export const Navbar: React.FC = () => {
     setIsMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      const navHeight = window.innerWidth <= 1160 ? 64 : 72;
+      const navHeight = window.innerWidth <= 1160 ? 60 : 68;
       const elementPosition = element.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({
         top: elementPosition - navHeight,
@@ -87,7 +86,6 @@ export const Navbar: React.FC = () => {
   return (
     <>
       <header className={`navbar-header ${isScrolled ? 'scrolled' : ''}`}>
-        {/* Reading Progress Bar */}
         <div className="reading-progress-track" aria-hidden="true">
           <div className="reading-progress-bar" style={{ width: `${scrollProgress}%` }} />
         </div>
@@ -99,16 +97,11 @@ export const Navbar: React.FC = () => {
             onClick={(e) => scrollToSection(e, 'beranda')}
             id="nav-brand-logo"
           >
-            <div className="brand-seal">
-              <Scroll size={18} />
-            </div>
-            <div className="brand-text">
-              <span className="brand-title">CULTUURSTELSEL</span>
-              <span className="brand-subtitle">1830 – 1870</span>
-            </div>
+            <span className="brand-title">Cultuurstelsel</span>
+            <span className="brand-divider" aria-hidden="true">/</span>
+            <span className="brand-subtitle tabular-nums">1830–1870</span>
           </a>
 
-          {/* Desktop Menu */}
           <div className="desktop-nav-menu">
             {navItems.map((item) => (
               <a
@@ -119,7 +112,6 @@ export const Navbar: React.FC = () => {
                 onClick={(e) => scrollToSection(e, item.id)}
               >
                 {item.label}
-                {activeSection === item.id && <span className="active-pip" />}
               </a>
             ))}
             <a
@@ -128,12 +120,11 @@ export const Navbar: React.FC = () => {
               onClick={(e) => scrollToSection(e, 'pustaka')}
               id="nav-btn-referensi"
             >
-              <BookOpen size={14} />
+              <BookOpen size={15} strokeWidth={1.5} />
               <span>Referensi</span>
             </a>
           </div>
 
-          {/* Mobile/Tablet Toggle Button */}
           <button
             type="button"
             className="mobile-menu-btn"
@@ -143,12 +134,11 @@ export const Navbar: React.FC = () => {
             aria-label={isMobileMenuOpen ? 'Tutup Daftar Bab' : 'Buka Daftar Bab'}
             id="mobile-menu-toggle"
           >
-            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {isMobileMenuOpen ? <X size={18} strokeWidth={1.5} /> : <Menu size={18} strokeWidth={1.5} />}
             <span className="mobile-menu-label">Daftar Bab</span>
           </button>
         </nav>
 
-        {/* Mobile/Tablet Drawer Menu */}
         {isMobileMenuOpen && (
           <div className="mobile-drawer" id="mobile-navigation-drawer">
             <div className="container mobile-drawer-content">
@@ -160,7 +150,7 @@ export const Navbar: React.FC = () => {
                   className={`mobile-nav-link ${activeSection === item.id ? 'active' : ''}`}
                   onClick={(e) => scrollToSection(e, item.id)}
                 >
-                  <span className="mobile-nav-index">
+                  <span className="mobile-nav-index tabular-nums">
                     {String(idx + 1).padStart(2, '0')}
                   </span>
                   <span>{item.label}</span>
@@ -171,7 +161,6 @@ export const Navbar: React.FC = () => {
         )}
       </header>
 
-      {/* Mobile & Tablet Thumb-Friendly Bottom Quick-Jump Dock */}
       <nav className="mobile-bottom-dock" aria-label="Pintasan Cepat Bab">
         {quickDockItems.map((item) => {
           const Icon = item.icon;
@@ -184,7 +173,7 @@ export const Navbar: React.FC = () => {
               onClick={() => navigateToSection(item.id)}
               aria-current={isActive ? 'true' : undefined}
             >
-              <Icon size={18} className="dock-icon" />
+              <Icon size={17} strokeWidth={1.5} className="dock-icon" />
               <span className="dock-label">{item.shortLabel}</span>
             </button>
           );
@@ -196,7 +185,11 @@ export const Navbar: React.FC = () => {
           aria-expanded={isMobileMenuOpen}
           aria-label="Semua Bab"
         >
-          {isMobileMenuOpen ? <X size={18} className="dock-icon" /> : <Menu size={18} className="dock-icon" />}
+          {isMobileMenuOpen ? (
+            <X size={17} strokeWidth={1.5} className="dock-icon" />
+          ) : (
+            <Menu size={17} strokeWidth={1.5} className="dock-icon" />
+          )}
           <span className="dock-label">Semua</span>
         </button>
       </nav>

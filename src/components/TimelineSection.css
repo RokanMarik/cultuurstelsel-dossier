@@ -1,100 +1,34 @@
-/* Timeline Section Styling */
 .timeline-section {
   background-color: var(--bg-parchment-dark);
-  border-bottom: 1px solid var(--border-strong);
-  position: relative;
 }
 
-.timeline-interactive-container {
-  background: linear-gradient(180deg, var(--bg-parchment-light) 0%, var(--bg-parchment) 100%);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-lg);
-  padding: clamp(1.35rem, 4vw, 3rem) clamp(1rem, 3.5vw, 2.5rem);
-  box-shadow: var(--shadow-md);
-  position: relative;
+.timeline-open-workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.timeline-interactive-container::before {
-  content: '';
-  position: absolute;
-  inset: 6px;
-  border: 1px dashed var(--border-subtle);
-  border-radius: calc(var(--radius-lg) - 6px);
-  pointer-events: none;
-}
-
-.timeline-section-header {
-  text-align: center;
-  margin-bottom: clamp(1.5rem, 3.5vw, 2.5rem);
-  position: relative;
-  z-index: 2;
-}
-
-.timeline-badge-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.85rem;
-  border-radius: var(--radius-full);
-  background-color: var(--accent-gold-bg);
-  color: var(--accent-gold);
-  border: 1px solid rgba(158, 111, 25, 0.3);
-  font-size: 0.78rem;
-  font-weight: 700;
-  font-family: var(--font-serif-heading);
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-
-.timeline-main-title {
-  font-size: clamp(1.35rem, 2.8vw, 1.85rem);
-  color: var(--ink-primary);
-  margin-bottom: 0.5rem;
-}
-
-.timeline-main-subtitle {
-  font-size: clamp(0.88rem, 1.1vw, 0.95rem);
-  color: var(--ink-muted);
-  max-width: 62ch;
-  margin-inline: auto;
-}
-
+/* Horizontal Chronology Rail */
 .timeline-stepper-track {
   display: flex;
   align-items: flex-start;
   position: relative;
-  margin-bottom: clamp(1.5rem, 3.5vw, 2.25rem);
-  padding: 0.5rem 0.75rem 1.25rem 0.75rem;
+  padding: 0.25rem 0 1rem 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x proximity;
-  gap: 1.15rem;
-  z-index: 2;
+  gap: 1rem;
   scrollbar-width: thin;
-  scrollbar-color: var(--accent-gold) rgba(0, 0, 0, 0.05);
-}
-
-.timeline-stepper-track::-webkit-scrollbar {
-  height: 6px;
-}
-
-.timeline-stepper-track::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.04);
-  border-radius: var(--radius-full);
-}
-
-.timeline-stepper-track::-webkit-scrollbar-thumb {
-  background-color: var(--accent-gold);
-  border-radius: var(--radius-full);
+  scrollbar-color: var(--border-strong) transparent;
 }
 
 .timeline-stepper-track::before {
   content: '';
   position: absolute;
-  top: 33px;
-  left: 2rem;
+  top: 22px;
+  left: 0;
   width: max(100%, 1180px);
-  height: 2px;
+  height: 1px;
   background-color: var(--border-strong);
   z-index: 1;
 }
@@ -106,72 +40,62 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.5rem;
   position: relative;
   z-index: 2;
   flex-shrink: 0;
-  min-width: 78px;
+  min-width: 92px;
   scroll-snap-align: center;
-  transition: transform var(--transition-fast);
+  padding: 0;
 }
 
-.timeline-step-node:hover {
-  transform: translateY(-2px);
-}
-
-.step-circle {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background-color: var(--bg-parchment-light);
-  border: 2px solid var(--border-strong);
-  display: flex;
+.step-year-box {
+  min-width: 64px;
+  height: 40px;
+  padding: 0 0.625rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-parchment-card);
+  border: 1px solid var(--border-strong);
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-sm);
-  transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink-primary);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
 }
 
-.step-year {
-  font-family: var(--font-serif-heading);
-  font-size: 0.78rem;
-  font-weight: 800;
-  color: var(--ink-primary);
+.timeline-step-node:hover .step-year-box {
+  border-color: var(--ink-primary);
 }
 
 .step-badge {
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
   color: var(--ink-muted);
-  max-width: 92px;
+  max-width: 96px;
   text-align: center;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
-.timeline-step-node.active .step-circle {
+.timeline-step-node.active .step-year-box {
   background-color: var(--accent-crimson);
   border-color: var(--accent-crimson);
-  box-shadow: 0 0 0 4px var(--accent-crimson-bg);
-}
-
-.timeline-step-node.active .step-year {
-  color: #fff;
+  color: #ffffff;
 }
 
 .timeline-step-node.active .step-badge {
-  color: var(--accent-crimson);
-  font-weight: 700;
+  color: var(--ink-primary);
+  font-weight: 600;
 }
 
-/* Featured Timeline Card */
+/* Single Featured Chronology Sheet (Zero Side-Tab, Zero Nested Container) */
 .featured-timeline-card {
-  border-left: 5px solid var(--accent-crimson);
   padding: var(--space-card);
-  position: relative;
-  z-index: 2;
 }
 
-/* Prev / Next Stepper Bar */
 .timeline-quick-nav-bar {
   display: flex;
   align-items: center;
@@ -179,90 +103,90 @@
   gap: 0.75rem;
   padding-bottom: 1rem;
   margin-bottom: 1.25rem;
-  border-bottom: 1px dashed var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .timeline-nav-step-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.375rem;
   min-height: var(--touch-target-min);
-  padding: 0.45rem 0.9rem;
-  border-radius: var(--radius-full);
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-strong);
   background-color: var(--bg-parchment);
   color: var(--ink-primary);
   font-family: var(--font-sans);
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: 0.875rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .timeline-nav-step-btn:hover:not(:disabled) {
-  background-color: var(--accent-gold-bg);
-  border-color: var(--accent-gold);
-  color: var(--accent-crimson);
+  background-color: var(--bg-parchment-dark);
+  border-color: var(--ink-primary);
 }
 
 .timeline-nav-step-btn:disabled {
-  opacity: 0.42;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
 .timeline-step-counter {
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   color: var(--ink-muted);
   text-align: center;
 }
 
 .featured-card-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1.25rem;
-  margin-bottom: 1.15rem;
+  margin-bottom: 1rem;
 }
 
 .featured-year-box {
-  background-color: var(--accent-crimson);
-  color: #fff;
+  background-color: var(--bg-parchment);
+  border: 1px solid var(--border-medium);
   border-radius: var(--radius-sm);
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.875rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   flex-shrink: 0;
 }
 
-.featured-year-label {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  opacity: 0.88;
+.featured-year-number {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--accent-crimson);
+  line-height: 1.15;
 }
 
-.featured-year-number {
-  font-family: var(--font-serif-heading);
-  font-size: clamp(1.15rem, 2vw, 1.35rem);
-  font-weight: 900;
-  line-height: 1.1;
+.featured-year-label {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  line-height: 1.3;
 }
 
 .featured-title-wrap {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.35rem;
+  gap: 0.5rem;
 }
 
 .featured-event-title {
-  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
   color: var(--ink-primary);
+  margin: 0;
 }
 
 .featured-event-short-desc {
-  font-size: clamp(0.95rem, 1.15vw, 1.05rem);
-  line-height: 1.75;
+  font-size: 1rem;
+  line-height: 1.72;
   color: var(--ink-secondary);
   margin-bottom: 1.5rem;
   max-width: var(--reading-measure);
@@ -276,15 +200,13 @@
 }
 
 .action-hint {
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   color: var(--ink-muted);
-  font-style: italic;
 }
 
 @media (max-width: 768px) {
   .featured-card-header {
     flex-direction: column;
-    align-items: flex-start;
     gap: 0.75rem;
   }
 
@@ -295,10 +217,10 @@
 
 @media (max-width: 440px) {
   .timeline-nav-step-btn span {
-    font-size: 0.76rem;
+    font-size: 0.8125rem;
   }
 
   .timeline-nav-step-btn {
-    padding: 0.45rem 0.65rem;
+    padding: 0.5rem 0.625rem;
   }
 }

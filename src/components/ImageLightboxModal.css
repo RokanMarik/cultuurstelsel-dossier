@@ -1,19 +1,19 @@
 /* ==========================================================================
-   IMAGE LIGHTBOX MODAL STYLES (Clean & Minimalist Historical Archive)
+   IMAGE LIGHTBOX MODAL STYLES (Curatorial Museum Archive Frame)
    ========================================================================== */
 
 .lightbox-overlay {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background-color: rgba(18, 14, 11, 0.84);
+  background-color: rgba(18, 14, 11, 0.88);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: clamp(0.75rem, 2.5vw, 1.5rem);
-  animation: lightboxFadeIn 0.25s ease-out forwards;
+  animation: lightboxFadeIn 0.22s ease-out forwards;
 }
 
 @keyframes lightboxFadeIn {
@@ -27,10 +27,10 @@
 
 .lightbox-content {
   position: relative;
-  background-color: var(--bg-parchment-light, #fcfaf5);
-  border: 1px solid var(--border-strong, #c2b49c);
-  border-radius: var(--radius-md, 12px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.38);
+  background-color: var(--bg-card, #ffffff);
+  border: 1px solid var(--border-subtle, #d8d8d4);
+  border-radius: var(--radius-sm, 4px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
   max-width: 900px;
   width: 100%;
   max-height: 90vh;
@@ -38,13 +38,13 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  animation: lightboxScaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: lightboxScaleUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes lightboxScaleUp {
   from {
     opacity: 0;
-    transform: scale(0.96);
+    transform: scale(0.97);
   }
   to {
     opacity: 1;
@@ -62,22 +62,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-full, 9999px);
-  background-color: rgba(24, 19, 15, 0.84);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-sm, 4px);
+  background-color: rgba(23, 23, 21, 0.85);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
-  transition: background-color var(--transition-fast, 150ms), transform var(--transition-fast, 150ms);
+  transition: background-color var(--transition-fast, 150ms), border-color var(--transition-fast, 150ms);
 }
 
 .lightbox-close-btn:hover {
-  background-color: var(--accent-crimson, #8c251b);
-  transform: scale(1.06);
+  background-color: var(--accent-burgundy, #8a1c14);
+  border-color: var(--accent-burgundy, #8a1c14);
 }
 
 .lightbox-image-wrap {
   width: 100%;
-  background-color: #1a1511;
+  background-color: #141412;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,13 +92,12 @@
   max-height: 62dvh;
   object-fit: contain;
   display: block;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .lightbox-caption-panel {
   padding: clamp(1rem, 2.5vw, 1.35rem) clamp(1rem, 3vw, 1.5rem);
-  background-color: var(--bg-parchment-light, #fcfaf5);
-  border-top: 1px solid var(--border-subtle, #ded4c0);
+  background-color: var(--bg-card, #ffffff);
+  border-top: 1px solid var(--border-subtle, #d8d8d4);
   overflow-y: auto;
 }
 
@@ -114,29 +113,29 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.74rem;
-  font-weight: 700;
+  font-size: 0.75rem;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 0.22rem 0.65rem;
-  border-radius: var(--radius-full, 9999px);
-  background-color: var(--accent-gold-bg, rgba(158, 111, 25, 0.1));
-  color: var(--accent-gold, #9e6f19);
-  border: 1px solid rgba(158, 111, 25, 0.25);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-xs, 2px);
+  background-color: var(--surface-recessed, #eaeae6);
+  color: var(--ink-secondary, #3b3b36);
+  border: 1px solid var(--border-subtle, #d8d8d4);
 }
 
 .lightbox-title {
-  font-family: var(--font-serif-heading, serif);
+  font-family: var(--font-serif-heading, Georgia, serif);
   font-size: clamp(1.02rem, 1.8vw, 1.18rem);
-  font-weight: 700;
-  color: var(--ink-primary, #1f1914);
+  font-weight: 600;
+  color: var(--ink-primary, #171715);
   margin: 0;
 }
 
 .lightbox-caption-text {
   font-size: 0.92rem;
   line-height: 1.58;
-  color: var(--ink-secondary, #43372f);
+  color: var(--ink-secondary, #3b3b36);
   margin-bottom: 0.85rem;
 }
 
@@ -147,26 +146,26 @@
   gap: 0.4rem;
   font-size: 0.78rem;
   padding: 0.45rem 0.75rem;
-  background-color: var(--bg-parchment-dark, #ede4d1);
-  border-radius: var(--radius-sm, 6px);
-  border: 1px solid var(--border-subtle, #dbd0bb);
-  color: var(--ink-muted, #695b50);
+  background-color: var(--surface-recessed, #eaeae6);
+  border-radius: var(--radius-xs, 2px);
+  border: 1px solid var(--border-subtle, #d8d8d4);
+  color: var(--ink-muted, #575750);
 }
 
 .source-icon {
-  color: var(--accent-gold, #9e6f19);
+  color: var(--accent-burgundy, #8a1c14);
   flex-shrink: 0;
   margin-top: 0.1rem;
 }
 
 .source-label {
-  font-weight: 700;
-  color: var(--ink-secondary, #43372f);
+  font-weight: 600;
+  color: var(--ink-secondary, #3b3b36);
 }
 
 .source-value {
   font-style: italic;
-  color: var(--ink-primary, #1f1914);
+  color: var(--ink-primary, #171715);
 }
 
 @media (max-width: 640px) {

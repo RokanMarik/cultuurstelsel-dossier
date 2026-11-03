@@ -1,23 +1,11 @@
 import React, { useState } from 'react';
-import { heroData } from '../data/historyContent';
+import { heroData, backgroundData, exploitationData } from '../data/historyContent';
 import type { HistoricalImage } from '../data/historyContent';
-import { 
-  ChevronRight, 
-  Calendar, 
-  Users, 
-  Landmark, 
-  FileSpreadsheet, 
-  Clock, 
-  Sparkles, 
-  BookOpen, 
-  Leaf, 
-  Scale, 
-  AlertTriangle, 
-  Bookmark,
+import {
+  ArrowRight,
+  Maximize2,
   ChevronDown,
-  ChevronUp,
-  Compass,
-  Gamepad2
+  ChevronUp
 } from 'lucide-react';
 import './Hero.css';
 
@@ -25,198 +13,192 @@ interface HeroProps {
   onOpenImage?: (image: HistoricalImage, title: string) => void;
 }
 
+interface CuratorialPlate {
+  id: string;
+  shortLabel: string;
+  year: string;
+  title: string;
+  image: HistoricalImage;
+}
+
+const curatorialPlates: CuratorialPlate[] = [
+  {
+    id: 'plate-vandenbosch',
+    shortLabel: 'Van den Bosch',
+    year: '1836',
+    title: 'Potret Gubernur Jenderal Johannes van den Bosch',
+    image: heroData.image,
+  },
+  {
+    id: 'plate-diponegoro',
+    shortLabel: 'Perang Jawa',
+    year: '1857',
+    title: 'Penangkapan Pangeran Diponegoro di Magelang',
+    image: backgroundData.crises[0].image!,
+  },
+  {
+    id: 'plate-kopi',
+    shortLabel: 'Kopi Jawa',
+    year: 'Arsip',
+    title: 'Pengolahan Kopi Ekspor di Perkebunan Jawa',
+    image: exploitationData.commodities[0].image!,
+  },
+];
+
 export const Hero: React.FC<HeroProps> = ({ onOpenImage }) => {
+  const [activePlateIndex, setActivePlateIndex] = useState<number>(0);
   const [isSummaryOpen, setIsSummaryOpen] = useState<boolean>(true);
+
+  const activePlate = curatorialPlates[activePlateIndex] ?? curatorialPlates[0];
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      const offset = 72;
+      const offset = 68;
       const pos = el.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top: pos, behavior: 'smooth' });
     }
   };
 
-  const getShortcutIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'book': return <BookOpen size={14} />;
-      case 'leaf': return <Leaf size={14} />;
-      case 'scale': return <Scale size={14} />;
-      case 'clock': return <Calendar size={14} />;
-      case 'alert': return <AlertTriangle size={14} />;
-      case 'compass': return <Compass size={14} />;
-      case 'gamepad': return <Gamepad2 size={14} />;
-      case 'bookmark': return <Bookmark size={14} />;
-      default: return <BookOpen size={14} />;
-    }
-  };
-
   return (
     <section id="beranda" className="hero-section">
-      {/* Decorative Archival Corner Borders */}
-      <div className="corner-ornament corner-top-left" />
-      <div className="corner-ornament corner-top-right" />
-      <div className="corner-ornament corner-bottom-left" />
-      <div className="corner-ornament corner-bottom-right" />
-
       <div className="container hero-container">
-        {/* Authors & Academic Header */}
-        <div className="academic-badge-wrap">
-          <div className="academic-badge">
-            <span className="course-name">{heroData.course}</span>
-            <span className="badge-separator">•</span>
-            <span className="authors-names">
-              Oleh: <strong>{heroData.authors[0].name}</strong> & <strong>{heroData.authors[1].name}</strong>
-            </span>
+        {/* Asymmetric 7:5 Rijksmuseum Curatorial Split */}
+        <div className="hero-split-grid">
+          <div className="hero-editorial-col">
+            <h1 className="hero-title">Cultuurstelsel</h1>
+            <p className="hero-subtitle">{heroData.subtitle}</p>
+            <p className="hero-overview-text">{heroData.overview}</p>
+
+            <div className="hero-colophon-line">
+              <span>{heroData.course}</span>
+              <span className="colophon-dot" aria-hidden="true">·</span>
+              <span>
+                Disusun oleh <strong>{heroData.authors[0].name}</strong> &amp; <strong>{heroData.authors[1].name}</strong>
+              </span>
+            </div>
+
+            <div className="hero-cta-group">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => scrollTo('latar-belakang')}
+                id="hero-btn-explore"
+              >
+                <span>Mulai Penelusuran</span>
+                <ArrowRight size={16} strokeWidth={1.5} />
+              </button>
+              <button
+                type="button"
+                className="btn btn-outline"
+                onClick={() => scrollTo('timeline-section')}
+                id="hero-btn-timeline"
+              >
+                <span>Garis Waktu (1830–1870)</span>
+              </button>
+            </div>
           </div>
+
+          {/* Right Column: Curatorial Archival Plate */}
+          <figure className="hero-curatorial-plate">
+            <div className="plate-canvas-wrap">
+              <img
+                src={activePlate.image.src}
+                alt={activePlate.image.alt}
+                className="plate-artwork-img"
+                width={640}
+                height={480}
+                decoding="async"
+              />
+              {onOpenImage && (
+                <button
+                  type="button"
+                  className="plate-zoom-btn"
+                  onClick={() => onOpenImage(activePlate.image, activePlate.title)}
+                  aria-label={`Perbesar arsip ${activePlate.title}`}
+                >
+                  <Maximize2 size={15} strokeWidth={1.5} />
+                  <span>Perbesar Pelat</span>
+                </button>
+              )}
+            </div>
+
+            <figcaption className="plate-plaque">
+              <div className="plate-plaque-meta">
+                <strong className="plate-plaque-title">{activePlate.title}</strong>
+                <span className="plate-plaque-source">{activePlate.image.archiveSource}</span>
+              </div>
+              <p className="plate-plaque-caption">{activePlate.image.caption}</p>
+
+              <div className="plate-switcher" role="tablist" aria-label="Pilih pelat arsip pameran">
+                {curatorialPlates.map((plate, idx) => {
+                  const isSelected = idx === activePlateIndex;
+                  return (
+                    <button
+                      key={plate.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={isSelected}
+                      className={`plate-switch-btn ${isSelected ? 'active' : ''}`}
+                      onClick={() => setActivePlateIndex(idx)}
+                    >
+                      <span className="plate-switch-num tabular-nums">{idx + 1}.</span>
+                      <span>{plate.shortLabel}</span>
+                      <span className="plate-switch-year tabular-nums">({plate.year})</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </figcaption>
+          </figure>
         </div>
 
-        {/* Hero Title & Subtitle */}
-        <div className="hero-main-title">
-          <span className="hero-prefix">ARSIP SEJARAH SOSIAL & FISKAL KOLONIAL</span>
-          <h1 className="hero-title">{heroData.title}</h1>
-          <h2 className="hero-subtitle">{heroData.subtitle}</h2>
-          
-          <div className="ornament-divider">
-            <div className="ornament-line" />
-            <div className="ornament-diamond" />
-            <div className="ornament-diamond" />
-            <div className="ornament-diamond" />
-            <div className="ornament-line" />
-          </div>
+        {/* Open 4-Column Archival Ledger Strip (1px Hairlines, Tabular Figures, Zero Icon Tiles) */}
+        <dl className="hero-ledger-strip" aria-label="Ringkasan data kunci Cultuurstelsel">
+          {heroData.highlights.map((item) => (
+            <div key={item.label} className="ledger-stat-cell">
+              <dd className="ledger-stat-value tabular-nums">{item.value}</dd>
+              <dt className="ledger-stat-label">{item.label}</dt>
+              <dd className="ledger-stat-note">{item.note}</dd>
+            </div>
+          ))}
+        </dl>
 
-          <p className="hero-tagline">{heroData.tagline}</p>
-        </div>
-
-        {/* Overview Excerpt */}
-        <div className="hero-overview-card">
-          <p className="hero-overview-text">{heroData.overview}</p>
-          <div className="hero-cta-group">
-            <button 
-              className="btn btn-primary"
-              onClick={() => scrollTo('latar-belakang')}
-              id="hero-btn-explore"
-            >
-              <span>Mulai Penelusuran</span>
-              <ChevronRight size={16} />
-            </button>
-            <button 
-              className="btn btn-outline"
-              onClick={() => scrollTo('timeline-section')}
-              id="hero-btn-timeline"
-            >
-              <span>Garis Waktu (1830–1870)</span>
-            </button>
-          </div>
-        </div>
-
-        {/* SUB-FITUR PRD FASE 1: Ringkasan 1 Menit */}
-        <div className="quick-summary-box parchment-card">
+        {/* Open 4-Act Monograph Digest (Zero Nested Cards) */}
+        <div className="hero-digest-section">
           <button
-            className="quick-summary-header"
+            type="button"
+            className="hero-digest-header"
             onClick={() => setIsSummaryOpen(!isSummaryOpen)}
             aria-expanded={isSummaryOpen}
             id="toggle-1-min-summary"
           >
-            <div className="summary-title-group">
-              <div className="summary-badge-pill">
-                <Clock size={15} />
-                <span>{heroData.quickSummary.badge}</span>
-                <span className="read-time-dot">•</span>
-                <span className="read-time-text">{heroData.quickSummary.readTime}</span>
-              </div>
-              <h3 className="summary-title">{heroData.quickSummary.title}</h3>
+            <div className="digest-heading-row">
+              <h2 className="digest-title">{heroData.quickSummary.title}</h2>
+              <span className="digest-readtime">
+                {heroData.quickSummary.badge} · {heroData.quickSummary.readTime}
+              </span>
             </div>
             <span
-              className="summary-toggle-btn"
+              className="digest-toggle-icon"
               aria-label={isSummaryOpen ? 'Sembunyikan Ringkasan' : 'Buka Ringkasan'}
             >
-              {isSummaryOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              {isSummaryOpen ? <ChevronUp size={18} strokeWidth={1.5} /> : <ChevronDown size={18} strokeWidth={1.5} />}
             </span>
           </button>
 
-
           {isSummaryOpen && (
-            <div className="summary-grid">
+            <div className="hero-digest-grid">
               {heroData.quickSummary.points.map((pt) => (
-                <div key={pt.step} className="summary-point-card">
-                  <div className="summary-point-step">
-                    <span>{pt.step}</span>
-                  </div>
-                  <div className="summary-point-body">
-                    <h4 className="summary-point-label">{pt.label}</h4>
-                    <p className="summary-point-text">{pt.text}</p>
-                  </div>
+                <div key={pt.step} className="digest-act-col">
+                  <h3 className="digest-act-title">
+                    <span className="digest-act-num tabular-nums">{pt.step}.</span> {pt.label}
+                  </h3>
+                  <p className="digest-act-text">{pt.text}</p>
                 </div>
               ))}
             </div>
           )}
-        </div>
-
-        {/* SUB-FITUR PRD FASE 1: Poin Kunci Cepat (Highlights Grid) */}
-        <div className="hero-highlights-grid">
-          {heroData.highlights.map((item, index) => {
-            const icons = [Calendar, Users, FileSpreadsheet, Landmark];
-            const Icon = icons[index % icons.length];
-
-            return (
-              <div key={item.label} className="highlight-card">
-                {item.label === 'Pencetus Kebijakan' && heroData.image ? (
-                  <div
-                    className="highlight-icon-wrapper highlight-portrait-wrapper"
-                    onClick={() => onOpenImage?.(heroData.image, 'Johannes van den Bosch')}
-                    role="button"
-                    tabIndex={0}
-                    title="Klik untuk memperbesar potret resmi Van den Bosch"
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        onOpenImage?.(heroData.image, 'Johannes van den Bosch');
-                      }
-                    }}
-                  >
-                    <img
-                      src={heroData.image.thumbSrc ?? heroData.image.src}
-                      alt={heroData.image.alt}
-                      className="highlight-portrait-img"
-                      width={46}
-                      height={46}
-                      decoding="async"
-                    />
-                  </div>
-                ) : (
-                  <div className="highlight-icon-wrapper">
-                    <Icon size={20} />
-                  </div>
-                )}
-                <div className="highlight-content">
-                  <span className="highlight-label">{item.label}</span>
-                  <strong className="highlight-value">{item.value}</strong>
-                  <span className="highlight-note">{item.note}</span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* SUB-FITUR PRD FASE 1: Pintasan ke Bagian */}
-        <div className="quick-shortcuts-container">
-          <span className="shortcuts-label">
-            <Sparkles size={14} className="shortcuts-sparkle" />
-            <span>Pintasan Cepat ke Bagian:</span>
-          </span>
-          <div className="shortcuts-pills-wrap">
-            {heroData.quickShortcuts.map((sc) => (
-              <button
-                key={sc.targetId}
-                className="shortcut-pill-btn"
-                onClick={() => scrollTo(sc.targetId)}
-                id={`shortcut-${sc.targetId}`}
-              >
-                <span className="shortcut-icon">{getShortcutIcon(sc.icon)}</span>
-                <span>{sc.label}</span>
-              </button>
-            ))}
-          </div>
         </div>
       </div>
     </section>

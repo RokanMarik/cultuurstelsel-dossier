@@ -4,14 +4,9 @@
    ========================================================================== */
 
 .historical-games-section {
-  background: linear-gradient(
-    180deg,
-    var(--bg-parchment-dark) 0%,
-    var(--bg-parchment) 50%,
-    var(--bg-parchment-light) 100%
-  );
-  border-top: 1px solid var(--border-medium);
-  border-bottom: 1px solid var(--border-strong);
+  background-color: var(--bg-paper);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 /* Newspaper Masthead Strip */
@@ -69,17 +64,18 @@
 }
 
 .dossier-tab-btn.active .games-tab-pill {
-  background-color: rgba(255, 255, 255, 0.22);
-  color: #fff;
+  background-color: var(--surface-recessed);
+  color: var(--ink-primary);
 }
 
 /* Prevent card hover jump on interactive arcade containers */
-.tts-arcade-wrapper.parchment-card,
-.quiz-arcade-wrapper.parchment-card {
+.tts-arcade-wrapper,
+.quiz-arcade-wrapper {
   max-width: 1080px;
   margin: 0 auto;
-  border: 1px solid var(--border-strong);
-  box-shadow: var(--shadow-md);
+  border: none;
+  background: transparent;
+  box-shadow: none;
 }
 
 @media (hover: hover) {
@@ -209,18 +205,18 @@
   margin-bottom: 1.2rem;
   padding: 0.85rem 1.05rem;
   border-radius: var(--radius-sm);
-  border-left: 4px solid var(--accent-gold);
+  border: 1px solid var(--border-subtle);
   background-color: var(--bg-parchment);
   animation: gazettePopIn 220ms ease-out;
 }
 
 .tts-witty-banner.tone-solved {
-  border-left-color: var(--accent-verdigris);
+  border-color: var(--accent-verdigris);
   background-color: var(--accent-verdigris-bg);
 }
 
 .tts-witty-banner.tone-check {
-  border-left-color: var(--accent-crimson);
+  border-color: var(--accent-crimson);
   background-color: var(--accent-crimson-bg);
 }
 
@@ -380,13 +376,7 @@
 }
 
 .tts-cell-block {
-  background: repeating-linear-gradient(
-    -45deg,
-    #251e18,
-    #251e18 4px,
-    #332921 4px,
-    #332921 8px
-  );
+  background-color: var(--ink-primary);
 }
 
 .tts-cell-playable {
@@ -490,9 +480,9 @@
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
-  border-radius: 6px;
-  border: 1px solid var(--border-strong);
-  border-bottom: 3px solid #9f8b6d;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 0 var(--border-strong);
   background-color: var(--bg-parchment-light);
   color: var(--ink-primary);
   font-family: var(--font-serif-heading);
@@ -710,12 +700,12 @@
 }
 
 .quiz-question-box {
-  padding: 1.25rem 1.35rem;
+  padding: 1.25rem 0;
   margin-bottom: 1.25rem;
-  border-radius: var(--radius-md);
-  background-color: var(--bg-parchment-light);
-  border: 1px solid var(--border-medium);
-  border-left: 4px solid var(--accent-crimson);
+  border-radius: 0;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .quiz-type-kicker {
@@ -869,12 +859,12 @@
 
 .quiz-feedback-panel.feedback-right {
   background-color: #eef7f4;
-  border-left: 4px solid var(--accent-verdigris);
+  border: 1px solid var(--accent-verdigris);
 }
 
 .quiz-feedback-panel.feedback-wrong {
   background-color: #fdf1ef;
-  border-left: 4px solid var(--accent-crimson);
+  border: 1px solid var(--accent-crimson);
 }
 
 .quiz-reaction-header {
@@ -1033,7 +1023,7 @@
   margin-bottom: 1.5rem;
   border-radius: var(--radius-sm);
   background-color: var(--bg-parchment-light);
-  border-left: 3px solid var(--accent-gold);
+  border: 1px solid var(--border-subtle);
   font-family: var(--font-serif-body);
   font-style: italic;
   font-size: 0.96rem;

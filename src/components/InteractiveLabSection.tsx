@@ -43,7 +43,10 @@ import {
   FileText,
   ZoomIn,
   Globe,
-  Maximize2
+  Maximize2,
+  Leaf,
+  Sprout,
+  Coffee
 } from 'lucide-react';
 import './InteractiveLabSection.css';
 
@@ -205,19 +208,14 @@ export const InteractiveLabSection: React.FC = () => {
     <section id="interactive-lab" className="interactive-lab-section">
       <div className="interactive-lab-container">
         {/* Section Header */}
-        <div className="lab-header">
-          <div className="lab-badge">
-            <Compass size={14} className="lab-badge-icon" />
-            <span>ARSIP EKSPLORATIF & SIMULASI</span>
-          </div>
-          <h2 className="lab-title">Laboratorium Sejarah Interaktif</h2>
-          <p className="lab-subtitle">
-            Instrumen investigasi spasial berstandar geospasial Nusantara, kalkulator komparasi sosio-ekonomi,
+        <div className="section-header">
+          <h2 className="section-title">Laboratorium Sejarah: Peta Spasial, Komparator, & Simulasi Dilema</h2>
+          <p className="section-subtitle">
+            Instrumen investigasi spasial berstandar geospasial Nusantara, kalkulator komparasi sosio-ekonomi Jan Breman,
             dan simulasi pengambilan keputusan dilema moral para aktor sejarah Sistem Tanam Paksa (1830–1870).
           </p>
         </div>
 
-        {/* Tab Navigation */}
         <div className="lab-tab-nav-wrapper">
           <div className="lab-tab-nav" role="tablist" aria-label="Modul Laboratorium Sejarah">
             <button
@@ -1218,21 +1216,24 @@ export const InteractiveLabSection: React.FC = () => {
                       className={`crop-btn ${selectedCrop === 'nila' ? 'active' : ''}`}
                       onClick={() => setSelectedCrop('nila')}
                     >
-                      🌿 Nila / Indigo (Cirebon)
+                      <Leaf size={14} className="crop-btn-icon" />
+                      <span>Nila / Indigo (Cirebon)</span>
                     </button>
                     <button
                       type="button"
                       className={`crop-btn ${selectedCrop === 'tebu' ? 'active' : ''}`}
                       onClick={() => setSelectedCrop('tebu')}
                     >
-                      🌾 Tebu / Gula (Pasuruan)
+                      <Sprout size={14} className="crop-btn-icon" />
+                      <span>Tebu / Gula (Pasuruan)</span>
                     </button>
                     <button
                       type="button"
                       className={`crop-btn ${selectedCrop === 'kopi' ? 'active' : ''}`}
                       onClick={() => setSelectedCrop('kopi')}
                     >
-                      ☕ Kopi Bivak (Priangan)
+                      <Coffee size={14} className="crop-btn-icon" />
+                      <span>Kopi Bivak (Priangan)</span>
                     </button>
                   </div>
                 </div>
@@ -1272,7 +1273,15 @@ export const InteractiveLabSection: React.FC = () => {
                     {simResult.isDeficit ? `- ƒ ${Math.abs(simResult.netBalance).toFixed(2)}` : `+ ƒ ${simResult.netBalance.toFixed(2)}`}
                   </div>
                   <span className="metric-badge-status">
-                    {simResult.isDeficit ? '⚠️ SKANDAL NOMBOK PAJAK' : '✓ SURPLUS MINIMAL'}
+                    {simResult.isDeficit ? (
+                    <span className="status-label status-deficit">
+                      <AlertTriangle size={13} /> Skandal Nombok Pajak
+                    </span>
+                  ) : (
+                    <span className="status-label status-surplus">
+                      <CheckCircle2 size={13} /> Surplus Minimal
+                    </span>
+                  )}
                   </span>
                   <p className="balance-note">
                     {simResult.isDeficit
@@ -1309,7 +1318,7 @@ export const InteractiveLabSection: React.FC = () => {
             </div>
 
             {/* Scenario Content Card */}
-            <div className="scenario-stage-card">
+            <div className="scenario-stage">
               <div className="stage-header">
                 <div className="stage-meta">
                   <span className="stage-role-badge">{activeScenario.role}</span>

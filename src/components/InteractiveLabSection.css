@@ -5,23 +5,14 @@
 
 .interactive-lab-section {
   padding: var(--space-section) var(--space-container);
-  background: linear-gradient(180deg, #181410 0%, #1f1a14 50%, #15110d 100%);
-  color: #ebd9b8;
+  background-color: var(--bg-paper);
+  color: var(--ink-primary);
   position: relative;
-  overflow: hidden;
-  border-top: 2px solid rgba(200, 150, 62, 0.3);
-  border-bottom: 2px solid rgba(200, 150, 62, 0.3);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-.interactive-lab-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(200, 150, 62, 0.05) 1px, transparent 1px);
-  background-size: 24px 24px;
-  pointer-events: none;
-  opacity: 0.7;
-}
+/* Radial dots removed for clean monograph aesthetic */
 
 .interactive-lab-container {
   max-width: 1240px;
@@ -120,17 +111,17 @@
   background: linear-gradient(135deg, #8c251b 0%, #591616 100%);
   border-color: #e5a93c;
   color: #fff9ed;
-  box-shadow: 0 4px 18px rgba(140, 37, 27, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  box-shadow: none;
 }
 
 /* Panels General */
 .lab-panel {
-  background: rgba(26, 21, 16, 0.88);
-  border: 1px solid rgba(200, 150, 62, 0.35);
-  border-radius: 12px;
-  padding: clamp(1.1rem, 3.2vw, 2rem);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.42);
-  backdrop-filter: blur(8px);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
 /* ==========================================================================
@@ -154,8 +145,13 @@
   gap: 0.5rem;
   font-family: var(--font-serif-heading);
   font-size: 0.86rem;
-  color: #e5a93c;
-  font-weight: 700;
+  color: var(--ink-secondary, #3b3b36);
+  font-weight: 600;
+}
+
+.filter-label em {
+  color: var(--ink-primary, #171715);
+  font-style: normal;
 }
 
 .filter-buttons {
@@ -286,7 +282,7 @@
   background: linear-gradient(135deg, #8c251b 0%, #5e1814 100%);
   border-color: #ffd57e;
   color: #fff9ed;
-  box-shadow: 0 2px 8px rgba(140, 37, 27, 0.45);
+  box-shadow: none;
 }
 
 /* Zoom Controls */
@@ -341,9 +337,9 @@
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  border-radius: 6px;
-  border: 1px solid rgba(200, 150, 62, 0.28);
-  background: radial-gradient(circle at 50% 50%, #2c231a 0%, #17120d 100%);
+  border-radius: 0;
+  border: none;
+  background: transparent;
   scrollbar-width: thin;
   scrollbar-color: #c8963e rgba(0, 0, 0, 0.25);
 }
@@ -726,15 +722,17 @@
 
 .detail-stat-card,
 .detail-note-card {
-  padding: 0.85rem 0.95rem;
-  border-radius: 6px;
+  padding: 0.85rem 0;
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  border-top: 1px solid rgba(200, 150, 62, 0.22);
   font-size: 0.84rem;
   line-height: 1.55;
 }
 
 .detail-stat-card {
-  background: rgba(30, 42, 56, 0.45);
-  border-left: 3px solid #64b5f6;
+  background: transparent;
 }
 
 .stat-card-title,
@@ -753,8 +751,7 @@
 }
 
 .detail-note-card {
-  background: rgba(66, 30, 30, 0.4);
-  border-left: 3px solid #ef9a9a;
+  background: transparent;
 }
 
 .detail-archive-footer {
@@ -915,10 +912,11 @@
 }
 
 .calc-result-box {
-  background: rgba(18, 14, 11, 0.88);
-  border: 1px solid rgba(200, 150, 62, 0.32);
-  border-radius: 6px;
-  padding: 1rem;
+  background: transparent;
+  border: none;
+  border-top: 1px solid rgba(200, 150, 62, 0.22);
+  border-radius: 0;
+  padding: 1rem 0 0 0;
   margin-top: auto;
 }
 
@@ -946,10 +944,11 @@
 
 /* Simulator Petani */
 .farmer-simulator-section {
-  background: rgba(32, 26, 20, 0.92);
-  border: 1px solid rgba(200, 150, 62, 0.35);
-  border-radius: 10px;
-  padding: clamp(1.15rem, 3vw, 1.75rem);
+  background: transparent;
+  border: none;
+  border-top: 1px solid rgba(200, 150, 62, 0.22);
+  border-radius: 0;
+  padding: clamp(1.15rem, 3vw, 1.75rem) 0 0 0;
 }
 
 .sim-header {
@@ -1224,7 +1223,7 @@
   color: #ffd57e;
 }
 
-.scenario-stage-card {
+.scenario-stage {
   display: flex;
   flex-direction: column;
   gap: 1.35rem;
@@ -1267,9 +1266,9 @@
 
 .stage-narrative-box {
   background: rgba(22, 17, 13, 0.85);
-  border-left: 4px solid #c8963e;
+  border: 1px solid rgba(200, 150, 62, 0.28);
+  border-radius: var(--radius-sm, 4px);
   padding: clamp(1rem, 2.5vw, 1.35rem);
-  border-radius: 0 8px 8px 0;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -1336,7 +1335,7 @@
 .choice-card.selected {
   background: rgba(65, 30, 30, 0.85);
   border-color: #ffd57e;
-  box-shadow: 0 0 15px rgba(229, 169, 60, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
 .choice-header {
@@ -1405,9 +1404,9 @@
 
 .feedback-card {
   background: rgba(45, 34, 22, 0.92);
-  border-left: 4px solid #ffa726;
+  border: 1px solid rgba(255, 167, 38, 0.35);
+  border-radius: var(--radius-sm, 4px);
   padding: 1.15rem 1.25rem;
-  border-radius: 0 8px 8px 0;
 }
 
 .feedback-header {

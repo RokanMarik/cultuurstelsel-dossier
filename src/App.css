@@ -6,6 +6,7 @@
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  background-color: var(--bg-parchment);
 }
 
 .app-root > main {
@@ -19,21 +20,21 @@
 
 /* Zero-CLS Anchor-Preserving Lazy Section Placeholders */
 .lazy-section-placeholder {
-  min-height: 540px;
+  min-height: 520px;
   display: flex;
   align-items: center;
 }
 
 .lazy-skeleton-card {
-  max-width: 720px;
+  max-width: 640px;
   margin: 0 auto;
-  min-height: 220px;
+  min-height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   font-family: var(--font-serif-heading);
-  font-size: 0.95rem;
-  letter-spacing: 0.04em;
+  font-size: 0.9375rem;
+  letter-spacing: 0;
   color: var(--ink-muted);
 }

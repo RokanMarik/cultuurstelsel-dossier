@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 2,
+  "name": "Cultuurstelsel Curatorial Monograph Design System",
+  "archetype": "Curatorial Exhibition Monograph",
+  "personality": [
+    "rigorous",
+    "archival",
+    "restrained",
+    "editorial",
+    "scholarly"
+  ],
+  "typography": {
+    "fonts": {
+      "serif": "Spectral, Georgia, serif",
+      "sans": "Source Sans 3, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
+      "mono": "JetBrains Mono, Menlo, monospace"
+    },
+    "scale": {
+      "display": "clamp(2.4rem, 4.6vw, 3.8rem)",
+      "h2": "clamp(1.75rem, 3.2vw, 2.35rem)",
+      "h3": "clamp(1.18rem, 2vw, 1.45rem)",
+      "body": "clamp(0.96rem, 1.1vw, 1.05rem)",
+      "small": "0.78rem"
+    },
+    "weights": [400, 500, 600]
+  },
+  "colors": {
+    "paper": "#f4f4f2",
+    "card": "#ffffff",
+    "recessed": "#eaeae6",
+    "plate": "#181816",
+    "inkPrimary": "#171715",
+    "inkSecondary": "#3b3b36",
+    "inkMuted": "#575750",
+    "accentBurgundy": "#8a1c14",
+    "accentOchre": "#6b4c0b",
+    "accentPrussian": "#184a50",
+    "accentVerdigris": "#1d4e38",
+    "borderSubtle": "#d8d8d4",
+    "borderStrong": "#b8b8b0"
+  },
+  "elevation": {
+    "none": "none",
+    "subtle": "0 1px 3px rgba(23, 23, 21, 0.05)",
+    "card": "0 2px 6px rgba(23, 23, 21, 0.06)",
+    "modal": "0 16px 36px rgba(23, 23, 21, 0.35)"
+  },
+  "radii": {
+    "xs": "2px",
+    "sm": "4px",
+    "md": "6px",
+    "full": "9999px"
+  },
+  "rules": {
+    "maxLineLength": "68ch",
+    "minFontSize": "12px",
+    "bannedPatterns": [
+      "side-tab",
+      "nested-cards",
+      "kicker-above-heading",
+      "dark-glow",
+      "repeating-stripes-gradient",
+      "emoji-in-ui"
+    ]
+  }
+}
+

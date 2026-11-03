@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { implementationData } from '../data/historyContent';
 import type { TimelineEvent } from '../data/historyContent';
 import { TimelineModal } from './TimelineModal';
-import { Calendar, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import './TimelineSection.css';
 
 export const TimelineSection: React.FC = () => {
@@ -34,34 +34,16 @@ export const TimelineSection: React.FC = () => {
   return (
     <section id="timeline-section" className="section timeline-section">
       <div className="container">
-        {/* Header */}
+        {/* Monograph 2-Column Section Header */}
         <div className="section-header">
-          <span className="section-tag">Bagian III: Kronik Sejarah</span>
-          <h2 className="section-title">Timeline Interaktif Cultuurstelsel</h2>
+          <h2 className="section-title">Kronik Sejarah Cultuurstelsel (1830–1915)</h2>
           <p className="section-subtitle">
-            Deretan peristiwa kunci, titik balik kebijakan kolonial, hingga penghapusan sistem (1830–1915)
+            Deretan peristiwa kunci, titik balik kebijakan kolonial, hingga penghapusan sistem tanam wajib di Jawa dan Nusantara
           </p>
-          <div className="ornament-divider">
-            <div className="ornament-line" />
-            <div className="ornament-diamond" />
-            <div className="ornament-line" />
-          </div>
         </div>
 
-        {/* Interactive Timeline Container */}
-        <div className="timeline-interactive-container">
-          <div className="timeline-section-header">
-            <div className="timeline-badge-pill">
-              <Calendar size={16} />
-              <span>Garis Waktu Peristiwa Kunci</span>
-            </div>
-            <h3 className="timeline-main-title">Evolusi Sejarah Tanam Paksa di Jawa & Nusantara</h3>
-            <p className="timeline-main-subtitle">
-              Geser atau ketuk simpul tahun di bawah untuk melihat ringkasan, atau gunakan tombol Sebelumnya/Berikutnya.
-            </p>
-          </div>
-
-          {/* Interactive Timeline Horizontal Stepper / Nodes */}
+        {/* Open Horizontal Timeline Track + Single Active Sheet (Zero Nested Cards) */}
+        <div className="timeline-open-workspace">
           <div
             className="timeline-stepper-track"
             ref={trackRef}
@@ -78,17 +60,13 @@ export const TimelineSection: React.FC = () => {
                 className={`timeline-step-node ${activeTimelineTab === item.id ? 'active' : ''}`}
                 onClick={() => selectTimelineByIndex(idx)}
               >
-                <div className="step-circle">
-                  <span className="step-year">{item.year}</span>
-                </div>
+                <span className="step-year-box tabular-nums">{item.year}</span>
                 <span className="step-badge">{item.badge}</span>
               </button>
             ))}
           </div>
 
-          {/* Featured Active Timeline Card */}
-          <div className="parchment-card featured-timeline-card">
-            {/* Quick Stepper Bar for Mobile & Desktop Ergonomics */}
+          <article className="parchment-card featured-timeline-card">
             <div className="timeline-quick-nav-bar">
               <button
                 type="button"
@@ -97,11 +75,11 @@ export const TimelineSection: React.FC = () => {
                 disabled={activeIndex === 0}
                 aria-label="Peristiwa sebelumnya"
               >
-                <ChevronLeft size={18} />
+                <ChevronLeft size={17} strokeWidth={1.5} />
                 <span>Sebelumnya</span>
               </button>
 
-              <span className="timeline-step-counter" aria-live="polite">
+              <span className="timeline-step-counter tabular-nums" aria-live="polite">
                 Peristiwa <strong>{activeIndex + 1}</strong> dari <strong>{timelineItems.length}</strong>
               </span>
 
@@ -113,18 +91,18 @@ export const TimelineSection: React.FC = () => {
                 aria-label="Peristiwa berikutnya"
               >
                 <span>Berikutnya</span>
-                <ChevronRight size={18} />
+                <ChevronRight size={17} strokeWidth={1.5} />
               </button>
             </div>
 
             <div className="featured-card-header">
               <div className="featured-year-box">
-                <span className="featured-year-label">Tahun</span>
-                <span className="featured-year-number">{currentTimelineEvent.year}</span>
+                <span className="featured-year-number tabular-nums">{currentTimelineEvent.year}</span>
+                <span className="featured-year-label">Tahun arsip</span>
               </div>
               <div className="featured-title-wrap">
+                <h3 className="featured-event-title">{currentTimelineEvent.title}</h3>
                 <span className="badge badge-gold">{currentTimelineEvent.badge}</span>
-                <h4 className="featured-event-title">{currentTimelineEvent.title}</h4>
               </div>
             </div>
 
@@ -138,14 +116,15 @@ export const TimelineSection: React.FC = () => {
                 id={`btn-detail-timeline-${currentTimelineEvent.id}`}
               >
                 <span>Buka Dokumen Detail Peristiwa</span>
-                <ArrowRight size={16} />
+                <ArrowRight size={16} strokeWidth={1.5} />
               </button>
-              <span className="action-hint">*Termasuk telaah kronologis, tokoh terlibat, dan implikasi sistemik</span>
+              <span className="action-hint">
+                Memuat uraian kronologis, tokoh terlibat, dan implikasi struktural
+              </span>
             </div>
-          </div>
+          </article>
         </div>
 
-        {/* Modal Dialog for Deep Dive Detail */}
         <TimelineModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
       </div>
     </section>

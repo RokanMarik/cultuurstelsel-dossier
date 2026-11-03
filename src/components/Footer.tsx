@@ -1,5 +1,5 @@
 import React from 'react';
-import { Scroll, ArrowUp, BookOpen } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import './Footer.css';
 
 export const Footer: React.FC = () => {
@@ -12,60 +12,48 @@ export const Footer: React.FC = () => {
       <div className="container">
         <div className="footer-top-row">
           <div className="footer-brand-block">
-            <div className="footer-brand-logo">
-              <div className="footer-seal">
-                <Scroll size={20} />
-              </div>
-              <div>
-                <h3 className="footer-title">CULTUURSTELSEL</h3>
-                <span className="footer-subtitle">Sistem Tanam Paksa Hindia Belanda (1830–1870)</span>
-              </div>
-            </div>
+            <h3 className="footer-title">Cultuurstelsel (1830–1870)</h3>
+            <span className="footer-subtitle">
+              Monograf Digital Sejarah Sosial Perekonomian Hindia Belanda
+            </span>
             <p className="footer-about">
-              Media edukasi digital sejarah sosial perekonomian sebagai pengganti infografis/poster kelompok. 
-              Mengulas secara komprehensif akar krisis, mekanisme fiskal, penderitaan petani, dan dinamika agraria kolonial abad ke-19.
+              Publikasi akademik digital pengganti infografis kelompok yang membedah krisis fiskal kolonial,
+              regulasi Staatsblad 1834, surplus Batig Slot, bencana kelaparan Jawa, dan kritik parlemen abad ke-19.
             </p>
           </div>
 
           <div className="footer-authors-block">
-            <h4 className="footer-col-title">Tim Penyusun & Peneliti</h4>
-            <div className="footer-authors-card">
-              <div className="author-pill">
-                <div className="author-dot" />
-                <span><strong>Rokan</strong> — Mahasiswa Sejarah</span>
-              </div>
-              <div className="author-pill">
-                <div className="author-dot" />
-                <span><strong>Fiqrul</strong> — Mahasiswa Sejarah</span>
-              </div>
-              <div className="course-tag">
-                <BookOpen size={13} />
-                <span>Mata Kuliah: Sejarah Sosial Perekonomian</span>
-              </div>
-            </div>
+            <h4 className="footer-col-title">Kolofon Penyusun</h4>
+            <ul className="footer-authors-list">
+              <li>
+                <strong>Rokan</strong> — Penyusun &amp; Peneliti Sejarah
+              </li>
+              <li>
+                <strong>Fiqrul</strong> — Penyusun &amp; Peneliti Sejarah
+              </li>
+              <li className="footer-course-item">
+                Mata Kuliah Sejarah Sosial Perekonomian
+              </li>
+            </ul>
           </div>
 
           <div className="footer-back-to-top">
-            <button 
-              className="btn btn-outline back-to-top-btn"
+            <button
+              type="button"
+              className="btn back-to-top-btn"
               onClick={scrollToTop}
               id="footer-btn-top"
               aria-label="Kembali ke Atas"
             >
-              <ArrowUp size={16} />
+              <ArrowUp size={16} strokeWidth={1.5} />
               <span>Kembali ke Atas</span>
             </button>
           </div>
         </div>
 
         <div className="footer-bottom-row">
-          <div className="ornament-divider" style={{ margin: '1.5rem auto' }}>
-            <div className="ornament-line" />
-            <div className="ornament-diamond" />
-            <div className="ornament-line" />
-          </div>
           <p className="footer-copy">
-            © 2026 Proyek Kelompok Sejarah Sosial Perekonomian • Rokan & Fiqrul. Disusun untuk tujuan presentasi akademis & pembelajaran.
+            © 2026 Proyek Kelompok Sejarah Sosial Perekonomian oleh Rokan &amp; Fiqrul · Disusun untuk rujukan akademik dan pembelajaran sejarah.
           </p>
         </div>
       </div>

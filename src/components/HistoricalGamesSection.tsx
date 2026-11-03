@@ -12,7 +12,6 @@ import {
 } from '../data/gamesContent';
 import {
   Gamepad2,
-  Sparkles,
   Lightbulb,
   CheckCircle2,
   XCircle,
@@ -562,19 +561,12 @@ export const HistoricalGamesSection: React.FC = () => {
       <div className="container">
         {/* Section Header */}
         <div className="section-header">
-          <span className="section-tag">Bagian VI: Rubrik Hiburan & Asah Otak</span>
-          <h2 className="section-title">Suplemen Akhir Pekan Javasche Courant</h2>
+          <h2 className="section-title">Suplemen Evaluasi Akhir Pekan Javasche Courant</h2>
           <p className="section-subtitle">
-            Rehat sejenak dari angka pajak kolonial! Uji ketajaman ingatan sejarahmu lewat Teka-Teki Silang Batavia dan Kuis Satir Komisi Hindia.
+            Rehat sejenak dari angka pajak kolonial. Uji ketajaman pemahaman sejarah kritis Anda lewat Teka-Teki Silang Batavia (11×12) dan Kuis Sidang Komisi Hindia 1860.
           </p>
-          <div className="ornament-divider">
-            <div className="ornament-line" />
-            <div className="ornament-diamond" />
-            <div className="ornament-line" />
-          </div>
         </div>
 
-        {/* Masthead Koran Jadul */}
         <div className="gazette-masthead-strip">
           <span className="gazette-edition">EDISI KHUSUS • BATAVIA, 1860</span>
           <span className="gazette-motto">
@@ -616,13 +608,13 @@ export const HistoricalGamesSection: React.FC = () => {
             TAB 1: TEKA-TEKI SILANG BATAVIA
             ========================================== */}
         {activeTab === 'tts' && (
-          <div className="tts-arcade-wrapper parchment-card" role="tabpanel" aria-labelledby="tab-btn-tts">
+          <div className="tts-arcade-wrapper" role="tabpanel" aria-labelledby="tab-btn-tts">
             {/* Top Status & Action Toolbar */}
             <div className="tts-topbar">
               <div className="tts-progress-group">
                 <div className="tts-progress-label-row">
                   <span className="tts-progress-title">
-                    <Sparkles size={15} />
+                    <FileCheck2 size={15} />
                     <span>Progres Silang Kata: <strong>{solvedWordIds.size} dari {crosswordWordsData.length} Kata</strong></span>
                   </span>
                   <span className="tts-progress-pct">{ttsProgressPct}%</span>
@@ -906,7 +898,7 @@ export const HistoricalGamesSection: React.FC = () => {
             TAB 2: KUIS SIDANG KOMISI HINDIA
             ========================================== */}
         {activeTab === 'quiz' && (
-          <div className="quiz-arcade-wrapper parchment-card" role="tabpanel" aria-labelledby="tab-btn-quiz">
+          <div className="quiz-arcade-wrapper" role="tabpanel" aria-labelledby="tab-btn-quiz">
             {/* Score & Streak HUD */}
             <div className="quiz-hud-bar">
               <div className="quiz-hud-stat">

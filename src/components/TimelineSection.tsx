@@ -41,7 +41,16 @@ export const TimelineSection: React.FC = () => {
       if (detail?.sectionId === 'timeline-section' && detail.tabId) {
         const idx = timelineItems.findIndex((t) => t.id === detail.tabId);
         if (idx !== -1) {
-          selectTimelineByIndex(idx);
+          const targetItem = timelineItems[idx];
+          if (targetItem) {
+            setActiveTimelineTab(targetItem.id);
+            const track = trackRef.current;
+            const node = document.getElementById(`timeline-node-${targetItem.id}`);
+            if (track && node) {
+              const targetLeft = node.offsetLeft - track.clientWidth / 2 + node.clientWidth / 2;
+              track.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+            }
+          }
         }
       }
     };

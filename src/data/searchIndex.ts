@@ -560,6 +560,7 @@ function buildSearchCatalog(): MonographSearchEntry[] {
         sectionId: 'interactive-lab',
         tabId: 'map',
         subTabId: m.id,
+        elementId: 'lab-map-panel',
       },
     });
   });
@@ -575,6 +576,7 @@ function buildSearchCatalog(): MonographSearchEntry[] {
     target: {
       sectionId: 'interactive-lab',
       tabId: 'calculator',
+      elementId: 'lab-calc-panel',
     },
   });
 
@@ -591,6 +593,7 @@ function buildSearchCatalog(): MonographSearchEntry[] {
         sectionId: 'interactive-lab',
         tabId: 'dilemma',
         subTabId: dil.id,
+        elementId: 'lab-dilemma-panel',
       },
     });
   });

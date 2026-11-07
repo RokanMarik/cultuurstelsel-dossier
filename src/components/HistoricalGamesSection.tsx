@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import {
   MONOGRAPH_NAVIGATE_EVENT,
+  parseHashNavigationTarget,
   type MonographNavigationTarget,
 } from '../utils/monographNavigator';
 import {
@@ -88,7 +89,12 @@ function getWordCellKeys(word: CrosswordWord): string[] {
 }
 
 export const HistoricalGamesSection: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<GameTab>('tts');
+  const [activeTab, setActiveTab] = useState<GameTab>(() => {
+    const t = parseHashNavigationTarget(window.location.hash);
+    return t?.sectionId === 'permainan-sejarah' && (t.tabId === 'tts' || t.tabId === 'quiz')
+      ? t.tabId
+      : 'tts';
+  });
 
   useEffect(() => {
     const handleNavigate = (event: Event) => {

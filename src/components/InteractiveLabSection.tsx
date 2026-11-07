@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import {
   MONOGRAPH_NAVIGATE_EVENT,
+  parseHashNavigationTarget,
   type MonographNavigationTarget,
 } from '../utils/monographNavigator';
 import {
@@ -65,11 +66,22 @@ function formatHistoricalCoord(lat: number, lon: number): string {
 }
 
 export const InteractiveLabSection: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<LabTab>('map');
+  const [activeTab, setActiveTab] = useState<LabTab>(() => {
+    const t = parseHashNavigationTarget(window.location.hash);
+    if (t?.sectionId === 'interactive-lab' && (t.tabId === 'map' || t.tabId === 'calculator' || t.tabId === 'dilemma')) {
+      return t.tabId;
+    }
+    return 'map';
+  });
 
   // --- State Tab 1: Peta Spasial Geospasial ---
   const [mapFilter, setMapFilter] = useState<MapFilter>('all');
-  const [selectedMarkerId, setSelectedMarkerId] = useState<string>('marker-priangan');
+  const [selectedMarkerId, setSelectedMarkerId] = useState<string>(() => {
+    const t = parseHashNavigationTarget(window.location.hash);
+    return t?.sectionId === 'interactive-lab' && t.subTabId?.startsWith('marker-')
+      ? t.subTabId
+      : 'marker-priangan';
+  });
   const [mapZoom, setMapZoom] = useState<MapZoom>(1);
   const [mapRegionView, setMapRegionView] = useState<MapRegionView>('nusantara');
 
@@ -84,7 +96,12 @@ export const InteractiveLabSection: React.FC = () => {
   const [selectedCrop, setSelectedCrop] = useState<'kopi' | 'tebu' | 'nila'>('nila');
 
   // --- State Tab 3: Skenario Dilema Sejarah ---
-  const [activeScenarioId, setActiveScenarioId] = useState<string>('scenario-cirebon-1845');
+  const [activeScenarioId, setActiveScenarioId] = useState<string>(() => {
+    const t = parseHashNavigationTarget(window.location.hash);
+    return t?.sectionId === 'interactive-lab' && t.subTabId?.startsWith('scenario-')
+      ? t.subTabId
+      : 'scenario-cirebon-1845';
+  });
   const [chosenOption, setChosenOption] = useState<Record<string, DilemmaChoice | null>>({
     'scenario-cirebon-1845': null,
     'scenario-priangan-1840': null,
@@ -105,6 +122,10 @@ export const InteractiveLabSection: React.FC = () => {
         if (detail.subTabId.startsWith('marker-')) {
           setMapFilter('all');
           setSelectedMarkerId(detail.subTabId);
+          const targetMarker = spatialMarkersData.find((m) => m.id === detail.subTabId);
+          if (targetMarker?.regionGroup === 'luar-jawa' && targetMarker.id !== 'marker-lampung') {
+            setMapRegionView('nusantara');
+          }
         } else if (detail.subTabId.startsWith('scenario-')) {
           setActiveScenarioId(detail.subTabId);
         }
@@ -281,7 +302,7 @@ export const InteractiveLabSection: React.FC = () => {
 
         {/* TAB 1: PETA KARTOGRAFI SPASIAL */}
         {activeTab === 'map' && (
-          <div className="lab-panel lab-map-panel">
+          <div className="lab-panel lab-map-panel" id="lab-map-panel">
             {/* Filter Bar */}
             <div className="map-filter-bar">
               <div className="filter-label">
@@ -1087,7 +1108,7 @@ export const InteractiveLabSection: React.FC = () => {
 
         {/* TAB 2: KALKULATOR & KOMPARATOR KOLONIAL */}
         {activeTab === 'calculator' && (
-          <div className="lab-panel lab-calc-panel">
+          <div className="lab-panel lab-calc-panel" id="lab-calc-panel">
             <div className="calc-submodules-grid">
               {/* Sub-Alat A: Kurs Gulden ke IDR Modern */}
               <div className="calc-card">
@@ -1324,7 +1345,7 @@ export const InteractiveLabSection: React.FC = () => {
 
         {/* TAB 3: SIMULASI SKENARIO DILEMA SEJARAH */}
         {activeTab === 'dilemma' && (
-          <div className="lab-panel lab-dilemma-panel">
+          <div className="lab-panel lab-dilemma-panel" id="lab-dilemma-panel">
             {/* Scenario Switcher Header */}
             <div className="dilemma-selector-bar">
               <span className="dilemma-bar-label">Pilih Skenario Peran Sejarah:</span>

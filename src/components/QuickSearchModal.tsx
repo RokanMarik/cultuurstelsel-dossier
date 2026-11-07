@@ -21,6 +21,7 @@ export const QuickSearchModal: React.FC<QuickSearchModalProps> = ({ isOpen, onCl
   const listRef = useRef<HTMLUListElement | null>(null);
 
   const results = useMemo(() => searchMonographCatalog(query, 20), [query]);
+  const safeSelectedIndex = results.length > 0 ? Math.min(selectedIndex, results.length - 1) : 0;
 
   useEffect(() => {
     if (isOpen) {
@@ -53,19 +54,19 @@ export const QuickSearchModal: React.FC<QuickSearchModalProps> = ({ isOpen, onCl
 
     if (e.key === 'ArrowDown') {
       e.preventDefault();
-      const next = (selectedIndex + 1) % results.length;
+      const next = (safeSelectedIndex + 1) % results.length;
       setSelectedIndex(next);
       const itemEl = document.getElementById(`quick-search-option-${next}`);
       itemEl?.scrollIntoView({ block: 'nearest' });
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
-      const prev = (selectedIndex - 1 + results.length) % results.length;
+      const prev = (safeSelectedIndex - 1 + results.length) % results.length;
       setSelectedIndex(prev);
       const itemEl = document.getElementById(`quick-search-option-${prev}`);
       itemEl?.scrollIntoView({ block: 'nearest' });
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      const activeEntry = results[selectedIndex] ?? results[0];
+      const activeEntry = results[safeSelectedIndex] ?? results[0];
       if (activeEntry) {
         handleSelectEntry(activeEntry);
       }
@@ -183,7 +184,7 @@ export const QuickSearchModal: React.FC<QuickSearchModalProps> = ({ isOpen, onCl
               aria-label="Hasil pencarian arsip"
             >
               {results.map((item, idx) => {
-                const isSelected = idx === selectedIndex;
+                const isSelected = idx === safeSelectedIndex;
                 return (
                   <li
                     key={item.id}

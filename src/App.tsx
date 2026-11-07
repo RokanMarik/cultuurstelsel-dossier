@@ -52,10 +52,15 @@ export const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const initialTarget = parseHashNavigationTarget(window.location.hash);
-    if (initialTarget) {
-      navigateToMonographTarget(initialTarget, { updateHash: false });
-    }
+    const applyCurrentHash = () => {
+      const target = parseHashNavigationTarget(window.location.hash);
+      if (target) {
+        navigateToMonographTarget(target, { updateHash: false });
+      }
+    };
+    applyCurrentHash();
+    window.addEventListener('hashchange', applyCurrentHash);
+    return () => window.removeEventListener('hashchange', applyCurrentHash);
   }, []);
 
   return (

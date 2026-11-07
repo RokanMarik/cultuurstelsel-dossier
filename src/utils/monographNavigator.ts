@@ -40,9 +40,20 @@ export function parseHashNavigationTarget(rawHash: string): MonographNavigationT
 
 /**
  * Menggulir ke elemen target dan memberikan sorot kuratorial sementara.
+ * Jika `elementId` diminta tetapi belum muncul di DOM (mis. tab baru sedang dirender atau komponen React.lazy sedang dimuat),
+ * fungsi ini mengembalikan `false` selama `allowSectionFallback === false` agar mekanisme retry dapat berjalan.
  */
-function scrollToAndHighlight(sectionId: string, elementId?: string) {
-  const targetEl = (elementId ? document.getElementById(elementId) : null) ?? document.getElementById(sectionId);
+function scrollToAndHighlight(
+  sectionId: string,
+  elementId?: string,
+  allowSectionFallback = false
+): boolean {
+  const exactEl = elementId ? document.getElementById(elementId) : null;
+  if (elementId && !exactEl && !allowSectionFallback) {
+    return false;
+  }
+
+  const targetEl = exactEl ?? document.getElementById(sectionId);
   if (!targetEl) return false;
 
   const navHeight = window.innerWidth <= 1160 ? 64 : 74;
@@ -54,7 +65,6 @@ function scrollToAndHighlight(sectionId: string, elementId?: string) {
 
   if (elementId && targetEl.id === elementId) {
     targetEl.classList.remove('monograph-target-highlight');
-    // Paksa reflow agar animasi dapat diputar ulang
     void targetEl.offsetWidth;
     targetEl.classList.add('monograph-target-highlight');
     window.setTimeout(() => {
@@ -66,7 +76,7 @@ function scrollToAndHighlight(sectionId: string, elementId?: string) {
 
 /**
  * Mengirimkan sinyal navigasi lintas-tab ke seluruh bagian monograf, memperbarui URL hash,
- * lalu menggulir ke elemen tujuan setelah tab selesai dirender.
+ * lalu menggulir ke elemen tujuan setelah tab atau komponen lazy-loaded selesai dirender.
  */
 export function navigateToMonographTarget(
   target: MonographNavigationTarget,
@@ -84,15 +94,20 @@ export function navigateToMonographTarget(
     })
   );
 
-  // Beri jeda singkat agar React merender konten tab baru terlebih dahulu
+  // Percobaan 1 (60ms): tunggu render sinkron state tab React
   window.setTimeout(() => {
-    const found = scrollToAndHighlight(target.sectionId, target.elementId);
-    if (!found) {
-      // Cadangan kedua jika section masih dalam proses Suspense lazy-loading
+    const foundFirst = scrollToAndHighlight(target.sectionId, target.elementId, false);
+    if (!foundFirst) {
+      // Percobaan 2 (180ms): tunggu bila komponen berada di dalam React.lazy Suspense
       window.setTimeout(() => {
-        scrollToAndHighlight(target.sectionId, target.elementId);
-      }, 220);
+        const foundSecond = scrollToAndHighlight(target.sectionId, target.elementId, false);
+        if (!foundSecond) {
+          // Percobaan 3 (380ms): fallback ke induk sectionId bila elemen spesifik masih belum siap
+          window.setTimeout(() => {
+            scrollToAndHighlight(target.sectionId, target.elementId, true);
+          }, 200);
+        }
+      }, 120);
     }
   }, 60);
 }
-

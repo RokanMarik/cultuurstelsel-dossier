@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   impactData,
   peasantResistanceData,
@@ -8,6 +8,10 @@ import {
   prianganMonetizationData
 } from '../data/historyContent';
 import type { HistoricalImage } from '../data/historyContent';
+import {
+  MONOGRAPH_NAVIGATE_EVENT,
+  type MonographNavigationTarget,
+} from '../utils/monographNavigator';
 import {
   AlertOctagon,
   TrendingUp,
@@ -45,6 +49,27 @@ const getMonetizationBadgeClass = (level: string) => {
 export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => {
   const [activeMainTab, setActiveMainTab] = useState<'famines-impact' | 'resistance' | 'politics' | 'historiography' | 'van-rees'>('famines-impact');
   const [activeImpactPolarity, setActiveImpactPolarity] = useState<'negative' | 'positive'>('negative');
+
+  useEffect(() => {
+    const handleNavigate = (e: Event) => {
+      const detail = (e as CustomEvent<MonographNavigationTarget>).detail;
+      if (detail?.sectionId !== 'dampak') return;
+      if (
+        detail.tabId === 'famines-impact' ||
+        detail.tabId === 'resistance' ||
+        detail.tabId === 'politics' ||
+        detail.tabId === 'historiography' ||
+        detail.tabId === 'van-rees'
+      ) {
+        setActiveMainTab(detail.tabId);
+      }
+      if (detail.subTabId === 'negative' || detail.subTabId === 'positive') {
+        setActiveImpactPolarity(detail.subTabId);
+      }
+    };
+    window.addEventListener(MONOGRAPH_NAVIGATE_EVENT, handleNavigate);
+    return () => window.removeEventListener(MONOGRAPH_NAVIGATE_EVENT, handleNavigate);
+  }, []);
 
   return (
     <section id="dampak" className="section impact-section">
@@ -373,7 +398,7 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
 
             <div className="hist-cards-grid">
               {historiographicalSynthesisData.map((hist, idx) => (
-                <article key={idx} className="parchment-card hist-lens-card">
+                <article key={idx} className="parchment-card hist-lens-card" id={`hist-lens-card-${idx}`}>
                   <div className="hist-lens-top">
                     <h4 className="hist-scholar-name">{hist.historian}</h4>
                     <span className="badge badge-gold">{hist.schoolName}</span>
@@ -423,7 +448,7 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
             <h4 className="subsection-heading">Empat Temuan &amp; Rekomendasi Utama Laporan Van Rees</h4>
             <div className="staatsblad-cards-grid">
               {vanReesReportData.map((section) => (
-                <article key={section.id} className="staatsblad-card parchment-card">
+                <article key={section.id} className="staatsblad-card parchment-card" id={section.id}>
                   <div className="staatsblad-card-header">
                     <span className="rule-number-badge">Temuan {String(section.sectionNumber).padStart(2, '0')}</span>
                     <span className={`badge ${section.sectionNumber === 4 ? 'badge-amber' : 'badge-red'}`}>
@@ -446,14 +471,14 @@ export const ImpactSection: React.FC<ImpactSectionProps> = ({ onOpenImage }) => 
             </div>
 
             {/* Monetization Phases — Open Section (Zero Nested Cards, WCAG-Safe Badges) */}
-            <div className="van-rees-monetization-open">
+            <div className="van-rees-monetization-open" id="van-rees-monetization-section">
               <div className="van-rees-monetization-header">
                 <ArrowUpRight size={19} strokeWidth={1.5} className="van-rees-gold-icon" />
                 <h4>Empat Fase Monetisasi Priangan: Dari Garam sebagai Alat Tukar hingga Ekonomi Uang</h4>
               </div>
               <div className="van-rees-phases-grid">
                 {prianganMonetizationData.map((phase) => (
-                  <article key={phase.id} className="parchment-card van-rees-phase-item">
+                  <article key={phase.id} className="parchment-card van-rees-phase-item" id={phase.id}>
                     <div className="van-rees-phase-top">
                       <strong className="van-rees-phase-title">{phase.title}</strong>
                       <span className={`badge ${getMonetizationBadgeClass(phase.monetizationLevel)}`}>

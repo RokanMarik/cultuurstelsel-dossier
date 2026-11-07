@@ -90,7 +90,7 @@ export const BackgroundSection: React.FC<BackgroundSectionProps> = ({ onOpenImag
         </div>
 
         {/* Johannes van den Bosch Concept — Open 2-Column Monograph Layout (Zero Nested Cards) */}
-        <div className="vandenbosch-open-section">
+        <div className="vandenbosch-open-section" id="vandenbosch-concept-section">
           <div className="vandenbosch-content">
             <div className="vandenbosch-info">
               <h3 className="vandenbosch-title">{backgroundData.vanDenBoschConcept.title}</h3>
@@ -180,7 +180,7 @@ export const BackgroundSection: React.FC<BackgroundSectionProps> = ({ onOpenImag
         </div>
 
         {/* Potret Humanis: Sehari-hari di Bivak Rimba Kopi (Open Section — Zero Nested Cards) */}
-        <div className="farmer-life-open-section">
+        <div className="farmer-life-open-section" id="farmer-bivak-section">
           <div className="monograph-sub-opener">
             <h3 className="farmer-life-title">{everydayFarmerLifeData.title}</h3>
             <p className="farmer-life-subtitle">{everydayFarmerLifeData.subtitle}</p>

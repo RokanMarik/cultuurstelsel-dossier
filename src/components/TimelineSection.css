@@ -224,3 +224,92 @@
     padding: 0.5rem 0.625rem;
   }
 }
+
+/* --- Timeline Modal Semantic Typography & Layout --- */
+.timeline-modal-heading {
+  font-size: 1.375rem;
+  color: var(--ink-primary);
+  margin-bottom: 0.5rem;
+}
+
+.timeline-modal-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.timeline-modal-section {
+  margin-bottom: 1.5rem;
+}
+
+.timeline-modal-subheading {
+  font-size: 1rem;
+  color: var(--ink-primary);
+  margin-bottom: 0.625rem;
+}
+
+.timeline-modal-paragraph {
+  font-size: 0.95rem;
+  line-height: 1.72;
+  margin-bottom: 0.75rem;
+  color: var(--ink-secondary);
+}
+
+.timeline-modal-impact-block {
+  margin-bottom: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.timeline-modal-impact-heading {
+  font-size: 1rem;
+  color: var(--accent-crimson);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.timeline-modal-impact-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+}
+
+.timeline-modal-impact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--ink-secondary);
+}
+
+.timeline-modal-check-icon {
+  color: var(--accent-gold);
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.timeline-modal-figures-block {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.timeline-modal-figures-heading {
+  font-size: 0.95rem;
+  color: var(--ink-primary);
+  margin-bottom: 0.625rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.timeline-modal-figures-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

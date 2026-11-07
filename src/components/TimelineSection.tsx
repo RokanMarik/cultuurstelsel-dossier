@@ -1,7 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { implementationData } from '../data/historyContent';
 import type { TimelineEvent } from '../data/historyContent';
 import { TimelineModal } from './TimelineModal';
+import {
+  MONOGRAPH_NAVIGATE_EVENT,
+  type MonographNavigationTarget,
+} from '../utils/monographNavigator';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import './TimelineSection.css';
 
@@ -30,6 +34,20 @@ export const TimelineSection: React.FC = () => {
       track.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
     }
   };
+
+  useEffect(() => {
+    const handleNavigate = (e: Event) => {
+      const detail = (e as CustomEvent<MonographNavigationTarget>).detail;
+      if (detail?.sectionId === 'timeline-section' && detail.tabId) {
+        const idx = timelineItems.findIndex((t) => t.id === detail.tabId);
+        if (idx !== -1) {
+          selectTimelineByIndex(idx);
+        }
+      }
+    };
+    window.addEventListener(MONOGRAPH_NAVIGATE_EVENT, handleNavigate);
+    return () => window.removeEventListener(MONOGRAPH_NAVIGATE_EVENT, handleNavigate);
+  }, [timelineItems]);
 
   return (
     <section id="timeline-section" className="section timeline-section">
@@ -66,7 +84,7 @@ export const TimelineSection: React.FC = () => {
             ))}
           </div>
 
-          <article className="parchment-card featured-timeline-card">
+          <article className="parchment-card featured-timeline-card" id="timeline-featured-card">
             <div className="timeline-quick-nav-bar">
               <button
                 type="button"

@@ -1,5 +1,9 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import {
+  MONOGRAPH_NAVIGATE_EVENT,
+  type MonographNavigationTarget,
+} from '../utils/monographNavigator';
+import {
   CROSSWORD_ROWS,
   CROSSWORD_COLS,
   KEYBOARD_ROWS,
@@ -85,6 +89,19 @@ function getWordCellKeys(word: CrosswordWord): string[] {
 
 export const HistoricalGamesSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<GameTab>('tts');
+
+  useEffect(() => {
+    const handleNavigate = (event: Event) => {
+      const detail = (event as CustomEvent<MonographNavigationTarget>).detail;
+      if (!detail || detail.sectionId !== 'permainan-sejarah') return;
+      if (detail.tabId === 'tts' || detail.tabId === 'quiz') {
+        setActiveTab(detail.tabId);
+      }
+    };
+
+    window.addEventListener(MONOGRAPH_NAVIGATE_EVENT, handleNavigate);
+    return () => window.removeEventListener(MONOGRAPH_NAVIGATE_EVENT, handleNavigate);
+  }, []);
 
   // ==========================================
   // STATE TAB 1: TEKA-TEKI SILANG (TTS)

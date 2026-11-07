@@ -452,59 +452,25 @@
   color: var(--accent-gold);
 }
 
-.monetization-phases-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
-  gap: 1.25rem;
-  margin-top: 1.25rem;
-}
-
-.monetization-phase-item {
+.monetization-crossref-bar {
   display: flex;
-  flex-direction: column;
-}
-
-.monetization-phase-top {
-  display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 0.5rem;
-  margin-bottom: 0.25rem;
+  flex-wrap: wrap;
+  gap: 1.25rem;
 }
 
-.monetization-phase-heading {
-  font-family: var(--font-serif-heading);
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--ink-primary);
-  line-height: 1.35;
-  margin: 0;
+.crossref-info {
+  flex: 1;
+  min-width: 280px;
 }
 
-.monetization-period-label {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--ink-muted);
-  margin-bottom: 0.75rem;
+.crossref-desc {
+  margin-bottom: 0;
 }
 
-.monetization-char-list {
-  margin: 0 0 0.875rem 0;
-  padding-left: 1.125rem;
-  font-size: 0.875rem;
-  color: var(--ink-secondary);
-  line-height: 1.58;
-  flex-grow: 1;
-}
-
-.monetization-fact-footer {
-  margin-top: auto;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border-subtle);
-  font-size: 0.8125rem;
-  color: var(--ink-primary);
-  font-weight: 500;
-  line-height: 1.5;
+.crossref-jump-btn {
+  flex-shrink: 0;
 }
 
 @media (max-width: 1024px) {

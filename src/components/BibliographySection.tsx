@@ -1,12 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { bibliographyData, featuredHistoricalQuotes } from '../data/historyContent';
 import type { BibliographyItem } from '../data/historyContent';
+import {
+  MONOGRAPH_NAVIGATE_EVENT,
+  type MonographNavigationTarget,
+} from '../utils/monographNavigator';
 import { BookOpen, FileText, Bookmark, Check, Copy, ScrollText, ExternalLink } from 'lucide-react';
 import './BibliographySection.css';
 
 export const BibliographySection: React.FC = () => {
   const [filterType, setFilterType] = useState<string>('Semua');
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleNavigate = (e: Event) => {
+      const detail = (e as CustomEvent<MonographNavigationTarget>).detail;
+      if (detail?.sectionId === 'pustaka' && detail.subTabId) {
+        setFilterType('Semua');
+      }
+    };
+    window.addEventListener(MONOGRAPH_NAVIGATE_EVENT, handleNavigate);
+    return () => window.removeEventListener(MONOGRAPH_NAVIGATE_EVENT, handleNavigate);
+  }, []);
 
   const filteredItems = filterType === 'Semua'
     ? bibliographyData
@@ -96,7 +111,7 @@ export const BibliographySection: React.FC = () => {
           {/* Bibliography Ledger List (Hairline Rows) */}
           <ol className="bibliography-list">
             {filteredItems.map((item, index) => (
-              <li key={item.id} className="biblio-row">
+              <li key={item.id} className="biblio-row" id={`biblio-item-${item.id}`}>
                 <span className="biblio-number tabular-nums">[{index + 1}]</span>
                 <div className="biblio-content">
                   <div className="biblio-header-row">

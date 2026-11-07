@@ -126,9 +126,11 @@
   border-radius: var(--radius-sm);
   background-color: var(--bg-parchment-card);
   color: var(--ink-primary);
+  font-family: var(--font-sans);
   font-size: 0.8125rem;
   font-weight: 600;
   border: 1px solid var(--border-strong);
+  cursor: pointer;
   transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
   white-space: nowrap;
 }
@@ -137,6 +139,23 @@
   background-color: var(--bg-parchment-dark);
   border-color: var(--ink-primary);
   color: var(--ink-primary);
+}
+
+.nav-search-kbd {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  background-color: var(--bg-parchment);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 0.1rem 0.35rem;
+}
+
+.mobile-header-actions {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* Mobile Toggle */
@@ -177,6 +196,10 @@
 
   .desktop-nav-menu {
     display: none;
+  }
+
+  .mobile-header-actions {
+    display: inline-flex;
   }
 
   .mobile-menu-btn {

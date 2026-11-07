@@ -2,14 +2,19 @@ import React, { useState, useEffect } from 'react';
 import {
   Menu,
   X,
-  BookOpen,
+  Search,
   History,
   Coins,
   Flame,
   Compass,
   Gamepad2
 } from 'lucide-react';
+import { navigateToMonographTarget } from '../utils/monographNavigator';
 import './Navbar.css';
+
+interface NavbarProps {
+  onOpenSearch?: () => void;
+}
 
 interface NavItem {
   id: string;
@@ -36,7 +41,7 @@ const quickDockItems = [
   { id: 'permainan-sejarah', shortLabel: 'Kuis', icon: Gamepad2 },
 ];
 
-export const Navbar: React.FC = () => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenSearch }) => {
   const [activeSection, setActiveSection] = useState<string>('beranda');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [scrollProgress, setScrollProgress] = useState<number>(0);
@@ -67,15 +72,7 @@ export const Navbar: React.FC = () => {
 
   const navigateToSection = (id: string) => {
     setIsMobileMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      const navHeight = window.innerWidth <= 1160 ? 60 : 68;
-      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({
-        top: elementPosition - navHeight,
-        behavior: 'smooth',
-      });
-    }
+    navigateToMonographTarget({ sectionId: id });
   };
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -114,29 +111,47 @@ export const Navbar: React.FC = () => {
                 {item.label}
               </a>
             ))}
-            <a
-              href="#pustaka"
-              className="nav-cta-btn"
-              onClick={(e) => scrollToSection(e, 'pustaka')}
-              id="nav-btn-referensi"
-            >
-              <BookOpen size={15} strokeWidth={1.5} />
-              <span>Referensi</span>
-            </a>
+            {onOpenSearch && (
+              <button
+                type="button"
+                className="nav-cta-btn nav-search-btn"
+                onClick={onOpenSearch}
+                id="nav-btn-quick-search"
+                aria-label="Cari materi arsip lintas bab dan tab (Ctrl+K)"
+              >
+                <Search size={15} strokeWidth={1.5} />
+                <span>Cari Arsip</span>
+                <kbd className="nav-search-kbd tabular-nums">Ctrl K</kbd>
+              </button>
+            )}
           </div>
 
-          <button
-            type="button"
-            className="mobile-menu-btn"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-expanded={isMobileMenuOpen}
-            aria-controls="mobile-navigation-drawer"
-            aria-label={isMobileMenuOpen ? 'Tutup Daftar Bab' : 'Buka Daftar Bab'}
-            id="mobile-menu-toggle"
-          >
-            {isMobileMenuOpen ? <X size={18} strokeWidth={1.5} /> : <Menu size={18} strokeWidth={1.5} />}
-            <span className="mobile-menu-label">Daftar Bab</span>
-          </button>
+          <div className="mobile-header-actions">
+            {onOpenSearch && (
+              <button
+                type="button"
+                className="mobile-menu-btn mobile-search-trigger"
+                onClick={onOpenSearch}
+                aria-label="Cari materi arsip"
+                id="mobile-search-toggle"
+              >
+                <Search size={17} strokeWidth={1.5} />
+                <span className="mobile-menu-label">Cari</span>
+              </button>
+            )}
+            <button
+              type="button"
+              className="mobile-menu-btn"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-navigation-drawer"
+              aria-label={isMobileMenuOpen ? 'Tutup Daftar Bab' : 'Buka Daftar Bab'}
+              id="mobile-menu-toggle"
+            >
+              {isMobileMenuOpen ? <X size={18} strokeWidth={1.5} /> : <Menu size={18} strokeWidth={1.5} />}
+              <span className="mobile-menu-label">Daftar Bab</span>
+            </button>
+          </div>
         </nav>
 
         {isMobileMenuOpen && (

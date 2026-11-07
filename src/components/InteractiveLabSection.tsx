@@ -1,4 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import {
+  MONOGRAPH_NAVIGATE_EVENT,
+  type MonographNavigationTarget,
+} from '../utils/monographNavigator';
 import {
   spatialMarkersData,
   railwayLinesData,
@@ -86,6 +90,30 @@ export const InteractiveLabSection: React.FC = () => {
     'scenario-priangan-1840': null,
     'scenario-parliament-1860': null
   });
+
+  useEffect(() => {
+    const handleNavigate = (event: Event) => {
+      const detail = (event as CustomEvent<MonographNavigationTarget>).detail;
+      if (!detail || detail.sectionId !== 'interactive-lab') return;
+
+      const validTabs: LabTab[] = ['map', 'calculator', 'dilemma'];
+      if (detail.tabId && validTabs.includes(detail.tabId as LabTab)) {
+        setActiveTab(detail.tabId as LabTab);
+      }
+
+      if (detail.subTabId) {
+        if (detail.subTabId.startsWith('marker-')) {
+          setMapFilter('all');
+          setSelectedMarkerId(detail.subTabId);
+        } else if (detail.subTabId.startsWith('scenario-')) {
+          setActiveScenarioId(detail.subTabId);
+        }
+      }
+    };
+
+    window.addEventListener(MONOGRAPH_NAVIGATE_EVENT, handleNavigate);
+    return () => window.removeEventListener(MONOGRAPH_NAVIGATE_EVENT, handleNavigate);
+  }, []);
 
   const selectedMarker: SpatialMarker = useMemo(() => {
     return spatialMarkersData.find((m) => m.id === selectedMarkerId) || spatialMarkersData[0];
@@ -427,7 +455,7 @@ export const InteractiveLabSection: React.FC = () => {
                                   y={y - 3}
                                   fill="#cda053"
                                   fontSize={8.2}
-                                  fontFamily="Cinzel, serif"
+                                  fontFamily="JetBrains Mono, monospace"
                                   opacity={0.72}
                                 >
                                   {Math.abs(lat)}° {lat > 0 ? 'LU' : 'LS'}
@@ -453,7 +481,7 @@ export const InteractiveLabSection: React.FC = () => {
                             fill="#f0be63"
                             fontSize={8.5}
                             fontWeight="bold"
-                            fontFamily="Cinzel, serif"
+                            fontFamily="JetBrains Mono, monospace"
                             opacity={0.88}
                           >
                             0° KHATULISTIWA (LINIE)
@@ -479,7 +507,7 @@ export const InteractiveLabSection: React.FC = () => {
                                     y={MAP_BOUNDS.height - 6}
                                     fill="#cda053"
                                     fontSize={8.2}
-                                    fontFamily="Cinzel, serif"
+                                    fontFamily="JetBrains Mono, monospace"
                                     opacity={0.72}
                                   >
                                     {lon}° BT
@@ -510,7 +538,7 @@ export const InteractiveLabSection: React.FC = () => {
                                   y={y - 2.5 * k}
                                   fill="#cda053"
                                   fontSize={8.2 * k}
-                                  fontFamily="Cinzel, serif"
+                                  fontFamily="JetBrains Mono, monospace"
                                   opacity={0.78}
                                 >
                                   {Math.abs(lat)}° LS
@@ -538,7 +566,7 @@ export const InteractiveLabSection: React.FC = () => {
                                     y={JAVA_FOCUS_RECT.y + JAVA_FOCUS_RECT.height - 4 * k}
                                     fill="#cda053"
                                     fontSize={8.2 * k}
-                                    fontFamily="Cinzel, serif"
+                                    fontFamily="JetBrains Mono, monospace"
                                     opacity={0.78}
                                   >
                                     {lon}° BT
@@ -666,7 +694,7 @@ export const InteractiveLabSection: React.FC = () => {
                             textAnchor="end"
                             fill="#ffd57e"
                             fontSize={7.6}
-                            fontFamily="Cinzel, serif"
+                            fontFamily="JetBrains Mono, monospace"
                             fontWeight="bold"
                             opacity={0.9}
                           >
@@ -887,7 +915,7 @@ export const InteractiveLabSection: React.FC = () => {
                         <polygon points="0,27 4.2,8 0,0 -4.2,8" fill="#c8963e" />
                         <polygon points="27,0 8,4.2 0,0 8,-4.2" fill="#c8963e" />
                         <polygon points="-27,0 -8,4.2 0,0 -8,-4.2" fill="#c8963e" />
-                        <text x="0" y="-31" textAnchor="middle" fill="#ffd57e" fontSize="9.5" fontWeight="bold" fontFamily="Cinzel, serif">
+                        <text x="0" y="-31" textAnchor="middle" fill="#ffd57e" fontSize="9.5" fontWeight="bold" fontFamily="JetBrains Mono, monospace">
                           U
                         </text>
                       </g>
@@ -904,9 +932,9 @@ export const InteractiveLabSection: React.FC = () => {
                             <rect x={-6} y={-14} width={105} height={22} rx={3} fill="rgba(18, 14, 10, 0.72)" stroke="rgba(200, 150, 62, 0.35)" strokeWidth={0.7} />
                             <rect x={0} y={-2} width={46.4} height={3.5} fill="#e5a93c" />
                             <rect x={46.4} y={-2} width={46.4} height={3.5} fill="#3b2f22" stroke="#e5a93c" strokeWidth={0.6} />
-                            <text x={0} y={-5} fill="#ebd9b8" fontSize={7.2} fontFamily="Cinzel, serif">0</text>
-                            <text x={46.4} y={-5} textAnchor="middle" fill="#ebd9b8" fontSize={7.2} fontFamily="Cinzel, serif">250</text>
-                            <text x={92.8} y={-5} textAnchor="end" fill="#ffd57e" fontSize={7.2} fontWeight="bold" fontFamily="Cinzel, serif">500 km</text>
+                            <text x={0} y={-5} fill="#ebd9b8" fontSize={7.2} fontFamily="JetBrains Mono, monospace">0</text>
+                            <text x={46.4} y={-5} textAnchor="middle" fill="#ebd9b8" fontSize={7.2} fontFamily="JetBrains Mono, monospace">250</text>
+                            <text x={92.8} y={-5} textAnchor="end" fill="#ffd57e" fontSize={7.2} fontWeight="bold" fontFamily="JetBrains Mono, monospace">500 km</text>
                           </>
                         ) : (
                           <>
@@ -914,9 +942,9 @@ export const InteractiveLabSection: React.FC = () => {
                             <rect x={-6 * k} y={-14 * k} width={99 * k} height={22 * k} rx={3 * k} fill="rgba(18, 14, 10, 0.76)" stroke="rgba(200, 150, 62, 0.4)" strokeWidth={0.7 * k} />
                             <rect x={0} y={-2 * k} width={9.28} height={3.5 * k} fill="#e5a93c" />
                             <rect x={9.28} y={-2 * k} width={9.28} height={3.5 * k} fill="#3b2f22" stroke="#e5a93c" strokeWidth={0.6 * k} />
-                            <text x={0} y={-5 * k} fill="#ebd9b8" fontSize={7.2 * k} fontFamily="Cinzel, serif">0</text>
-                            <text x={9.28} y={-5 * k} textAnchor="middle" fill="#ebd9b8" fontSize={7.2 * k} fontFamily="Cinzel, serif">50</text>
-                            <text x={18.56} y={-5 * k} textAnchor="end" fill="#ffd57e" fontSize={7.2 * k} fontWeight="bold" fontFamily="Cinzel, serif">100 km</text>
+                            <text x={0} y={-5 * k} fill="#ebd9b8" fontSize={7.2 * k} fontFamily="JetBrains Mono, monospace">0</text>
+                            <text x={9.28} y={-5 * k} textAnchor="middle" fill="#ebd9b8" fontSize={7.2 * k} fontFamily="JetBrains Mono, monospace">50</text>
+                            <text x={18.56} y={-5 * k} textAnchor="end" fill="#ffd57e" fontSize={7.2 * k} fontWeight="bold" fontFamily="JetBrains Mono, monospace">100 km</text>
                           </>
                         )}
                       </g>

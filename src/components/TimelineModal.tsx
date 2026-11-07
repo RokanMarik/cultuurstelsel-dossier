@@ -36,10 +36,10 @@ export const TimelineModal: React.FC<TimelineModalProps> = ({ event, onClose }) 
       >
         <div className="modal-header">
           <div>
-            <h3 id="timeline-modal-title" style={{ fontSize: '1.375rem', color: 'var(--ink-primary)', marginBottom: '0.5rem' }}>
+            <h3 id="timeline-modal-title" className="timeline-modal-heading">
               {event.title}
             </h3>
-            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.5rem' }}>
+            <div className="timeline-modal-badges">
               <span className="badge badge-crimson tabular-nums">
                 <Calendar size={13} strokeWidth={1.5} />
                 <span>Tahun {event.year}</span>
@@ -59,61 +59,29 @@ export const TimelineModal: React.FC<TimelineModalProps> = ({ event, onClose }) 
         </div>
 
         <div className="modal-body">
-          <div style={{ marginBottom: '1.5rem' }}>
-            <h4 style={{ fontSize: '1rem', color: 'var(--ink-primary)', marginBottom: '0.625rem' }}>
+          <div className="timeline-modal-section">
+            <h4 className="timeline-modal-subheading">
               Uraian Historis Lengkap
             </h4>
             {event.fullDesc.map((par, idx) => (
-              <p
-                key={idx}
-                style={{
-                  fontSize: '0.95rem',
-                  lineHeight: '1.72',
-                  marginBottom: '0.75rem',
-                  color: 'var(--ink-secondary)',
-                }}
-              >
+              <p key={idx} className="timeline-modal-paragraph">
                 {par}
               </p>
             ))}
           </div>
 
-          <div
-            style={{
-              marginBottom: '1.5rem',
-              paddingTop: '1.25rem',
-              borderTop: '1px solid var(--border-subtle)',
-            }}
-          >
-            <h4
-              style={{
-                fontSize: '1rem',
-                color: 'var(--accent-crimson)',
-                marginBottom: '0.75rem',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-              }}
-            >
+          <div className="timeline-modal-impact-block">
+            <h4 className="timeline-modal-impact-heading">
               <AlertCircle size={16} strokeWidth={1.5} />
               <span>Implikasi Struktural</span>
             </h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: 0 }}>
+            <ul className="timeline-modal-impact-list">
               {event.impactPoints.map((pt, idx) => (
-                <li
-                  key={idx}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '0.5rem',
-                    fontSize: '0.9rem',
-                    color: 'var(--ink-secondary)',
-                  }}
-                >
+                <li key={idx} className="timeline-modal-impact-item">
                   <CheckCircle2
                     size={15}
                     strokeWidth={1.5}
-                    style={{ color: 'var(--accent-gold)', marginTop: '0.2rem', flexShrink: 0 }}
+                    className="timeline-modal-check-icon"
                   />
                   <span>{pt}</span>
                 </li>
@@ -122,21 +90,12 @@ export const TimelineModal: React.FC<TimelineModalProps> = ({ event, onClose }) 
           </div>
 
           {event.historicalFigures && event.historicalFigures.length > 0 && (
-            <div style={{ paddingTop: '1.25rem', borderTop: '1px solid var(--border-subtle)' }}>
-              <h4
-                style={{
-                  fontSize: '0.95rem',
-                  color: 'var(--ink-primary)',
-                  marginBottom: '0.625rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                }}
-              >
+            <div className="timeline-modal-figures-block">
+              <h4 className="timeline-modal-figures-heading">
                 <Users size={15} strokeWidth={1.5} />
                 <span>Tokoh Terkait</span>
               </h4>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              <div className="timeline-modal-figures-list">
                 {event.historicalFigures.map((fig, idx) => (
                   <span key={idx} className="badge badge-verdigris">
                     {fig}

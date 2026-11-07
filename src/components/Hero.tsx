@@ -109,6 +109,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenImage }) => {
                 width={640}
                 height={480}
                 decoding="async"
+                fetchPriority="high"
               />
               {onOpenImage && (
                 <button

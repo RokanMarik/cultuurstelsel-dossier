@@ -804,3 +804,45 @@ table th {
     scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================================================
+   CROSS-TAB NAVIGATION TARGET HIGHLIGHT
+   ========================================================================== */
+.monograph-target-highlight {
+  outline: 2px solid var(--accent-crimson);
+  outline-offset: 4px;
+  transition: outline-color var(--transition-normal);
+}
+
+/* ==========================================================================
+   PRINT STYLESHEET (@media print — Academic Handout & PDF Export)
+   ========================================================================== */
+@media print {
+  .navbar-header,
+  .mobile-bottom-dock,
+  .skip-to-content,
+  .plate-zoom-btn,
+  .quick-search-overlay,
+  .modal-overlay {
+    display: none !important;
+  }
+
+  body {
+    background-color: #ffffff !important;
+    color: var(--ink-primary) !important;
+    font-size: 11pt;
+  }
+
+  .section-padding {
+    padding: 1.5rem 0 !important;
+  }
+
+  .parchment-card,
+  table,
+  figure,
+  blockquote {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    box-shadow: none !important;
+  }
+}

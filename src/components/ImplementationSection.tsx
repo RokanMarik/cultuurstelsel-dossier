@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   implementationData,
   residencyComparisonData,
   exploitationData,
   bupatiRolesData,
   preangerBlueprintData,
-  vocExpansionData,
-  prianganMonetizationData
+  vocExpansionData
 } from '../data/historyContent';
+import {
+  MONOGRAPH_NAVIGATE_EVENT,
+  navigateToMonographTarget,
+  type MonographNavigationTarget,
+} from '../utils/monographNavigator';
 import {
   FileText,
   CheckCircle,
@@ -29,17 +33,22 @@ import './ImplementationSection.css';
 export const ImplementationSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'staatsblad' | 'three-residencies' | 'outer-java' | 'bupati'>('three-residencies');
 
-  const getMonetizationBadgeClass = (level: string) => {
-    switch (level) {
-      case 'Sangat Rendah':
-      case 'Rendah':
-        return 'badge-crimson';
-      case 'Terbatas':
-        return 'badge-gold';
-      default:
-        return 'badge-verdigris';
-    }
-  };
+  useEffect(() => {
+    const handleNavigate = (e: Event) => {
+      const detail = (e as CustomEvent<MonographNavigationTarget>).detail;
+      if (detail?.sectionId !== 'pelaksanaan') return;
+      if (
+        detail.tabId === 'three-residencies' ||
+        detail.tabId === 'staatsblad' ||
+        detail.tabId === 'outer-java' ||
+        detail.tabId === 'bupati'
+      ) {
+        setActiveTab(detail.tabId);
+      }
+    };
+    window.addEventListener(MONOGRAPH_NAVIGATE_EVENT, handleNavigate);
+    return () => window.removeEventListener(MONOGRAPH_NAVIGATE_EVENT, handleNavigate);
+  }, []);
 
   return (
     <section id="pelaksanaan" className="section implementation-section">
@@ -187,7 +196,7 @@ export const ImplementationSection: React.FC = () => {
 
             <div className="residency-cards-grid">
               {residencyComparisonData.map((item, idx) => (
-                <article key={idx} className="parchment-card res-card">
+                <article key={idx} className="parchment-card res-card" id={`residency-card-${idx}`}>
                   <div className="res-card-top">
                     <div>
                       <h4 className="res-name">{item.residency}</h4>
@@ -318,12 +327,12 @@ export const ImplementationSection: React.FC = () => {
             <div className="tab-lead-open">
               <div className="tab-lead-title-row">
                 <h3 className="residency-lead-title">
-                  Perluasan Sistem Monopoli ke Wilayah Luar Pulau Jawa
+                  {exploitationData.outerJavaExpansion.title}
                 </h3>
-                <span className="badge badge-gold">Penyerahan wajib luar Jawa</span>
+                <span className="badge badge-gold">{exploitationData.outerJavaExpansion.subtitle}</span>
               </div>
               <p className="residency-lead-desc">
-                Meskipun Tanam Paksa dipusatkan di 18 karesidenan Jawa, pemerintah kolonial memberlakukan sistem penyerahan wajib serupa di wilayah strategis luar Jawa dengan memanfaatkan pemimpin adat (seperti para penghulu di Minangkabau) serta kerja paksa pembukaan jalan angkut.
+                {exploitationData.outerJavaExpansion.overview}
               </p>
             </div>
 
@@ -384,7 +393,7 @@ export const ImplementationSection: React.FC = () => {
             <h4 className="subsection-heading">Lima Peran Utama Bupati dalam Sistem Kerja Paksa</h4>
             <div className="staatsblad-cards-grid">
               {bupatiRolesData.map((role) => (
-                <article key={role.id} className="staatsblad-card parchment-card">
+                <article key={role.id} className="staatsblad-card parchment-card" id={role.id}>
                   <div className="staatsblad-card-header">
                     <span className="rule-number-badge">Peran {String(role.roleNumber).padStart(2, '0')}</span>
                     <span className={`badge ${role.roleNumber <= 2 || role.roleNumber === 4 ? 'badge-red' : 'badge-amber'}`}>
@@ -408,7 +417,7 @@ export const ImplementationSection: React.FC = () => {
             </div>
 
             {/* Preangerstelsel Blueprint — Open Section so Table is NOT Nested */}
-            <div className="preanger-blueprint-open">
+            <div className="preanger-blueprint-open" id="preanger-blueprint-section">
               <div className="preanger-blueprint-header">
                 <GitBranch size={19} strokeWidth={1.5} className="preanger-blueprint-icon" />
                 <h4>Preangerstelsel sebagai Cetak Biru Cultuurstelsel</h4>
@@ -446,7 +455,7 @@ export const ImplementationSection: React.FC = () => {
             <h4 className="subsection-heading bupati-sub-top">Lima Mekanisme Ekspansi VOC ke Pedalaman Priangan</h4>
             <div className="outer-regions-grid">
               {vocExpansionData.map((mech) => (
-                <article key={mech.id} className="region-card parchment-card">
+                <article key={mech.id} className="region-card parchment-card" id={mech.id}>
                   <div className="region-card-top">
                     <h4 className="region-name">{mech.title}</h4>
                     <span className="badge badge-amber">{mech.badge}</span>
@@ -462,35 +471,31 @@ export const ImplementationSection: React.FC = () => {
               ))}
             </div>
 
-            {/* Monetisasi Priangan — Open Section with 4 WCAG-Safe Sheets (Zero Nested Cards) */}
-            <div className="monetization-open-section">
-              <div className="preanger-blueprint-header">
-                <Coins size={19} strokeWidth={1.5} className="preanger-blueprint-icon" />
-                <h4>Proses Monetisasi Pedesaan Priangan (Abad ke-18 – Pasca-1870)</h4>
+            {/* Rujukan Silang Kuratorial ke Laporan Van Rees 1867 & 4 Fase Monetisasi Priangan (Bebas Duplikasi) */}
+            <div className="monetization-open-section monetization-crossref-bar">
+              <div className="crossref-info">
+                <div className="preanger-blueprint-header">
+                  <Coins size={19} strokeWidth={1.5} className="preanger-blueprint-icon" />
+                  <h4>Kelanjutan Sejarah: Runtuhnya Sistem Priangan &amp; Empat Fase Monetisasi</h4>
+                </div>
+                <p className="preanger-blueprint-lead crossref-desc">
+                  Bagaimana kekuasaan feodal bupati Priangan dan tradisi <em>ngawula</em> akhirnya dibongkar oleh penyelidikan rahasia Komisaris Ono van Rees (1867) hingga memicu peralihan dari barter garam ke ekonomi uang? Telaah 4 fase monetisasi Priangan secara lengkap di Bab Dampak.
+                </p>
               </div>
-              <div className="monetization-phases-grid">
-                {prianganMonetizationData.map((phase) => (
-                  <article key={phase.id} className="parchment-card monetization-phase-item">
-                    <div className="monetization-phase-top">
-                      <h5 className="monetization-phase-heading">{phase.title}</h5>
-                      <span className={`badge ${getMonetizationBadgeClass(phase.monetizationLevel)}`}>
-                        {phase.monetizationLevel}
-                      </span>
-                    </div>
-                    <div className="monetization-period-label tabular-nums">
-                      {phase.phase} · {phase.periodLabel}
-                    </div>
-                    <ul className="monetization-char-list">
-                      {phase.characteristics.map((c, i) => (
-                        <li key={i}>{c}</li>
-                      ))}
-                    </ul>
-                    <div className="monetization-fact-footer">
-                      {phase.keyFact}
-                    </div>
-                  </article>
-                ))}
-              </div>
+              <button
+                type="button"
+                className="btn btn-outline crossref-jump-btn"
+                onClick={() =>
+                  navigateToMonographTarget({
+                    sectionId: 'dampak',
+                    tabId: 'van-rees',
+                    elementId: 'van-rees-monetization-section',
+                  })
+                }
+              >
+                <span>Buka Laporan Van Rees &amp; 4 Fase Monetisasi</span>
+                <ArrowRight size={16} strokeWidth={1.5} />
+              </button>
             </div>
           </div>
         )}
